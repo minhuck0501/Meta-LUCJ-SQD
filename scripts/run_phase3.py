@@ -1,0 +1,114 @@
+import json
+import os
+import platform
+import resource
+import shutil
+import sys
+import time
+import traceback
+from datetime import datetime, timezone
+from pathlib import Path
+
+import ffsim
+import numpy as np
+from pyscf import lib
+
+from meta_lucj_sqd.chemistry import build_chemistry, run_ccsd
+from meta_lucj_sqd.initialization import compressed_initialization
+from meta_lucj_sqd.lucj import interaction_pairs, prepare, sample
+from meta_lucj_sqd.optimization import spsa_step
+from meta_lucj_sqd.sqd import evaluate
+
+
+def main():
+    spec=json.loads(Path('configs/phase3.json').read_text())
+    cfg=json.loads(Path(spec['base_config']).read_text())
+    cfg.update(spec['solver_overrides'])
+    cfg.update(distance_angstrom=spec['distance_angstrom'],shots=spec['shots'])
+    lib.num_threads(cfg['threads'])
+    out=Path('results')/datetime.now(timezone.utc).strftime('phase3_%Y%m%dT%H%M%S')
+    out.mkdir(parents=True)
+    for source in [Path(__file__),*Path('src/meta_lucj_sqd').glob('*.py'),*Path('configs').glob('*.json')]:
+        target=out/'source_snapshot'/source.resolve().relative_to(Path.cwd())
+        target.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copy2(source,target)
+    report=dict(config=spec,effective_config=cfg,status='running',evaluations=[],trajectory=[],
+                python=sys.version,platform=platform.platform(),threads={k:os.getenv(k) for k in ['OMP_NUM_THREADS','OPENBLAS_NUM_THREADS']})
+    started=time.perf_counter()
+
+    def save():
+        report['wall_seconds']=time.perf_counter()-started
+        report['peak_rss_mib']=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/(1024**2 if sys.platform=='darwin' else 1024)
+        temp=out/'report.tmp'
+        temp.write_text(json.dumps(report,indent=2,allow_nan=False));temp.replace(out/'report.json')
+
+    try:
+        c=build_chemistry(cfg)
+        integrals=np.load(spec['reference_integrals'])
+        for key,value in [('h1',c.h1),('eri',c.eri),('ecore',c.ecore)]:
+            np.testing.assert_allclose(integrals[key],value,atol=1e-10,rtol=0)
+        ref=json.loads(Path(spec['reference_report']).read_text())['reference']
+        if not ref['converged'] or ref['residual_norm']>=1e-5:
+            raise ValueError('Reference invalid')
+        report['reference']=ref
+        cc=run_ccsd(c,cfg)
+        tick=time.perf_counter()
+        op,diag=compressed_initialization(cc,c.norb,cfg,spec['compression'],regularization=spec['regularization'])
+        report['initialization_seconds']=time.perf_counter()-tick
+        report['initialization']=diag
+        if not diag['all_stages_success']:
+            raise RuntimeError('Initialization did not converge')
+        initial=op.to_parameters(interaction_pairs=interaction_pairs(c.norb))
+        np.save(out/'initial.npy',initial)
+
+        def objective(params,seed,label):
+            tick=time.perf_counter()
+            operator=ffsim.UCJOpSpinBalanced.from_parameters(params,norb=c.norb,n_reps=cfg['n_reps'],interaction_pairs=interaction_pairs(c.norb),with_final_orbital_rotation=cfg['final_rotation_from_t1'])
+            state=prepare(operator,c.norb,c.nelec)
+            if abs(np.linalg.norm(state)-1)>1e-10:
+                raise RuntimeError('State norm failed')
+            samples=sample(state,c.norb,c.nelec,spec['shots'],seed)
+            del state
+            result,history=evaluate(c,samples,dict(cfg,seed=seed))
+            residual=max(x['projected_residual_norm'] for rows in history for x in rows)
+            entry=dict(label=label,seed=seed,energy_total=float(result.energy+c.ecore),
+                       error_mha=float(1000*(result.energy+c.ecore-ref['energy_total'])),
+                       history=history,dimension=int(result.sci_state.amplitudes.size),
+                       unique_samples=len(np.unique(samples,axis=0)),residual=residual,
+                       seconds=time.perf_counter()-tick,diagonalizations=sum(map(len,history)))
+            report['evaluations'].append(entry);save()
+            if residual>=1e-6:
+                raise RuntimeError('Projected residual failed')
+            print(label,round(entry['error_mha'],3),flush=True)
+            return entry['energy_total']
+
+        for seed in spec['probe_seeds']:
+            objective(initial,seed,'noise_probe')
+        parameters=initial.copy();best=initial.copy()
+        best_value=objective(parameters,spec['training_seed'],'train_initial')
+        rng=np.random.default_rng(spec['optimizer']['seed'])
+        for k in range(spec['optimizer']['iterations']):
+            direction=rng.choice([-1.,1.],size=len(parameters))
+            perturb=spec['optimizer']['c']/(k+1)**spec['optimizer']['gamma']
+            plus=objective(parameters+perturb*direction,spec['training_seed'],f'plus_{k}')
+            minus=objective(parameters-perturb*direction,spec['training_seed'],f'minus_{k}')
+            parameters=spsa_step(parameters,plus,minus,direction,k,spec['optimizer'])
+            value=objective(parameters,spec['training_seed'],f'candidate_{k}')
+            if value<best_value:
+                best_value=value;best=parameters.copy()
+            np.save(out/'best.npy',best);np.save(out/'current.npy',parameters)
+            report['trajectory'].append(dict(iteration=k+1,value=value,best_value=best_value,rng_state=rng.bit_generator.state))
+            save()
+        for seed in spec['evaluation_seeds']:
+            objective(initial,seed,'heldout_initial')
+            objective(best,seed,'heldout_refined')
+        report['optimizer_status']='budget_exhausted'
+        report['status']='success'
+    except BaseException:
+        report['status']='failed';report['exception']=traceback.format_exc();raise
+    finally:
+        save();print(out/'report.json',flush=True)
+
+
+if __name__=='__main__':
+    main()

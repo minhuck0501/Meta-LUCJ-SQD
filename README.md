@@ -58,9 +58,11 @@ LUCJ와 SQD는 참고 문헌에 기반한 방법입니다. 이 프로젝트에�
 
 ## 현재 상태
 
-Phase 1의 최소 계산 파이프라인 검증을 수행했습니다. 초기 SQD 정확도 개선이 필요하며 geometry sweep은 시작하지 않았습니다.
+Phase 2 소규모 진단 sweep(1.0/1.2/1.6 Å)을 완료했습니다. 세 지점 모두 수렴 검사를 통과했으며, SQD 정확도 개선과 최적화 baseline 구축이 다음 과제입니다.
 
-실행 설정과 수치 결과는 [Phase 1 결과](docs/experiments/PHASE1_RESULTS.md), [초기화 비교](docs/experiments/INITIALIZATION_COMPARISON.md), [Multi-stage 결과](docs/experiments/MULTISTAGE_RESULTS.md), [압축 진단과 수정 결과](docs/experiments/COMPRESSION_FIX_RESULTS.md)를 참고하세요.
+Phase 2 결과는 [소규모 sweep 보고서](docs/experiments/PHASE2_RESULTS.md)에 있습니다.
+
+이전 실행 설정과 수치 결과는 [Phase 1 결과](docs/experiments/PHASE1_RESULTS.md), [초기화 비교](docs/experiments/INITIALIZATION_COMPARISON.md), [Multi-stage 결과](docs/experiments/MULTISTAGE_RESULTS.md), [압축 진단과 수정 결과](docs/experiments/COMPRESSION_FIX_RESULTS.md)를 참고하세요.
 
 - 프로젝트 디렉터리, 연구 지침, 참고 논문 3편 및 참조 notebook이 준비되어 있습니다.
 - 로컬 `.venv`에서 Python 3.11.18과 native ARM64 실행을 확인했습니다.

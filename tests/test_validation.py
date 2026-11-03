@@ -150,3 +150,14 @@ def test_regularized_compression_matches_library():
     np.testing.assert_allclose(prepare(op, c.norb, c.nelec),
                                prepare(expected, c.norb, c.nelec), atol=1e-10)
     assert diagnostics['regularization'] == 0.001
+
+
+def test_spsa_step_quadratic_and_cap():
+    from meta_lucj_sqd.optimization import spsa_step
+
+    x=np.array([1.,2.]);direction=np.array([1.,-1.])
+    cfg=dict(a=0.1,c=0.01,alpha=0.602,gamma=0.101,stability=1,max_step_norm=0.1)
+    plus=float(np.sum((x+0.01*direction)**2));minus=float(np.sum((x-0.01*direction)**2))
+    updated=spsa_step(x,plus,minus,direction,0,cfg)
+    assert np.linalg.norm(updated-x)<=0.1+1e-12
+    assert np.sum(updated**2)<np.sum(x**2)

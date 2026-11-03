@@ -77,3 +77,20 @@ Gradient central-difference 검사와 optimizer trajectory를 기록했다. Grad
 ## D016: Phase 2 진입 판단 갱신
 
 D014 이후 gradient 검증, coefficient norm 진단 및 regularized objective의 gradient 수렴을 확인했다. 따라서 고정 pilot 설정으로 소수 geometry의 진단용 Phase 2를 진행할 수 있다. 목표 정확도 달성이나 최종 benchmark 준비 완료로 판정한 것은 아니다. 초기화 미수렴·자원 부족·reference 불확실성을 숨기지 않고 geometry별 실패를 기록한다. 큰 sweep과 meta training은 계속 보류한다. 이번 실행에서는 아직 Phase 2를 실행하지 않았다.
+
+## 2026-11-03 — D017: Phase 2 소규모 진단 sweep
+
+N₂의 1.0, 1.2, 1.6 Å 세 지점을 사용한다. 압축·평형 근방·늘어난 결합의 소규모 진단이며 전체 dissociation curve나 train/test split이 아니다. 6-31G, core 2, (10e,16o), layer 1, λ=0.001, optimizer tolerances와 10,000회 한도는 고정한다. 50,000 shots 및 기존 seed 3개를 사용하고 truncated control을 함께 실행한다. Geometry마다 독립 chemistry/CCSD 초기화이며 warm start나 meta 학습은 수행하지 않는다. 새 geometry는 FCI tol=1e-11, 최대 100 cycles로 기준을 계산한다. 1.2 Å만 기존 reference를 적분 일치 검사 후 재사용한다. 실패·미수렴도 저장하며 다음 geometry로 진행한다. 실행당 600초 timeout은 자원 보호 한도이고 수렴 기준을 바꾸지 않는다. 기존 측정 기준 각 새 reference는 약 90초/5 GiB 규모이나 거리별 비용은 달라질 수 있다.
+
+
+## D018: Phase 2 pilot 결과
+
+1.0/1.2/1.6 Å 모두 SCF·CCSD·regularized compression·FCI·SQD projected residual 검사를 통과했다. 압축 초기화의 평균 SQD 오차는 각각 35.48/44.25/65.44 mHa다. 이 세 지점 진단은 완료했고, 더 넓은 geometry 범위나 목표 정확도 달성을 주장하지 않는다. Phase 3에서 독립 SQD refinement baseline의 정확도-비용 관계를 검증하는 것이 다음 과제다. 근거는 experiments/PHASE2_RESULTS.md와 phase2_summary.json에 저장했다.
+
+## 2026-11-03 — D019: Phase 3 단일 지점 SQD refinement pilot
+
+N₂ 1.2 Å에서 regularized CCSD 초기값으로 시작해 531개 LUCJ parameters 전체를 SQD 에너지 기준으로 조정한다. 기대값 VQE나 t₂ fitting으로 목적함수를 대체하지 않는다. SPSA의 두 방향 차분 gradient 추정과 감소하는 a/c schedule을 사용한다. 참고: Spall, An Overview of the Simultaneous Perturbation Method for Efficient Optimization (1998), https://www.jhuapl.edu/spsa/pdf-spsa/spall_an_overview.pdf . L2 step cap=0.1은 본 pilot의 안정화 선택이며 표준 SPSA의 수렴 보장을 이 유한 샘플 objective에 적용하지 않는다.
+
+훈련 seed 12345를 고정해 유한 샘플 empirical objective를 정의한다. 12회 업데이트, 초기값 1회와 각 회 plus/minus/candidate 3회로 37회 훈련 평가다. Candidate 중 훈련 energy가 가장 낮은 값을 선택한다. 별도 probe seeds 23456/34567/45670으로 초기 잡음을 확인하고, 최종 initial/refined는 56789/67890/78901에서 비교한다. 모든 평가 50,000 shots, 기존 batch 및 solver 조건을 유지한다. 최종 seed 결과로 후보를 다시 선택하지 않는다. Optimizer direction RNG는 seed 45678로 분리한다.
+
+잡음 probe와 별도 평가도 전체 비용에 포함한다. 예산·gain은 첫 pilot의 사전 고정값이며 최적값으로 주장하지 않는다. 이 실험은 수렴 또는 강한 baseline의 확립이 아니라 refinement 가능성과 noise/cost 진단이다. Optimizer 상태는 budget_exhausted로 기록하고 여러 optimizer seed, 추가 geometry, accuracy-matched 비교는 후속 검증 대상이다.
