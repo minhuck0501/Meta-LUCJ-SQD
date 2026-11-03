@@ -1,0 +1,145 @@
+{
+  "source_report": "results/initialization_20261103T071730/report.json",
+  "status": "validation_incomplete",
+  "comparison": {
+    "base_config": "configs/phase1.json",
+    "seeds": [
+      12345,
+      23456,
+      34567
+    ],
+    "shot_budgets": [
+      10000,
+      50000
+    ],
+    "compression": {
+      "maxiter": 10000,
+      "ftol": 1e-12,
+      "gtol": 1e-07
+    },
+    "compression_stages": [
+      4,
+      3,
+      2,
+      1
+    ],
+    "solver_overrides": {
+      "solver_tol": 1e-13,
+      "solver_max_cycle": 200
+    },
+    "reference_report": "results/initialization_20261103T065552/report.json",
+    "reference_integrals": "results/phase1_20261103T064449/integrals.npz",
+    "reference_residual_limit": 1e-05
+  },
+  "config": {
+    "seed": 12345,
+    "threads": 1,
+    "molecule": "N",
+    "basis": "6-31g",
+    "distance_angstrom": 1.2,
+    "frozen_core": 2,
+    "expected_norb": 16,
+    "expected_nelec": [
+      5,
+      5
+    ],
+    "scf_tol": 1e-10,
+    "ccsd_tol": 1e-09,
+    "ccsd_amplitude_tol": 1e-07,
+    "max_cycle": 100,
+    "n_reps": 1,
+    "compressed": false,
+    "final_rotation_from_t1": true,
+    "shots": 10000,
+    "samples_per_batch": 200,
+    "num_batches": 3,
+    "sqd_iterations": 2,
+    "solver_tol": 1e-13,
+    "solver_max_cycle": 200,
+    "reference_max_cycle": 60,
+    "reference_tol": 1e-09,
+    "max_memory_mb": 8000
+  },
+  "compression": {
+    "success": false,
+    "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+    "iterations": 10000,
+    "evaluations": 10237,
+    "loss": 0.02137576950982076,
+    "gradient_norm": 0.0018605632172139497,
+    "initial_union_mask_loss": 0.045182025618561134,
+    "regularization": 0,
+    "multi_stage": true,
+    "stages": [
+      {
+        "terms": 4,
+        "success": false,
+        "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+        "iterations": 10000,
+        "evaluations": 10455,
+        "loss": 0.0013911032420802492,
+        "gradient_norm": 0.0005293634329757274
+      },
+      {
+        "terms": 3,
+        "success": false,
+        "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+        "iterations": 10000,
+        "evaluations": 10719,
+        "loss": 0.00266421577561865,
+        "gradient_norm": 0.002177201155713591
+      },
+      {
+        "terms": 2,
+        "success": false,
+        "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+        "iterations": 10000,
+        "evaluations": 10527,
+        "loss": 0.0057075966279637996,
+        "gradient_norm": 0.0004023513593609252
+      },
+      {
+        "terms": 1,
+        "success": false,
+        "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+        "iterations": 10000,
+        "evaluations": 10237,
+        "loss": 0.02137576950982076,
+        "gradient_norm": 0.0018605632172139497
+      }
+    ],
+    "all_stages_success": false
+  },
+  "reference": {
+    "energy_total": -109.09813082054681,
+    "converged": true,
+    "residual_norm": 2.98963841884039e-06
+  },
+  "reference_reused_from": "results/initialization_20261103T065552/report.json",
+  "timings": {
+    "chemistry": 0.0246930830180645,
+    "ccsd": 0.03808129113167524,
+    "truncated_initialization": 0.003024541772902012,
+    "truncated_state": 1.1790247079916298,
+    "compressed_initialization": 42.10361083270982,
+    "compressed_state": 1.1422392497770488
+  },
+  "wall_seconds": 53.20321566704661,
+  "peak_rss_mib": 1672.921875,
+  "groups": [
+    {
+      "shots": 10000,
+      "error_mha_mean": 50.42802484641129,
+      "error_mha_std": 4.3986834098579095,
+      "unique_mean": 353,
+      "max_residual": 2.8353005987391116e-07
+    },
+    {
+      "shots": 50000,
+      "error_mha_mean": 49.57984096923932,
+      "error_mha_std": 0.24616669068897729,
+      "unique_mean": 960.6666666666666,
+      "max_residual": 2.2174234483093782e-07
+    }
+  ]
+}

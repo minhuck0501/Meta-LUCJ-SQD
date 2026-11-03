@@ -1,0 +1,77 @@
+{
+  "source_report": "results/initialization_20261103T072303/report.json",
+  "status": "success",
+  "config": {
+    "base_config": "configs/phase1.json",
+    "seeds": [
+      12345,
+      23456,
+      34567
+    ],
+    "shot_budgets": [
+      10000,
+      50000
+    ],
+    "compression": {
+      "maxiter": 10000,
+      "ftol": 1e-12,
+      "gtol": 1e-07
+    },
+    "solver_overrides": {
+      "solver_tol": 1e-13,
+      "solver_max_cycle": 200
+    },
+    "reference_report": "results/initialization_20261103T065552/report.json",
+    "reference_integrals": "results/phase1_20261103T064449/integrals.npz",
+    "reference_residual_limit": 1e-05,
+    "regularization": 0.001
+  },
+  "compression": {
+    "success": true,
+    "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+    "iterations": 5290,
+    "evaluations": 5523,
+    "loss": 0.015895384896010174,
+    "gradient_norm": 4.889016345500379e-07,
+    "initial_union_mask_loss": 0.045182025618561134,
+    "regularization": 0.001,
+    "multi_stage": false,
+    "final_j_norm_squared": 1.2898589343415146,
+    "stages": [
+      {
+        "terms": 1,
+        "success": true,
+        "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+        "iterations": 5290,
+        "evaluations": 5523,
+        "loss": 0.015895384896010174,
+        "gradient_norm": 4.889016345500379e-07
+      }
+    ],
+    "all_stages_success": true
+  },
+  "timings": {
+    "chemistry": 0.02348162466660142,
+    "ccsd": 0.03763454221189022,
+    "truncated_initialization": 0.0030625411309301853,
+    "truncated_state": 1.294868040829897,
+    "compressed_initialization": 3.05032637482509,
+    "compressed_state": 1.0948045826517045
+  },
+  "wall_seconds": 15.110191666986793,
+  "peak_rss_mib": 1602.71875,
+  "groups": [
+    {
+      "shots": 10000,
+      "error_mha_mean": 55.42241410647364,
+      "error_mha_std": 3.9681548162955935
+    },
+    {
+      "shots": 50000,
+      "error_mha_mean": 44.2510704262844,
+      "error_mha_std": 3.1945739178408594
+    }
+  ],
+  "gradient_inf": 7.79148913782388e-08,
+  "gradient_max_absolute_error": 1.587117380706476e-11
+}

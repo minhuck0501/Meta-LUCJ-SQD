@@ -1,0 +1,18 @@
+{
+  "amplitudes": "results/phase1_20261103T064449/amplitudes.npz",
+  "seed": 12345,
+  "maxiter": 10000,
+  "gtol": 1e-07,
+  "ftol": 1e-12,
+  "methods": [
+    "L-BFGS-B"
+  ],
+  "gradient_steps": [
+    0.0001,
+    1e-05,
+    1e-06
+  ],
+  "directions": 5,
+  "regularization": 0.001,
+  "output_directory": "results/regularized_diagnostic"
+}

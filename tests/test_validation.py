@@ -116,3 +116,37 @@ def test_compression_matches_library_constructor():
                                prepare(expected, c.norb, c.nelec), atol=1e-10)
     assert np.isfinite(diagnostics['loss'])
     assert abs(np.linalg.norm(prepare(op, c.norb, c.nelec)) - 1) < 1e-10
+
+
+def test_multistage_matches_library():
+    from meta_lucj_sqd.initialization import compressed_initialization
+
+    lib.num_threads(1)
+    cfg = small_config()
+    c = build_chemistry(cfg)
+    cc = run_ccsd(c, cfg)
+    options = dict(maxiter=100, ftol=1e-12, gtol=1e-7)
+    op, diagnostics = compressed_initialization(cc, c.norb, cfg, options, [2, 1])
+    expected = ffsim.UCJOpSpinBalanced.from_t_amplitudes(
+        cc.t2, t1=cc.t1, n_reps=1, interaction_pairs=interaction_pairs(c.norb),
+        optimize=True, options=options, multi_stage_start=2, multi_stage_step=1)
+    np.testing.assert_allclose(prepare(op, c.norb, c.nelec),
+                               prepare(expected, c.norb, c.nelec), atol=1e-10)
+    assert len(diagnostics['stages']) == 2
+
+
+def test_regularized_compression_matches_library():
+    from meta_lucj_sqd.initialization import compressed_initialization
+
+    lib.num_threads(1)
+    cfg = small_config()
+    c = build_chemistry(cfg)
+    cc = run_ccsd(c, cfg)
+    options = dict(maxiter=100, ftol=1e-12, gtol=1e-7)
+    op, diagnostics = compressed_initialization(cc, c.norb, cfg, options, regularization=0.001)
+    expected = ffsim.UCJOpSpinBalanced.from_t_amplitudes(
+        cc.t2, t1=cc.t1, n_reps=1, interaction_pairs=interaction_pairs(c.norb),
+        optimize=True, options=options, regularization=0.001)
+    np.testing.assert_allclose(prepare(op, c.norb, c.nelec),
+                               prepare(expected, c.norb, c.nelec), atol=1e-10)
+    assert diagnostics['regularization'] == 0.001

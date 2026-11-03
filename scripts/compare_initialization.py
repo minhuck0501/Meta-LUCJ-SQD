@@ -1,4 +1,5 @@
 import hashlib
+import argparse
 import importlib.metadata
 import json
 import os
@@ -22,7 +23,10 @@ from meta_lucj_sqd.sqd import evaluate
 
 
 def main():
-    spec = json.loads(Path('configs/initialization_comparison.json').read_text())
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--config', default='configs/regularized_comparison.json')
+    args = parser.parse_args()
+    spec = json.loads(Path(args.config).read_text())
     cfg = json.loads(Path(spec['base_config']).read_text())
     cfg.update(spec.get('solver_overrides', {}))
     lib.num_threads(cfg['threads'])
@@ -70,7 +74,7 @@ def main():
         for method in ['truncated','compressed']:
             if method=='compressed':
                 op, diagnostics=stage(method+'_initialization',lambda:compressed_initialization(
-                    cc,chemistry.norb,cfg,spec['compression']))
+                    cc,chemistry.norb,cfg,spec['compression'],spec.get('compression_stages'),spec.get('regularization',0)))
                 report['compression_diagnostics']=diagnostics
                 save()
             else:
@@ -102,6 +106,27 @@ def main():
                     save()
                     print(method,shots,seed,row['energy_total'],row['unique_samples'],row['status'],flush=True)
             del state
+        if spec.get('reference_report'):
+            previous=json.loads(Path(spec['reference_report']).read_text())
+            for key in ['molecule','basis','distance_angstrom','frozen_core','expected_norb',
+                        'expected_nelec','scf_tol','max_cycle']:
+                if cfg[key] != previous['config'][key]:
+                    raise ValueError('Reference physical configuration mismatch: '+key)
+            if abs(previous['hf_total']-chemistry.mf.e_tot)>1e-10:
+                raise ValueError('Reference HF energy mismatch')
+            integrals=np.load(spec['reference_integrals'])
+            for name, value in [('h1',chemistry.h1),('eri',chemistry.eri),('ecore',chemistry.ecore)]:
+                np.testing.assert_allclose(integrals[name], value, atol=1e-10, rtol=0)
+            reference=previous['reference']
+            if not reference['converged'] or reference['residual_norm']>=spec['reference_residual_limit']:
+                raise ValueError('Reference validation failed')
+            report['reference']=reference
+            report['reference_reused_from']=spec['reference_report']
+            report['reference_integrals_verified_against']=spec['reference_integrals']
+            for row in report['rows']:
+                row['error_mha']=1000*(row['energy_total']-reference['energy_total'])
+            report['status']='success' if report['compression_diagnostics']['all_stages_success'] and all(r['status']=='success' for r in report['rows']) else 'validation_incomplete'
+            return
         solver=fci.direct_spin1.FCI(chemistry.mf.mol)
         solver.max_memory=cfg['max_memory_mb']
         solver.max_cycle=spec['reference_max_cycle']

@@ -6,7 +6,7 @@
 
 N₂ 1.2 Å, 6-31G, frozen core 2, active (10e,16o), 1-layer spin-balanced LUCJ, 531 parameters, 동일한 locality mask와 t₁ final rotation을 유지했다. 기존 단순 truncation과 library의 single-stage compressed double factorization을 비교했다. 압축은 0.5*||t₂_reconstructed−t₂_CCSD||²를 최소화하며 SQD 에너지를 직접 최적화하지 않는다. AA/AB mask 합집합에서 압축하고 각 spin mask를 나중에 적용하는 library 절차를 따른다. Regularization과 multi-stage는 사용하지 않았다.
 
-설정은 configs/initialization_comparison.json에 저장했다. Seeds는 12345, 23456, 34567이고 shots는 10,000 또는 50,000이다. SQD는 200 samples/batch, 3 batches, 최대 2 iterations로 동일하다. 비교 방법 모두 solver tolerance=1e-13, 최대 200 cycles로 강화했다. 목표 정확도를 달성한 값만 골라내지 않고 모든 결과를 기록했다.
+설정은 results/initialization_20261103T065552/source_snapshot/configs/initialization_comparison.json에 저장했다. Seeds는 12345, 23456, 34567이고 shots는 10,000 또는 50,000이다. SQD는 200 samples/batch, 3 batches, 최대 2 iterations로 동일하다. 비교 방법 모두 solver tolerance=1e-13, 최대 200 cycles로 강화했다. 목표 정확도를 달성한 값만 골라내지 않고 모든 결과를 기록했다.
 
 ## SQD 에너지 오차
 
@@ -56,7 +56,7 @@ FCI tolerance를 1e-9에서 1e-11 Ha로 강화했다. Refined FCI total은 -109.
 
 ```bash
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q
-PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts/compare_initialization.py
+PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts/compare_initialization.py --config results/initialization_20261103T065552/source_snapshot/configs/initialization_comparison.json
 ```
 
 추가한 compression wrapper의 상태가 ffsim 고수준 constructor와 일치하는 작은 H₂ 검증을 포함해 테스트 6개가 통과했다.

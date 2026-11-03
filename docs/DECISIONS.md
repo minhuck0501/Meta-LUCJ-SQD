@@ -43,7 +43,7 @@ Locality-truncated 1-layer LUCJ 샘플이 H₂ exact energy를 반드시 복원�
 
 ## D010: Phase 1 결과와 다음 단계
 
-N₂ 단일 지점 최소 pipeline과 H₂ 검증 5개는 통과했다. 측정된 SQD–FCI 오차가 189.95 mHa이므로 에너지 품질을 달성했다고 선언하지 않는다. Phase 2 sweep은 보류하고 같은 지점에서 압축 초기화와 sampling support를 조사한다. FCI energy convergence flag와 eigenvector residual을 구분하며 현재 reference를 미세한 성능 차이의 certified 기준으로 사용하지 않는다. 상세 증거는 PHASE1_RESULTS.md와 원본 report에 저장했다.
+N₂ 단일 지점 최소 pipeline과 H₂ 검증 5개는 통과했다. 측정된 SQD–FCI 오차가 189.95 mHa이므로 에너지 품질을 달성했다고 선언하지 않는다. Phase 2 sweep은 보류하고 같은 지점에서 압축 초기화와 sampling support를 조사한다. FCI energy convergence flag와 eigenvector residual을 구분하며 현재 reference를 미세한 성능 차이의 certified 기준으로 사용하지 않는다. 상세 증거는 experiments/PHASE1_RESULTS.md와 원본 report에 저장했다.
 
 ## 2026-11-03 — D011: 단일 지점 압축 초기화 비교
 
@@ -56,3 +56,24 @@ Seeds는 12345, 23456, 34567이고 shots는 10,000과 50,000이다. 이는 train
 ## D012: 10,000회 압축 예산의 해석
 
 강화 실행 initialization_20261103T065552에서도 압축 optimizer는 10,000회 한도에 도달했다. Loss는 줄었으나 gradient norm과 success flag상 수렴을 입증하지 못했다. 반복 한도를 계속 늘리거나 tolerance를 완화하여 성공으로 표시하지 않는다. 동일한 예산의 중간 해에 대한 SQD 진단 결과로 보고하고 전체 report를 validation_incomplete로 유지한다. 이 결과만으로 Phase 2 또는 Meta 학습에 진입하지 않는다. 다음 후보는 문헌의 multi-stage compression이며 별도 설정과 비교가 필요하다.
+
+## 2026-11-03 — D013: Multi-stage compression 진단
+
+Single-stage 실패에 대한 다음 실험은 같은 N₂ 1.2 Å에서 4→3→2→1항 compression이다. 각 단계에서 최적화된 factorization을 다음 단계 초기값으로 전달하며 public ffsim double_factorized_t2_compressed를 사용한다. 이는 문헌의 점진적 truncation 접근이며 새로운 압축 알고리즘은 아니다. 작은 H₂에서 ffsim multi_stage_start/step constructor와 최종 상태의 일치를 확인했다. 중간 단계별 success/message/loss/gradient/iteration/evaluation을 모두 보존한다. 최종 단계만 수렴해도 중간 실패를 숨기지 않으며 전체 검증 상태에 반영한다.
+
+각 단계 최대 10,000회, 동일 ftol=1e-12 및 gtol=1e-7을 유지한다. 이는 single-stage보다 최대 총 예산이 크므로 equal-compute 우월성을 주장하지 않는다. Seeds, shots, batch, solver tolerance 및 최종 topology는 이전 비교와 같다. 설정은 results/initialization_20261103T071730/source_snapshot/configs/multistage_comparison.json에 분리했다.
+
+기존 refined FCI를 재사용하되 물리 설정, HF total, 이전에 저장한 h1/eri/ecore와의 일치(절대 tolerance 1e-10), reference convergence/residual을 확인한다. 재사용한 기준 계산 비용은 새 실행 시간에 포함하지 않고 provenance를 기록한다. 원본 결과가 없거나 조건이 다르면 실행을 실패시킨다. 원본 reference 파일 경로는 로컬 실험 재현용이며 새 checkout에서는 reference 계산을 먼저 수행해야 한다.
+
+
+## D014: Multi-stage 결과와 진입 판단
+
+실행 initialization_20261103T071730은 4개 단계 모두 maxiter에 도달했고 validation_incomplete다. SQD solver 검증은 통과했지만 압축 수렴 검증은 통과하지 못했다. 50,000 shots의 SQD 오차는 평균 49.58 mHa로 이전 single-stage의 44.97 mHa보다 개선되지 않았다. Phase 2는 보류한다. 반복 한도 추가 증가보다 gradient/scale/trajectory와 norm을 진단한 후 원인에 맞는 변경을 결정한다. 상세 증거와 비용은 experiments/MULTISTAGE_RESULTS.md에 보존한다.
+
+## 2026-11-03 — D015: Norm 증가 진단과 regularization
+
+Gradient central-difference 검사와 optimizer trajectory를 기록했다. Gradient 오류의 증거를 발견하지 못했고, 대신 J norm 증가를 관측했다. 문헌 및 ffsim의 norm regularization λ=0.001을 별도 pilot config로 추가했다. 이는 목적함수 변경이며 기존 실험을 대체하지 않는다. λ는 이 단일 지점의 진단 후보이고 최종 benchmark 최적값이 아니다. 기존 gtol=1e-7을 유지한 채 gradient ∞ norm 7.79e-8로 5,290회에 종료했다. SQD 정확도는 여전히 약 44–55 mHa이며 에너지 개선을 주장하지 않는다. 상세 근거는 experiments/COMPRESSION_FIX_RESULTS.md에 있다.
+
+## D016: Phase 2 진입 판단 갱신
+
+D014 이후 gradient 검증, coefficient norm 진단 및 regularized objective의 gradient 수렴을 확인했다. 따라서 고정 pilot 설정으로 소수 geometry의 진단용 Phase 2를 진행할 수 있다. 목표 정확도 달성이나 최종 benchmark 준비 완료로 판정한 것은 아니다. 초기화 미수렴·자원 부족·reference 불확실성을 숨기지 않고 geometry별 실패를 기록한다. 큰 sweep과 meta training은 계속 보류한다. 이번 실행에서는 아직 Phase 2를 실행하지 않았다.
