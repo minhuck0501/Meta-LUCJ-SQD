@@ -1,0 +1,235 @@
+{
+  "source_report": "results/phase2_20261103T073148/report.json",
+  "status": "success",
+  "config": {
+    "base_comparison": "configs/regularized_comparison.json",
+    "distances_angstrom": [
+      1.0,
+      1.2,
+      1.6
+    ],
+    "shot_budgets": [
+      50000
+    ],
+    "reference_tol": 1e-11,
+    "reference_max_cycle": 100,
+    "point_timeout_seconds": 600
+  },
+  "wall_seconds": 249.2064267913811,
+  "points": [
+    {
+      "distance_angstrom": 1.0,
+      "status": "success",
+      "source_report": "results/initialization_20261103T073148/report.json",
+      "reference": {
+        "energy_total": -109.04667177831853,
+        "converged": true,
+        "residual_norm": 2.7322202392796176e-06
+      },
+      "compression": {
+        "success": true,
+        "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+        "iterations": 2699,
+        "evaluations": 2775,
+        "loss": 0.014098862085170303,
+        "gradient_norm": 5.114006232837423e-07,
+        "initial_union_mask_loss": 0.029750502721553423,
+        "regularization": 0.001,
+        "multi_stage": false,
+        "final_j_norm_squared": 1.067198526370436,
+        "stages": [
+          {
+            "terms": 1,
+            "success": true,
+            "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+            "iterations": 2699,
+            "evaluations": 2775,
+            "loss": 0.014098862085170303,
+            "gradient_norm": 5.114006232837423e-07
+          }
+        ],
+        "all_stages_success": true
+      },
+      "timings": {
+        "chemistry": 0.02415137505158782,
+        "ccsd": 0.029153209179639816,
+        "truncated_initialization": 0.0029691667295992374,
+        "truncated_state": 1.1110393339768052,
+        "compressed_initialization": 1.724167583975941,
+        "compressed_state": 1.2117154579609632,
+        "fci_refined": 72.58986575016752,
+        "fci_residual": 4.605791000183672
+      },
+      "wall_seconds": 87.32649591658264,
+      "peak_rss_mib": 5382.46875,
+      "methods": [
+        {
+          "method": "truncated",
+          "error_mha_mean": 142.10341254829473,
+          "error_mha_std": 4.685804800752108,
+          "unique_mean": 38.666666666666664,
+          "dimensions": [
+            304,
+            480,
+            324
+          ],
+          "max_residual": 9.043446717334568e-08
+        },
+        {
+          "method": "compressed",
+          "error_mha_mean": 35.4846969057642,
+          "error_mha_std": 1.5868821966050408,
+          "unique_mean": 345.3333333333333,
+          "dimensions": [
+            8281,
+            7298,
+            7719
+          ],
+          "max_residual": 3.140564169332312e-07
+        }
+      ]
+    },
+    {
+      "distance_angstrom": 1.2,
+      "status": "success",
+      "source_report": "results/initialization_20261103T073317/report.json",
+      "reference": {
+        "energy_total": -109.09813082054681,
+        "converged": true,
+        "residual_norm": 2.98963841884039e-06
+      },
+      "compression": {
+        "success": true,
+        "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+        "iterations": 5290,
+        "evaluations": 5523,
+        "loss": 0.015895384896010174,
+        "gradient_norm": 4.889016345500379e-07,
+        "initial_union_mask_loss": 0.045182025618561134,
+        "regularization": 0.001,
+        "multi_stage": false,
+        "final_j_norm_squared": 1.2898589343415146,
+        "stages": [
+          {
+            "terms": 1,
+            "success": true,
+            "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+            "iterations": 5290,
+            "evaluations": 5523,
+            "loss": 0.015895384896010174,
+            "gradient_norm": 4.889016345500379e-07
+          }
+        ],
+        "all_stages_success": true
+      },
+      "timings": {
+        "chemistry": 0.024197875056415796,
+        "ccsd": 0.03608062490820885,
+        "truncated_initialization": 0.0031520407646894455,
+        "truncated_state": 1.147143917158246,
+        "compressed_initialization": 3.0479686250910163,
+        "compressed_state": 1.1723505826666951
+      },
+      "wall_seconds": 11.8151746657677,
+      "peak_rss_mib": 1600.15625,
+      "methods": [
+        {
+          "method": "truncated",
+          "error_mha_mean": 162.89229917987313,
+          "error_mha_std": 5.878223190085666,
+          "unique_mean": 45.333333333333336,
+          "dimensions": [
+            484,
+            483,
+            506
+          ],
+          "max_residual": 7.483659683215828e-08
+        },
+        {
+          "method": "compressed",
+          "error_mha_mean": 44.2510704262844,
+          "error_mha_std": 3.1945739178408594,
+          "unique_mean": 410.6666666666667,
+          "dimensions": [
+            8455,
+            8096,
+            8463
+          ],
+          "max_residual": 1.6662468309261523e-07
+        }
+      ]
+    },
+    {
+      "distance_angstrom": 1.6,
+      "status": "success",
+      "source_report": "results/initialization_20261103T073330/report.json",
+      "reference": {
+        "energy_total": -108.94225171072745,
+        "converged": true,
+        "residual_norm": 2.9949646650592006e-06
+      },
+      "compression": {
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "iterations": 5859,
+        "evaluations": 6190,
+        "loss": 0.04345542120667821,
+        "gradient_norm": 3.102814611782611e-06,
+        "initial_union_mask_loss": 0.127658658316973,
+        "regularization": 0.001,
+        "multi_stage": false,
+        "final_j_norm_squared": 3.253620569780508,
+        "stages": [
+          {
+            "terms": 1,
+            "success": true,
+            "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+            "iterations": 5859,
+            "evaluations": 6190,
+            "loss": 0.04345542120667821,
+            "gradient_norm": 3.102814611782611e-06
+          }
+        ],
+        "all_stages_success": true
+      },
+      "timings": {
+        "chemistry": 0.023531166836619377,
+        "ccsd": 0.05133975017815828,
+        "truncated_initialization": 0.0029574581421911716,
+        "truncated_state": 1.224112291354686,
+        "compressed_initialization": 3.3591994582675397,
+        "compressed_state": 1.1386677077971399,
+        "fci_refined": 129.87478508334607,
+        "fci_residual": 4.658387666102499
+      },
+      "wall_seconds": 147.10192199982703,
+      "peak_rss_mib": 5380.484375,
+      "methods": [
+        {
+          "method": "truncated",
+          "error_mha_mean": 191.92173420245715,
+          "error_mha_std": 17.54059785185843,
+          "unique_mean": 60,
+          "dimensions": [
+            506,
+            928,
+            552
+          ],
+          "max_residual": 2.277188558169471e-07
+        },
+        {
+          "method": "compressed",
+          "error_mha_mean": 65.44198574650295,
+          "error_mha_std": 3.8355886342640138,
+          "unique_mean": 465.3333333333333,
+          "dimensions": [
+            5106,
+            5600,
+            6320
+          ],
+          "max_residual": 2.874927929149781e-07
+        }
+      ]
+    }
+  ]
+}

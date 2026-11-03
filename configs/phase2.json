@@ -1,0 +1,8 @@
+{
+  "base_comparison": "configs/regularized_comparison.json",
+  "distances_angstrom": [1.0, 1.2, 1.6],
+  "shot_budgets": [50000],
+  "reference_tol": 1e-11,
+  "reference_max_cycle": 100,
+  "point_timeout_seconds": 600
+}
