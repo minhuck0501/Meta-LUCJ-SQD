@@ -58,15 +58,18 @@ LUCJ와 SQD는 참고 문헌에 기반한 방법입니다. 이 프로젝트에�
 
 ## 현재 상태
 
-프로젝트 초기 구성 단계입니다.
+Phase 1의 최소 계산 파이프라인 검증을 수행했습니다. 초기 SQD 정확도 개선이 필요하며 geometry sweep은 시작하지 않았습니다.
+
+실행 설정과 수치 결과는 [Phase 1 결과](docs/PHASE1_RESULTS.md)를 참고하세요.
 
 - 프로젝트 디렉터리, 연구 지침, 참고 논문 3편 및 참조 notebook이 준비되어 있습니다.
 - 로컬 `.venv`에서 Python 3.11.18과 native ARM64 실행을 확인했습니다.
 - NumPy, SciPy, PySCF, ffsim, Qiskit, qiskit-addon-sqd, pytest의 import를 확인했습니다.
-- Chemistry/LUCJ/SQD 파이프라인, 수치 테스트, benchmark 결과는 아직 없습니다.
+- Chemistry/LUCJ/sampling/SQD 최소 구현과 수치 테스트 5개가 통과했습니다.
+- N₂ 1.2 Å의 FCI 및 초기 SQD 결과를 측정했습니다. SQD 오차는 약 189.95 mHa로 개선이 필요합니다.
 - 연구 문서 4종에 Phase 0 설계 초안과 참조 notebook 검토 내용을 작성했습니다.
-- `pyproject.toml`은 아직 빈 파일이며, 패키지 설정은 후속 구현 단계에서 작성합니다.
-- 의존성 버전 고정과 실제 수치 계산 호환성 검증은 아직 완료하지 않았습니다.
+- `pyproject.toml`에 패키지 구성과 현재 직접 의존성 버전을 선언했습니다.
+- 직접 의존성 버전을 고정했으며 해당 로컬 환경에서 작은 수치 검증을 수행했습니다. 전체 전이 의존성 lock과 별도 환경 설치 검증은 미완료입니다.
 
 환경 확인은 해당 로컬 환경에 대한 점검이며, 다른 환경에서의 설치나 수치적 정확성을 보장하지 않습니다.
 
@@ -111,7 +114,7 @@ source .venv/bin/activate
 python --version
 ```
 
-아직 패키지 설치 절차나 실행 명령은 확정되지 않았습니다. 의존성 선언과 실행 가능한 구현이 준비되면 이 문서를 갱신합니다.
+Phase 1 테스트와 실행 명령은 [결과 문서](docs/PHASE1_RESULTS.md)에 있습니다. 실행 결과는 `results/`에 저장됩니다. 현재 단계별 자동 resume과 전체 benchmark CLI는 제공하지 않습니다.
 
 ## 참고 자료
 
