@@ -44,3 +44,15 @@ Locality-truncated 1-layer LUCJ 샘플이 H₂ exact energy를 반드시 복원�
 ## D010: Phase 1 결과와 다음 단계
 
 N₂ 단일 지점 최소 pipeline과 H₂ 검증 5개는 통과했다. 측정된 SQD–FCI 오차가 189.95 mHa이므로 에너지 품질을 달성했다고 선언하지 않는다. Phase 2 sweep은 보류하고 같은 지점에서 압축 초기화와 sampling support를 조사한다. FCI energy convergence flag와 eigenvector residual을 구분하며 현재 reference를 미세한 성능 차이의 certified 기준으로 사용하지 않는다. 상세 증거는 PHASE1_RESULTS.md와 원본 report에 저장했다.
+
+## 2026-11-03 — D011: 단일 지점 압축 초기화 비교
+
+N₂ 1.2 Å, 6-31G, (10e,16o), core 2, layer 1, interaction topology와 final t₁ rotation은 유지한다. 단순 truncation과 single-stage compressed double factorization을 비교한다. Compressed objective는 0.5*||t₂_reconstructed−t₂_CCSD||²이고 regularization=0이다. AA/AB interaction의 합집합으로 압축한 후 각각의 locality mask를 적용한다. 설치된 ffsim 고수준 constructor와 작은 H₂ 상태가 일치하는지 테스트했다. Library constructor가 버리는 OptimizeResult를 보존하기 위해 같은 library의 하위 API를 사용한다.
+
+Seeds는 12345, 23456, 34567이고 shots는 10,000과 50,000이다. 이는 training/test split이 아닌 단일 지점 진단이다. 같은 seed 번호를 방법 간 사용하지만 common random numbers의 통계적 최적 coupling을 주장하지 않는다. 각 방법·예산별 sample arrays와 batch별 에너지·projected residual을 저장한다. FCI tolerance는 1e-9에서 1e-11 Ha로 강화하고 residual을 다시 계산한다.
+
+예비 실행 initialization_20261103T065403에서 compressed optimizer가 1,000회 한도에 도달했고 일부 SQD projected residual이 1e-6을 넘었다. 결과를 삭제하지 않고 검증 미완료로 취급한다. 후속 실행에서는 압축 maxiter=10,000, SQD solver tol=1e-13 및 max_cycle=200으로 강화한다. 모든 방법에 동일하게 적용하며 projected residual 검증 한도 1e-6은 완화하지 않는다. Phase 1의 기존 설정 파일은 변경하지 않고 별도 비교 설정의 override로 기록한다. Optimizer success와 gradient norm은 함께 보고하며 에너지 정확도 달성과 동일시하지 않는다.
+
+## D012: 10,000회 압축 예산의 해석
+
+강화 실행 initialization_20261103T065552에서도 압축 optimizer는 10,000회 한도에 도달했다. Loss는 줄었으나 gradient norm과 success flag상 수렴을 입증하지 못했다. 반복 한도를 계속 늘리거나 tolerance를 완화하여 성공으로 표시하지 않는다. 동일한 예산의 중간 해에 대한 SQD 진단 결과로 보고하고 전체 report를 validation_incomplete로 유지한다. 이 결과만으로 Phase 2 또는 Meta 학습에 진입하지 않는다. 다음 후보는 문헌의 multi-stage compression이며 별도 설정과 비교가 필요하다.

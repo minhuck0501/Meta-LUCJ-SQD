@@ -1,0 +1,10 @@
+{
+  "base_config": "configs/phase1.json",
+  "seeds": [12345, 23456, 34567],
+  "shot_budgets": [10000, 50000],
+  "compression": {"maxiter": 10000, "ftol": 1e-12, "gtol": 1e-7},
+  "solver_overrides": {"solver_tol": 1e-13, "solver_max_cycle": 200},
+  "reference_tol": 1e-11,
+  "reference_max_cycle": 100,
+  "reference_residual_limit": 1e-5
+}

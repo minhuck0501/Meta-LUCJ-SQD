@@ -60,13 +60,13 @@ LUCJ와 SQD는 참고 문헌에 기반한 방법입니다. 이 프로젝트에�
 
 Phase 1의 최소 계산 파이프라인 검증을 수행했습니다. 초기 SQD 정확도 개선이 필요하며 geometry sweep은 시작하지 않았습니다.
 
-실행 설정과 수치 결과는 [Phase 1 결과](docs/PHASE1_RESULTS.md)를 참고하세요.
+실행 설정과 수치 결과는 [Phase 1 결과](docs/PHASE1_RESULTS.md)와 [초기화 비교](docs/INITIALIZATION_COMPARISON.md)를 참고하세요.
 
 - 프로젝트 디렉터리, 연구 지침, 참고 논문 3편 및 참조 notebook이 준비되어 있습니다.
 - 로컬 `.venv`에서 Python 3.11.18과 native ARM64 실행을 확인했습니다.
 - NumPy, SciPy, PySCF, ffsim, Qiskit, qiskit-addon-sqd, pytest의 import를 확인했습니다.
-- Chemistry/LUCJ/sampling/SQD 최소 구현과 수치 테스트 5개가 통과했습니다.
-- N₂ 1.2 Å의 FCI 및 초기 SQD 결과를 측정했습니다. SQD 오차는 약 189.95 mHa로 개선이 필요합니다.
+- Chemistry/LUCJ/sampling/SQD 최소 구현과 수치 테스트 6개가 통과했습니다.
+- N₂ 1.2 Å의 FCI 및 초기 SQD 결과를 측정했습니다. 최초 SQD 오차는 약 189.95 mHa였습니다. 후속 압축 초기화 비교에서는 평균 약 45–49 mHa로 개선됐지만 압축 optimizer가 미수렴이어서 추가 검증이 필요합니다.
 - 연구 문서 4종에 Phase 0 설계 초안과 참조 notebook 검토 내용을 작성했습니다.
 - `pyproject.toml`에 패키지 구성과 현재 직접 의존성 버전을 선언했습니다.
 - 직접 의존성 버전을 고정했으며 해당 로컬 환경에서 작은 수치 검증을 수행했습니다. 전체 전이 의존성 lock과 별도 환경 설치 검증은 미완료입니다.

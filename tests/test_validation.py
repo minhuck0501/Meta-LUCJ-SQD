@@ -98,3 +98,21 @@ def test_sqd_complete_sample_support():
     exact, _ = fci.direct_spin1.kernel(c.h1, c.eri, c.norb, c.nelec, tol=1e-12)
     assert abs(result.energy - exact) < 1e-10
     assert all(r["projected_residual_norm"] < 1e-8 for rows in history for r in rows)
+
+
+def test_compression_matches_library_constructor():
+    from meta_lucj_sqd.initialization import compressed_initialization
+
+    lib.num_threads(1)
+    cfg = small_config()
+    c = build_chemistry(cfg)
+    cc = run_ccsd(c, cfg)
+    options = dict(maxiter=100, ftol=1e-12, gtol=1e-7)
+    op, diagnostics = compressed_initialization(cc, c.norb, cfg, options)
+    expected = ffsim.UCJOpSpinBalanced.from_t_amplitudes(
+        cc.t2, t1=cc.t1, n_reps=1, interaction_pairs=interaction_pairs(c.norb),
+        optimize=True, options=options)
+    np.testing.assert_allclose(prepare(op, c.norb, c.nelec),
+                               prepare(expected, c.norb, c.nelec), atol=1e-10)
+    assert np.isfinite(diagnostics['loss'])
+    assert abs(np.linalg.norm(prepare(op, c.norb, c.nelec)) - 1) < 1e-10
