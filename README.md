@@ -64,7 +64,8 @@ LUCJ와 SQD는 참고 문헌에 기반한 방법입니다. 이 프로젝트에�
 - 로컬 `.venv`에서 Python 3.11.18과 native ARM64 실행을 확인했습니다.
 - NumPy, SciPy, PySCF, ffsim, Qiskit, qiskit-addon-sqd, pytest의 import를 확인했습니다.
 - Chemistry/LUCJ/SQD 파이프라인, 수치 테스트, benchmark 결과는 아직 없습니다.
-- `pyproject.toml`과 연구 문서 4종은 현재 빈 파일이며 후속 단계에서 작성합니다.
+- 연구 문서 4종에 Phase 0 설계 초안과 참조 notebook 검토 내용을 작성했습니다.
+- `pyproject.toml`은 아직 빈 파일이며, 패키지 설정은 후속 구현 단계에서 작성합니다.
 - 의존성 버전 고정과 실제 수치 계산 호환성 검증은 아직 완료하지 않았습니다.
 
 환경 확인은 해당 로컬 환경에 대한 점검이며, 다른 환경에서의 설치나 수치적 정확성을 보장하지 않습니다.
