@@ -58,7 +58,9 @@ LUCJ와 SQD는 참고 문헌에 기반한 방법입니다. 이 프로젝트에�
 
 ## 현재 상태
 
-Phase 2 소규모 진단 sweep(1.0/1.2/1.6 Å)을 완료했습니다. 세 지점 모두 수렴 검사를 통과했으며, SQD 정확도 개선과 최적화 baseline 구축이 다음 과제입니다.
+Phase 2 소규모 sweep을 완료하고 Phase 3 단일 지점 SQD refinement pilot을 실행했습니다. Held-out seed의 평균 오차가 46.07→37.73 mHa로 감소했으며, 전체 독립 최적화 baseline 검증은 진행 중입니다.
+
+자세한 내용은 [Phase 3 pilot 결과](docs/experiments/PHASE3_PILOT_RESULTS.md)를 참고하세요.
 
 Phase 2 결과는 [소규모 sweep 보고서](docs/experiments/PHASE2_RESULTS.md)에 있습니다.
 
@@ -67,7 +69,7 @@ Phase 2 결과는 [소규모 sweep 보고서](docs/experiments/PHASE2_RESULTS.md
 - 프로젝트 디렉터리, 연구 지침, 참고 논문 3편 및 참조 notebook이 준비되어 있습니다.
 - 로컬 `.venv`에서 Python 3.11.18과 native ARM64 실행을 확인했습니다.
 - NumPy, SciPy, PySCF, ffsim, Qiskit, qiskit-addon-sqd, pytest의 import를 확인했습니다.
-- Chemistry/LUCJ/sampling/SQD 최소 구현과 수치 테스트 8개가 통과했습니다.
+- Chemistry/LUCJ/sampling/SQD 최소 구현과 수치 테스트 9개가 통과했습니다.
 - N₂ 1.2 Å의 FCI 및 초기 SQD 결과를 측정했습니다. 최초 SQD 오차는 약 189.95 mHa였습니다. 후속 압축 초기화 비교에서는 평균 약 45–49 mHa로 개선됐지만 초기 압축 optimizer는 미수렴이었습니다. 후속 norm regularization으로 gradient 수렴을 확인했으며, 50,000 shots의 평균 오차는 약 44.25 mHa입니다. 소규모 진단 sweep은 진행할 수 있지만 목표 정확도와 Meta 효율성은 미입증입니다.
 - 연구 문서 4종에 Phase 0 설계 초안과 참조 notebook 검토 내용을 작성했습니다.
 - `pyproject.toml`에 패키지 구성과 현재 직접 의존성 버전을 선언했습니다.

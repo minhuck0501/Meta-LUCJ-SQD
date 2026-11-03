@@ -9,6 +9,7 @@
 | [Multi-stage](MULTISTAGE_RESULTS.md) | 단계별 압축의 미수렴 및 비용 |
 | [진단과 수정](COMPRESSION_FIX_RESULTS.md) | Gradient 검증, norm 증가 진단, regularization 수렴 |
 | [Phase 2](PHASE2_RESULTS.md) | 세 거리의 수렴·에너지 오차·자원 사용량 |
+| [Phase 3 pilot](PHASE3_PILOT_RESULTS.md) | 독립 SQD refinement와 held-out seed 평가 |
 
 같은 폴더의 `*_summary.json`은 추적 가능한 수치 요약이다. 원본 배열·trajectory·실행 환경·source snapshot은 Git에서 제외한 `results/`에 저장한다.
 

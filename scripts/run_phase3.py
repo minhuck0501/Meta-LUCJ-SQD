@@ -1,9 +1,12 @@
 import json
+import hashlib
+import importlib.metadata
 import os
 import platform
 import resource
 import shutil
 import sys
+import subprocess
 import time
 import traceback
 from datetime import datetime, timezone
@@ -33,6 +36,11 @@ def main():
         target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copy2(source,target)
     report=dict(config=spec,effective_config=cfg,status='running',evaluations=[],trajectory=[],
+                config_sha256=hashlib.sha256(json.dumps([spec,cfg],sort_keys=True).encode()).hexdigest(),
+                timestamp_utc=datetime.now(timezone.utc).isoformat(),
+                versions={p:importlib.metadata.version(p) for p in ['numpy','scipy','pyscf','ffsim','qiskit','qiskit-addon-sqd']},
+                git_revision=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+                git_dirty=bool(subprocess.check_output(['git','status','--porcelain'],text=True)),
                 python=sys.version,platform=platform.platform(),threads={k:os.getenv(k) for k in ['OMP_NUM_THREADS','OPENBLAS_NUM_THREADS']})
     started=time.perf_counter()
 

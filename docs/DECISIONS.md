@@ -94,3 +94,7 @@ N₂ 1.2 Å에서 regularized CCSD 초기값으로 시작해 531개 LUCJ paramet
 훈련 seed 12345를 고정해 유한 샘플 empirical objective를 정의한다. 12회 업데이트, 초기값 1회와 각 회 plus/minus/candidate 3회로 37회 훈련 평가다. Candidate 중 훈련 energy가 가장 낮은 값을 선택한다. 별도 probe seeds 23456/34567/45670으로 초기 잡음을 확인하고, 최종 initial/refined는 56789/67890/78901에서 비교한다. 모든 평가 50,000 shots, 기존 batch 및 solver 조건을 유지한다. 최종 seed 결과로 후보를 다시 선택하지 않는다. Optimizer direction RNG는 seed 45678로 분리한다.
 
 잡음 probe와 별도 평가도 전체 비용에 포함한다. 예산·gain은 첫 pilot의 사전 고정값이며 최적값으로 주장하지 않는다. 이 실험은 수렴 또는 강한 baseline의 확립이 아니라 refinement 가능성과 noise/cost 진단이다. Optimizer 상태는 budget_exhausted로 기록하고 여러 optimizer seed, 추가 geometry, accuracy-matched 비교는 후속 검증 대상이다.
+
+## D020: Phase 3 단일 지점 pilot 결과
+
+12회 SPSA 갱신 예산의 단일 trajectory를 실행했다. Held-out sampling seeds 3개의 초기/최종 평균 오차는 46.07→37.73 mHa로 감소했고 3개 모두 개선됐다. 46 objective evaluations와 276 batch diagonalizations, 약 140.65초를 기록했다. Run 검사는 통과했으나 optimizer_status는 budget_exhausted이며 수렴으로 주장하지 않는다. 전체 Phase 3는 아직 완료하지 않았다. 복수 optimizer seeds, 예산별 성능과 다른 geometry 검증 후 strong independent baseline 여부를 판단한다. 상세 증거는 experiments/PHASE3_PILOT_RESULTS.md에 있다.
