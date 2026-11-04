@@ -194,3 +194,12 @@ Label archive 생성의 기존 end-to-end 비용, feature 준비, model fitting,
 ## D037: Phase 6 첫 Meta 결과
 
 Frozen affine common-frame 모델의 미학습 point 평가에서 1.1 Å는 independent/warm/meta 평균 오차 48.03/27.55/38.37 mHa, 1.4 Å는 49.49/43.64/59.85 mHa였다. Meta의 일관된 이점이나 전체 비용 절감은 확인하지 못했다. 두 point와 18개 sampling/SQD 결과의 수치 검사를 통과했고 새 FCI도 수렴했다. Feature MSE만으로 성공을 주장하지 않는다. 기존 label archive 비용 약 418.37초와 feature preparation 기록을 보존한다. 추가 validation/test 결과를 보고 model을 변경하면 새 독립 test를 확보해야 한다. 상세 증거는 experiments/PHASE6_PILOT_RESULTS.md에 있다. Phase 7로 진행한 것은 아니다.
+
+## 2026-11-04 — D038: Frozen Meta 모델 재구성 진단
+
+Phase 6 모델을 재학습/수정하지 않고 학습 geometry에서 label feature decode control과 affine prediction을 비교한다. Exact-label encode/decode/inverse-frame state 일치가 통과하면 decoder 구현 오류와 regression 오차를 구분하는 근거로 쓴다. Fresh sampling seeds 445566/556677/667788에서 label과 prediction의 SQD를 같은 예산으로 평가한다. Pre-projection unitarity/singular values/polar displacement, J angle radius, fidelity, probability TV 및 entropy/HF mass를 기록한다. Unseen 1.1/1.4는 저장된 method states의 분포만 분석하며 새 후보를 선택하지 않는다. Approximate label/baseline fidelity는 ground-state 정확도 자체가 아님을 유지한다. 이번 결과를 본 뒤 모델을 바꾸면 두 pilot target은 개발 데이터로 취급하고 새 독립 test를 정해야 한다.
+
+
+## D039: Frozen Meta 진단 결과와 다음 원인 분리
+
+Exact feature control은 세 training states를 약 1e-14 이내로 복원했다. Affine prediction의 label fidelity는 0.922/0.721/0.970이며 1.0/1.2 Å에서 label 대비 SQD 평균 오차가 약 10–11 mHa 높았다. 내부 U의 pre-projection 최소 singular value는 0.335/0.118/0.643으로, final F보다 크게 unitary 제약에서 벗어났다. 단일 원인으로 확정하지 않지만 affine feature 평균/표현의 training reconstruction을 먼저 조사할 근거다. Entropy/다양성도 SQD energy를 대신하지 못했다. 모델 수정 없이 약 47.36초에 진단했다. 다음 후보는 training-point-exact local/manifold interpolation 대조군이다. 모델 변경 시 기존 두 pilot targets를 development로 취급하고 새로운 독립 평가를 확보한다. 상세 증거는 experiments/META_DIAGNOSTIC_RESULTS.md에 있다.

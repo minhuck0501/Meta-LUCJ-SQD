@@ -1,0 +1,322 @@
+{
+  "source_report": "results/meta_diagnostic_20261104T072047/report.json",
+  "status": "success",
+  "config": {
+    "meta_report": "results/phase6_20261104T070714/report.json",
+    "representation_report": "results/representation_20261104T065315/report.json",
+    "evaluation_seeds": [
+      445566,
+      556677,
+      667788
+    ],
+    "shots": 50000,
+    "roundtrip_tolerance": 1e-10
+  },
+  "training": [
+    {
+      "distance_angstrom": 1.0,
+      "feature_rmse": 0.06369898500822427,
+      "exact_label_roundtrip_error": 9.363286276084576e-15,
+      "projection": {
+        "rotations": [
+          {
+            "min_singular_value": 0.33473866285459486,
+            "unitarity_error": 1.9105919987639368,
+            "polar_projection_distance": 1.2511085850001382
+          },
+          {
+            "min_singular_value": 0.9988129145780053,
+            "unitarity_error": 0.004879577051794104,
+            "polar_projection_distance": 0.0024402811711073955
+          }
+        ],
+        "jastrow_angle_blocks": [
+          {
+            "min_radius": 0.9756746284778699,
+            "max_unit_circle_error": 0.0243253715221301
+          },
+          {
+            "min_radius": 1.000391042803305,
+            "max_unit_circle_error": 0.02314087989493463
+          }
+        ]
+      },
+      "label_metrics": {
+        "hf_probability": 0.8828689528041852,
+        "entropy_bits": 1.3002781793247398,
+        "inverse_participation": 1.2822592281597744
+      },
+      "prediction_metrics": {
+        "hf_probability": 0.90360582419714,
+        "entropy_bits": 1.168778735292678,
+        "inverse_participation": 1.2245345227554572
+      },
+      "fidelity": 0.9219253167068767,
+      "total_variation": 0.05371949701356779,
+      "methods": [
+        {
+          "method": "optimized_label",
+          "mean_error_mha": 23.821944807925394,
+          "sample_std_mha": 0.8374049815022163,
+          "values": [
+            23.329749353180773,
+            24.788844053603043,
+            23.34724101699237
+          ]
+        },
+        {
+          "method": "affine_prediction",
+          "mean_error_mha": 33.70666600567063,
+          "sample_std_mha": 2.1499617185561597,
+          "values": [
+            32.30856368912782,
+            36.18232005305799,
+            32.629114274826065
+          ]
+        }
+      ]
+    },
+    {
+      "distance_angstrom": 1.2,
+      "feature_rmse": 0.09554847648518768,
+      "exact_label_roundtrip_error": 1.0758725995289713e-14,
+      "projection": {
+        "rotations": [
+          {
+            "min_singular_value": 0.11812421470203424,
+            "unitarity_error": 2.6629848541854266,
+            "polar_projection_distance": 1.971362343458487
+          },
+          {
+            "min_singular_value": 0.997661412774665,
+            "unitarity_error": 0.007950351624169088,
+            "polar_projection_distance": 0.003978339216359677
+          }
+        ],
+        "jastrow_angle_blocks": [
+          {
+            "min_radius": 0.9813211541009763,
+            "max_unit_circle_error": 0.01867884589902369
+          },
+          {
+            "min_radius": 0.9379944461285677,
+            "max_unit_circle_error": 0.06200555387143225
+          }
+        ]
+      },
+      "label_metrics": {
+        "hf_probability": 0.8560856233991213,
+        "entropy_bits": 1.3806911470203966,
+        "inverse_participation": 1.3618400962813575
+      },
+      "prediction_metrics": {
+        "hf_probability": 0.8604700332721037,
+        "entropy_bits": 1.6349939399728084,
+        "inverse_participation": 1.3500530752270543
+      },
+      "fidelity": 0.7206919076823395,
+      "total_variation": 0.10314927684658007,
+      "methods": [
+        {
+          "method": "optimized_label",
+          "mean_error_mha": 36.018130113788516,
+          "sample_std_mha": 0.9123181407009876,
+          "values": [
+            35.05836466889889,
+            36.874127324054484,
+            36.121898348412174
+          ]
+        },
+        {
+          "method": "affine_prediction",
+          "mean_error_mha": 46.9636066259748,
+          "sample_std_mha": 7.3481483996321995,
+          "values": [
+            40.730771272635025,
+            45.094133459812724,
+            55.06591514547665
+          ]
+        }
+      ]
+    },
+    {
+      "distance_angstrom": 1.6,
+      "feature_rmse": 0.03184949147698317,
+      "exact_label_roundtrip_error": 1.1254583674745629e-14,
+      "projection": {
+        "rotations": [
+          {
+            "min_singular_value": 0.6428094787870451,
+            "unitarity_error": 1.458723657523181,
+            "polar_projection_distance": 0.7924681138514744
+          },
+          {
+            "min_singular_value": 0.9993427743873058,
+            "unitarity_error": 0.004080670440825863,
+            "polar_projection_distance": 0.0020397239907826333
+          }
+        ],
+        "jastrow_angle_blocks": [
+          {
+            "min_radius": 0.997311277542105,
+            "max_unit_circle_error": 0.009236424350813177
+          },
+          {
+            "min_radius": 0.999167086775801,
+            "max_unit_circle_error": 0.03125351190201142
+          }
+        ]
+      },
+      "label_metrics": {
+        "hf_probability": 0.6443354593388124,
+        "entropy_bits": 2.7733949921661747,
+        "inverse_participation": 2.34905868468069
+      },
+      "prediction_metrics": {
+        "hf_probability": 0.6642910349705372,
+        "entropy_bits": 2.7079396451464937,
+        "inverse_participation": 2.2226870063763857
+      },
+      "fidelity": 0.9700738049398998,
+      "total_variation": 0.0616848439045245,
+      "methods": [
+        {
+          "method": "optimized_label",
+          "mean_error_mha": 53.7736224782274,
+          "sample_std_mha": 2.1034415596295304,
+          "values": [
+            56.18602349599655,
+            52.81177292980033,
+            52.323071008885336
+          ]
+        },
+        {
+          "method": "affine_prediction",
+          "mean_error_mha": 53.30449112931982,
+          "sample_std_mha": 3.8561104545682254,
+          "values": [
+            54.55772215239563,
+            56.3780981570261,
+            48.97765307853774
+          ]
+        }
+      ]
+    }
+  ],
+  "unseen": [
+    {
+      "distance_angstrom": 1.1,
+      "projection": {
+        "rotations": [
+          {
+            "min_singular_value": 0.2747397797778859,
+            "unitarity_error": 2.2554373409032222,
+            "polar_projection_distance": 1.5543821290551896
+          },
+          {
+            "min_singular_value": 0.9984886528414866,
+            "unitarity_error": 0.005633841241679818,
+            "polar_projection_distance": 0.002818495364641274
+          }
+        ],
+        "jastrow_angle_blocks": [
+          {
+            "min_radius": 0.9779923988727071,
+            "max_unit_circle_error": 0.02200760112729294
+          },
+          {
+            "min_radius": 0.9692117427011232,
+            "max_unit_circle_error": 0.030788257298876798
+          }
+        ]
+      },
+      "metrics": {
+        "independent": {
+          "hf_probability": 0.9212845555239499,
+          "entropy_bits": 0.921406826629937,
+          "inverse_participation": 1.1779847955111045
+        },
+        "warm": {
+          "hf_probability": 0.8828689528041798,
+          "entropy_bits": 1.333761524790469,
+          "inverse_participation": 1.2824641200095537
+        },
+        "meta": {
+          "hf_probability": 0.891456181304269,
+          "entropy_bits": 1.264033377136718,
+          "inverse_participation": 1.257895381661211
+        }
+      },
+      "comparisons": [
+        {
+          "reference": "independent",
+          "fidelity": 0.8341658569193308,
+          "total_variation": 0.07791113709072923
+        },
+        {
+          "reference": "warm",
+          "fidelity": 0.8964961737675402,
+          "total_variation": 0.05677377851258309
+        }
+      ]
+    },
+    {
+      "distance_angstrom": 1.4,
+      "projection": {
+        "rotations": [
+          {
+            "min_singular_value": 0.2079729782466971,
+            "unitarity_error": 2.4314152924108976,
+            "polar_projection_distance": 1.7528215016871924
+          },
+          {
+            "min_singular_value": 0.9977927857443228,
+            "unitarity_error": 0.007423916145711653,
+            "polar_projection_distance": 0.0037147916615969997
+          }
+        ],
+        "jastrow_angle_blocks": [
+          {
+            "min_radius": 0.9909677738758131,
+            "max_unit_circle_error": 0.00903222612418686
+          },
+          {
+            "min_radius": 0.9419651752816176,
+            "max_unit_circle_error": 0.058034824718382394
+          }
+        ]
+      },
+      "metrics": {
+        "independent": {
+          "hf_probability": 0.7552385799538779,
+          "entropy_bits": 2.0351861546171985,
+          "inverse_participation": 1.7378261051298012
+        },
+        "warm": {
+          "hf_probability": 0.8560856233991201,
+          "entropy_bits": 1.4935773933136152,
+          "inverse_participation": 1.3629495344318097
+        },
+        "meta": {
+          "hf_probability": 0.7317144950068947,
+          "entropy_bits": 2.405636887095729,
+          "inverse_participation": 1.8513508216171164
+        }
+      },
+      "comparisons": [
+        {
+          "reference": "independent",
+          "fidelity": 0.5062506462917862,
+          "total_variation": 0.1293829340866329
+        },
+        {
+          "reference": "warm",
+          "fidelity": 0.688486933741473,
+          "total_variation": 0.16085449116179285
+        }
+      ]
+    }
+  ],
+  "wall_seconds": 47.356686000246555,
+  "peak_rss_mib": 2307.484375
+}

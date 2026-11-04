@@ -58,7 +58,7 @@ LUCJ와 SQD는 참고 문헌에 기반한 방법입니다. 이 프로젝트에�
 
 ## 현재 상태
 
-Phase 6의 첫 geometry-conditioned affine 모델을 학습하고 새 1.1/1.4 Å에서 평가했습니다. Meta 평균 오차는 38.37/59.85 mHa로, warm control보다 높아 일관된 정확도·비용 이점은 확인하지 못했습니다. 실행 검증은 통과했으며 아직 Phase 7 전체 benchmark 단계는 아닙니다.
+Phase 6의 첫 affine Meta pilot은 일관된 이점을 보이지 못했습니다. 후속 진단에서 exact feature decode는 통과했지만 affine 모델이 학습 지점의 일부 state도 충분히 재구성하지 못했고 내부 회전의 unitary projection 변화가 컸습니다. 현재는 모델을 키우기 전에 표현·회귀의 재구성 한계를 분리하는 단계입니다.
 
 자세한 내용은 [Phase 3 pilot 결과](docs/experiments/PHASE3_PILOT_RESULTS.md)와 [반복·예산 비교](docs/experiments/PHASE3_REPETITIONS.md), [다른 거리 적용](docs/experiments/PHASE3_GEOMETRIES.md)을 참고하세요.
 
@@ -84,6 +84,8 @@ Phase 5 결과는 [오비탈·파라미터 분석 보고서](docs/experiments/PH
 현재 결과는 [Block warm-start 재평가](docs/experiments/BLOCK_WARMSTART_RESULTS.md), 표현 정의는 [Meta 공통 표현](docs/META_REPRESENTATION.md)에 있습니다.
 
 최신 결과는 [Phase 6 Meta pilot](docs/experiments/PHASE6_PILOT_RESULTS.md)에 있습니다.
+
+최신 원인 진단은 [Frozen Meta 진단](docs/experiments/META_DIAGNOSTIC_RESULTS.md)에 있습니다.
 
 ## 개발 단계
 

@@ -16,6 +16,7 @@
 | [Phase 5](PHASE5_RESULTS.md) | 오비탈 대응·주기성·polar 전달 진단 |
 | [Block warm-start 재평가](BLOCK_WARMSTART_RESULTS.md) | 양방향 고정 규칙 비교와 공통 표현 검증 |
 | [Phase 6 Meta pilot](PHASE6_PILOT_RESULTS.md) | Affine 학습과 새 geometry 평가 |
+| [Frozen Meta 진단](META_DIAGNOSTIC_RESULTS.md) | 학습점 재구성·unitary projection·확률 분포 |
 
 같은 폴더의 `*_summary.json`은 추적 가능한 수치 요약이다. 원본 배열·trajectory·실행 환경·source snapshot은 Git에서 제외한 `results/`에 저장한다.
 

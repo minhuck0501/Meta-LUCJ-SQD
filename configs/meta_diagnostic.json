@@ -1,0 +1,7 @@
+{
+  "meta_report": "results/phase6_20261104T070714/report.json",
+  "representation_report": "results/representation_20261104T065315/report.json",
+  "evaluation_seeds": [445566, 556677, 667788],
+  "shots": 50000,
+  "roundtrip_tolerance": 1e-10
+}
