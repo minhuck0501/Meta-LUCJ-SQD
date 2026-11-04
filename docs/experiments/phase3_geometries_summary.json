@@ -1,0 +1,87 @@
+{
+  "source_report": "results/phase3_geometries_20261104T061054/report.json",
+  "status": "success",
+  "config": {
+    "base_config": "configs/phase3.json",
+    "phase2_summary": "docs/experiments/phase2_summary.json",
+    "distances_angstrom": [
+      1.0,
+      1.6
+    ],
+    "evaluation_seeds": [
+      89012,
+      90123,
+      101234
+    ],
+    "iterations": 12,
+    "optimizer_seed": 45678,
+    "training_seed": 12345
+  },
+  "points": [
+    {
+      "distance_angstrom": 1.0,
+      "status": "success",
+      "optimizer_status": "budget_exhausted",
+      "source_report": "results/phase3_20261104T061057/report.json",
+      "wall_seconds": 130.61478658299893,
+      "peak_rss_mib": 1607.9375,
+      "reference_provenance": "results/initialization_20261103T073148/report.json",
+      "integrals_regenerated": true,
+      "objective_evaluations": 46,
+      "diagonalizations": 276,
+      "groups": {
+        "heldout_initial": {
+          "mean_error_mha": 35.40551727614627,
+          "sample_std_mha": 0.7716894224006403,
+          "values": [
+            35.50347955884092,
+            34.5895243304426,
+            36.12354793915529
+          ]
+        },
+        "heldout_refined": {
+          "mean_error_mha": 23.470367552628584,
+          "sample_std_mha": 0.8850346366094451,
+          "values": [
+            22.631924850372798,
+            24.395599461229267,
+            23.383578346283684
+          ]
+        }
+      }
+    },
+    {
+      "distance_angstrom": 1.6,
+      "status": "success",
+      "optimizer_status": "budget_exhausted",
+      "source_report": "results/phase3_20261104T061309/report.json",
+      "wall_seconds": 147.10456308396533,
+      "peak_rss_mib": 1604.765625,
+      "reference_provenance": "results/initialization_20261103T073330/report.json",
+      "integrals_regenerated": true,
+      "objective_evaluations": 46,
+      "diagonalizations": 276,
+      "groups": {
+        "heldout_initial": {
+          "mean_error_mha": 62.91414189181429,
+          "sample_std_mha": 0.7356880988752755,
+          "values": [
+            62.68951122287092,
+            63.73595900623741,
+            62.31695544633453
+          ]
+        },
+        "heldout_refined": {
+          "mean_error_mha": 54.521039018349406,
+          "sample_std_mha": 3.3853620798969217,
+          "values": [
+            58.06762376496977,
+            51.324026557281854,
+            54.1714667327966
+          ]
+        }
+      }
+    }
+  ],
+  "child_wall_seconds_sum": 277.71934966696426
+}

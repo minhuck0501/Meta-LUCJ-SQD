@@ -1,0 +1,9 @@
+{
+  "base_config": "configs/phase3.json",
+  "phase2_summary": "docs/experiments/phase2_summary.json",
+  "distances_angstrom": [1.0, 1.6],
+  "evaluation_seeds": [89012, 90123, 101234],
+  "iterations": 12,
+  "optimizer_seed": 45678,
+  "training_seed": 12345
+}

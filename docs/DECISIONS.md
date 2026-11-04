@@ -111,3 +111,14 @@ N₂ 1.2 Å에서 regularized CCSD 초기값으로 시작해 531개 LUCJ paramet
 ## D023: Phase 3 반복 및 예산 결과
 
 새 평가 seeds에서 초기 평균 오차 44.56 mHa가 세 경로에서 각각 36.62/27.42/30.25 mHa로 감소했다. 경로 1은 12→24회 연장에도 best candidate가 바뀌지 않아 추가 개선이 없었다. 모든 run 검사는 통과했으나 budget_exhausted이며 수렴을 주장하지 않는다. 신규 실행 시간 합계 약 452.22초, 선행 pilot 포함 실제 평가 187회다. 다음은 다른 geometry에서 같은 독립 refinement 설정을 진단하는 것으로, 전체 Phase 3 및 Phase 4 진입은 아직 완료하지 않았다. 상세 근거는 experiments/PHASE3_REPETITIONS.md에 기록했다.
+
+## 2026-11-04 — D024: 다른 geometry의 독립 refinement
+
+N₂ 1.0/1.6 Å에 고정한 12회 SPSA pilot 설정을 독립 적용한다. Optimizer/training seed=45678/12345, evaluation seeds=89012/90123/101234, 50,000 shots 등은 1.2 Å 비교와 맞춘다. 새 geometry마다 우선 한 optimizer trajectory에서 sampling seed 3개의 변동을 측정한다. 독립 optimizer 반복 3개를 완료한 1.2 Å와 같은 재현성 근거로 해석하지 않는다. Geometry 간 warm start나 parameter transfer는 수행하지 않는다.
+
+Phase 2 reference의 physical config와 HF total 일치를 검사하고 같은 chemistry 구현으로 적분을 재생성한다. Phase 2에는 새 geometry의 integral archive가 없었으므로 과거 적분과의 직접 비교가 아닌 동일 정의의 재구성임을 provenance에 명시한다. FCI 값은 Phase 2의 convergence/residual 검증 결과를 재사용하며 재계산 비용을 이번 시간에 포함하지 않는다. Point별 설정·재생성 적분·log와 child report를 저장한다.
+
+
+## D025: 다른 geometry의 refinement 결과
+
+1.0 Å의 별도 평가 평균 오차는 35.41→23.47 mHa, 1.6 Å는 62.91→54.52 mHa로 감소했다. 각 거리의 3 sampling seeds 모두 개선됐고 수치 검사를 통과했다. 각 한 optimizer trajectory, 12회 budget exhaustion이며 목표 정확도나 수렴은 미입증이다. Child wall time 합 약 277.72초, 전체 objective 92회다. 근거는 experiments/PHASE3_GEOMETRIES.md와 phase3_geometries_summary.json에 있다. 새 거리의 optimizer 반복과 예산 검증은 남아 있으며 아직 Phase 4로 진입하지 않는다.
