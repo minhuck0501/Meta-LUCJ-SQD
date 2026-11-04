@@ -203,3 +203,7 @@ Phase 6 모델을 재학습/수정하지 않고 학습 geometry에서 label feat
 ## D039: Frozen Meta 진단 결과와 다음 원인 분리
 
 Exact feature control은 세 training states를 약 1e-14 이내로 복원했다. Affine prediction의 label fidelity는 0.922/0.721/0.970이며 1.0/1.2 Å에서 label 대비 SQD 평균 오차가 약 10–11 mHa 높았다. 내부 U의 pre-projection 최소 singular value는 0.335/0.118/0.643으로, final F보다 크게 unitary 제약에서 벗어났다. 단일 원인으로 확정하지 않지만 affine feature 평균/표현의 training reconstruction을 먼저 조사할 근거다. Entropy/다양성도 SQD energy를 대신하지 못했다. 모델 수정 없이 약 47.36초에 진단했다. 다음 후보는 training-point-exact local/manifold interpolation 대조군이다. 모델 변경 시 기존 두 pilot targets를 development로 취급하고 새로운 독립 평가를 확보한다. 상세 증거는 experiments/META_DIAGNOSTIC_RESULTS.md에 있다.
+
+## D040: 보간 제안의 지위와 reference 재검토
+
+사용자의 방법론 검토 요청에 따라 Meta-VQE Eq.(2)/(16)/(17), LUCJ Eq.(14)와 norm regularization/QSCI 논의를 다시 확인했다. Exact training-label interpolation은 reference의 필수 성공 기준이나 검증된 해결책이 아니다. Local/manifold interpolation 제안은 diagnostic control로 한정하며 다음 주력 방법으로 확정하지 않는다. 논문의 linear angle encoding과 현재 affine matrix-entry regression을 혼동하지 않는다. Physical-objective shared learning 또는 검증된 surrogate/hybrid를 연구 후보로 두되 SQD 확장의 효과·비용은 새 실험으로 검증해야 한다. 자세한 근거는 METHOD_REVIEW.md에 기록했다. 기존 실험과 부정적 결과는 유지하며 모델을 변경하거나 새로운 계산을 실행하지 않았다.
