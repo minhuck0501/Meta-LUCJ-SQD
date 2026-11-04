@@ -1,4 +1,5 @@
 import json
+import argparse
 import hashlib
 import importlib.metadata
 import os
@@ -24,7 +25,10 @@ from meta_lucj_sqd.sqd import evaluate
 
 
 def main():
-    spec=json.loads(Path('configs/phase3.json').read_text())
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--config',default='configs/phase3.json')
+    args=parser.parse_args()
+    spec=json.loads(Path(args.config).read_text())
     cfg=json.loads(Path(spec['base_config']).read_text())
     cfg.update(spec['solver_overrides'])
     cfg.update(distance_angstrom=spec['distance_angstrom'],shots=spec['shots'])
@@ -95,7 +99,30 @@ def main():
         parameters=initial.copy();best=initial.copy()
         best_value=objective(parameters,spec['training_seed'],'train_initial')
         rng=np.random.default_rng(spec['optimizer']['seed'])
-        for k in range(spec['optimizer']['iterations']):
+        start_iteration=0
+        earlier_best=None
+        if spec.get('resume_report'):
+            prior_path=Path(spec['resume_report'])
+            prior=json.loads(prior_path.read_text())
+            for key in ['training_seed','shots','regularization','distance_angstrom']:
+                if spec[key]!=prior['config'][key]:
+                    raise ValueError('Resume configuration mismatch: '+key)
+            for key in spec['optimizer']:
+                if key!='iterations' and spec['optimizer'][key]!=prior['config']['optimizer'][key]:
+                    raise ValueError('Resume optimizer mismatch: '+key)
+            if cfg!=prior['effective_config']:
+                raise ValueError('Resume effective configuration mismatch')
+            np.testing.assert_allclose(initial,np.load(prior_path.parent/'initial.npy'),atol=1e-10,rtol=0)
+            parameters=np.load(prior_path.parent/'current.npy')
+            best=np.load(prior_path.parent/'best.npy')
+            earlier_best=best.copy()
+            start_iteration=prior['trajectory'][-1]['iteration']
+            best_value=prior['trajectory'][-1]['best_value']
+            rng.bit_generator.state=prior['trajectory'][-1]['rng_state']
+            report['resumed_from']=str(prior_path)
+            report['prior_wall_seconds']=prior['wall_seconds']
+            report['prior_evaluations']=len(prior['evaluations'])
+        for k in range(start_iteration,spec['optimizer']['iterations']):
             direction=rng.choice([-1.,1.],size=len(parameters))
             perturb=spec['optimizer']['c']/(k+1)**spec['optimizer']['gamma']
             plus=objective(parameters+perturb*direction,spec['training_seed'],f'plus_{k}')
@@ -109,6 +136,8 @@ def main():
             save()
         for seed in spec['evaluation_seeds']:
             objective(initial,seed,'heldout_initial')
+            if earlier_best is not None:
+                objective(earlier_best,seed,'heldout_budget12')
             objective(best,seed,'heldout_refined')
         report['optimizer_status']='budget_exhausted'
         report['status']='success'

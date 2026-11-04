@@ -98,3 +98,16 @@ N₂ 1.2 Å에서 regularized CCSD 초기값으로 시작해 531개 LUCJ paramet
 ## D020: Phase 3 단일 지점 pilot 결과
 
 12회 SPSA 갱신 예산의 단일 trajectory를 실행했다. Held-out sampling seeds 3개의 초기/최종 평균 오차는 46.07→37.73 mHa로 감소했고 3개 모두 개선됐다. 46 objective evaluations와 276 batch diagonalizations, 약 140.65초를 기록했다. Run 검사는 통과했으나 optimizer_status는 budget_exhausted이며 수렴으로 주장하지 않는다. 전체 Phase 3는 아직 완료하지 않았다. 복수 optimizer seeds, 예산별 성능과 다른 geometry 검증 후 strong independent baseline 여부를 판단한다. 상세 증거는 experiments/PHASE3_PILOT_RESULTS.md에 있다.
+
+## 2026-11-03 — D021: Phase 3 반복 및 예산 진단
+
+단일 geometry 1.2 Å를 유지하고 optimizer/training seeds를 함께 바꾼 두 개의 12회 독립 반복을 추가한다. 이는 optimizer RNG와 finite-sample objective의 변화를 합친 반복 변동성이며 두 요인을 분리한 실험은 아니다. 최초 trajectory는 RNG/current/best checkpoint를 검사해 12→24회로 연장한다. Physics/effective config, optimizer gains와 initial parameter 일치를 확인한다. 신규 seed 89012/90123/101234로 initial/12회/24회 결과를 평가하며 결과로 후보를 재선택하지 않는다. 같은 최초 optimizer에 대해서만 예산 곡선을 확인하므로 모든 seed에서 24회 효과를 입증하지 않는다. 기존 초기 진단/평가 비용과 연장 비용을 별도로 기록한다. 설정은 configs/phase3_repetitions.json에 저장하며 geometry 확대 전 단일 지점 baseline의 변동성을 확인한다.
+
+## D022: Phase 3 반복 결과 해석 기준
+
+최종 seed별 평균·표준편차와 optimizer 반복별 평균을 분리해 보고한다. 세 평가 seed를 공유하는 optimizer 반복 결과를 9개의 완전히 독립된 관측치로 합치지 않는다. 최초 12회 checkpoint와 연장 24회를 같은 신규 평가 seed에서 비교하되, 해당 결과로 gain이나 candidate를 재선택하지 않는다. 예산 증가에도 결과가 같으면 그대로 보고한다. 기존 pilot과 추가 실행의 실제 비용을 모두 제시하고, checkpoint 재사용을 공짜 실행으로 계산하지 않는다. Budget exhaustion을 optimizer convergence로 바꾸지 않는다.
+
+
+## D023: Phase 3 반복 및 예산 결과
+
+새 평가 seeds에서 초기 평균 오차 44.56 mHa가 세 경로에서 각각 36.62/27.42/30.25 mHa로 감소했다. 경로 1은 12→24회 연장에도 best candidate가 바뀌지 않아 추가 개선이 없었다. 모든 run 검사는 통과했으나 budget_exhausted이며 수렴을 주장하지 않는다. 신규 실행 시간 합계 약 452.22초, 선행 pilot 포함 실제 평가 187회다. 다음은 다른 geometry에서 같은 독립 refinement 설정을 진단하는 것으로, 전체 Phase 3 및 Phase 4 진입은 아직 완료하지 않았다. 상세 근거는 experiments/PHASE3_REPETITIONS.md에 기록했다.

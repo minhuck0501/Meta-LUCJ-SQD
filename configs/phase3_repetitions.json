@@ -1,0 +1,9 @@
+{
+  "base_config": "configs/phase3.json",
+  "evaluation_seeds": [89012, 90123, 101234],
+  "jobs": [
+    {"name": "budget24", "optimizer_seed": 45678, "training_seed": 12345, "iterations": 24, "resume_report": "results/phase3_20261103T074031/report.json"},
+    {"name": "repeat2", "optimizer_seed": 45679, "training_seed": 12346, "iterations": 12},
+    {"name": "repeat3", "optimizer_seed": 45680, "training_seed": 12347, "iterations": 12}
+  ]
+}

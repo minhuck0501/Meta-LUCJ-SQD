@@ -58,9 +58,9 @@ LUCJ와 SQD는 참고 문헌에 기반한 방법입니다. 이 프로젝트에�
 
 ## 현재 상태
 
-Phase 2 소규모 sweep을 완료하고 Phase 3 단일 지점 SQD refinement pilot을 실행했습니다. Held-out seed의 평균 오차가 46.07→37.73 mHa로 감소했으며, 전체 독립 최적화 baseline 검증은 진행 중입니다.
+Phase 2 소규모 sweep을 완료하고 Phase 3 단일 지점 SQD refinement pilot을 실행했습니다. Held-out seed의 평균 오차가 46.07→37.73 mHa로 감소했으며, 추가 seed 반복에서도 개선을 관측했습니다. 12→24회 예산 증가는 첫 경로에서 이득이 없었습니다. 전체 독립 최적화 baseline 검증은 진행 중입니다.
 
-자세한 내용은 [Phase 3 pilot 결과](docs/experiments/PHASE3_PILOT_RESULTS.md)를 참고하세요.
+자세한 내용은 [Phase 3 pilot 결과](docs/experiments/PHASE3_PILOT_RESULTS.md)와 [반복·예산 비교](docs/experiments/PHASE3_REPETITIONS.md)를 참고하세요.
 
 Phase 2 결과는 [소규모 sweep 보고서](docs/experiments/PHASE2_RESULTS.md)에 있습니다.
 
