@@ -1,0 +1,152 @@
+{
+  "source_report": "results/phase6_20261104T070714/report.json",
+  "status": "success",
+  "config": {
+    "representation_report": "results/representation_20261104T065315/report.json",
+    "phase3_config": "configs/phase3.json",
+    "anchor_distance_angstrom": 1.2,
+    "ridge": 1e-06,
+    "targets": [
+      {
+        "distance_angstrom": 1.1,
+        "role": "validation",
+        "warm_source": 1.0
+      },
+      {
+        "distance_angstrom": 1.4,
+        "role": "pilot_test",
+        "warm_source": 1.2
+      }
+    ],
+    "shots": 50000,
+    "evaluation_seeds": [
+      112233,
+      223344,
+      334455
+    ],
+    "reference_tol": 1e-11,
+    "reference_max_cycle": 100,
+    "reference_residual_limit": 1e-05
+  },
+  "training_distances": [
+    1.0,
+    1.2,
+    1.6
+  ],
+  "targets": [
+    {
+      "distance_angstrom": 1.1,
+      "role": "validation",
+      "status": "success",
+      "reference": {
+        "energy_total": -109.103365463904,
+        "converged": true,
+        "residual_norm": 1.5413091119578542e-06,
+        "seconds": 85.8581249578856
+      },
+      "methods": [
+        {
+          "method": "independent",
+          "mean_error_mha": 48.027502486348794,
+          "sample_std_mha": 5.502067934791188,
+          "values": [
+            51.389809803353614,
+            41.677953098201215,
+            51.014744557491554
+          ],
+          "state_preparation_seconds": 1.2456131246872246,
+          "sampling_sqd_seconds": 3.0493595409207046
+        },
+        {
+          "method": "warm",
+          "mean_error_mha": 27.5517200887568,
+          "sample_std_mha": 2.3388615474137704,
+          "values": [
+            28.248870488596367,
+            24.94355215385724,
+            29.462737623816793
+          ],
+          "state_preparation_seconds": 1.3430815418250859,
+          "sampling_sqd_seconds": 3.346600666642189
+        },
+        {
+          "method": "meta",
+          "mean_error_mha": 38.37332431771282,
+          "sample_std_mha": 0.9126587733631546,
+          "values": [
+            39.40021272327954,
+            38.0649927388248,
+            37.654767491034136
+          ],
+          "state_preparation_seconds": 1.5918736248277128,
+          "sampling_sqd_seconds": 2.9132926240563393
+        }
+      ],
+      "meta_prediction_and_transport_seconds": 0.0007025417871773243,
+      "independent_initialization_seconds": 1.7946407496929169,
+      "warm_transfer_seconds": 0.0003149588592350483
+    },
+    {
+      "distance_angstrom": 1.4,
+      "role": "pilot_test",
+      "status": "success",
+      "reference": {
+        "energy_total": -109.0220608498665,
+        "converged": true,
+        "residual_norm": 1.3693164677767625e-06,
+        "seconds": 117.49340945761651
+      },
+      "methods": [
+        {
+          "method": "independent",
+          "mean_error_mha": 49.49124003979458,
+          "sample_std_mha": 3.0668223868929396,
+          "values": [
+            50.716632534800965,
+            51.75590534024366,
+            46.001182244339134
+          ],
+          "state_preparation_seconds": 1.2255884581245482,
+          "sampling_sqd_seconds": 3.226729042828083
+        },
+        {
+          "method": "warm",
+          "mean_error_mha": 43.64228033844123,
+          "sample_std_mha": 3.802314779861534,
+          "values": [
+            48.01399846883214,
+            41.80807184762614,
+            41.10477069886542
+          ],
+          "state_preparation_seconds": 1.8219802910462022,
+          "sampling_sqd_seconds": 4.014042499475181
+        },
+        {
+          "method": "meta",
+          "mean_error_mha": 59.854145513601985,
+          "sample_std_mha": 3.564238809351873,
+          "values": [
+            55.789843851357546,
+            62.447444532637064,
+            61.32514815681134
+          ],
+          "state_preparation_seconds": 1.4917609998956323,
+          "sampling_sqd_seconds": 3.7653079591691494
+        }
+      ],
+      "meta_prediction_and_transport_seconds": 0.00078158313408494,
+      "independent_initialization_seconds": 1.476224625017494,
+      "warm_transfer_seconds": 0.0002738749608397484
+    }
+  ],
+  "training_feature_rmse": [
+    0.06369898500822427,
+    0.09554847648518768,
+    0.03184949147698317
+  ],
+  "model_fit_seconds": 0.0009274999611079693,
+  "label_archive_generation_wall_seconds": 418.36764575121924,
+  "feature_archive_preparation_wall_seconds": 10.21270400006324,
+  "new_wall_seconds": 235.84435262484476,
+  "peak_rss_mib": 5386.109375
+}

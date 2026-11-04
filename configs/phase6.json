@@ -1,0 +1,12 @@
+{
+  "representation_report": "results/representation_20261104T065315/report.json",
+  "phase3_config": "configs/phase3.json",
+  "anchor_distance_angstrom": 1.2,
+  "ridge": 0.000001,
+  "targets": [{"distance_angstrom": 1.1, "role": "validation", "warm_source": 1.0}, {"distance_angstrom": 1.4, "role": "pilot_test", "warm_source": 1.2}],
+  "shots": 50000,
+  "evaluation_seeds": [112233, 223344, 334455],
+  "reference_tol": 1e-11,
+  "reference_max_cycle": 100,
+  "reference_residual_limit": 1e-5
+}

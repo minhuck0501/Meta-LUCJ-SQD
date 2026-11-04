@@ -181,3 +181,16 @@ Encode/decode 및 역방향 anchor rotation 후 원래 N₂ state가 복원되�
 ## D035: Block warm-start 및 공통 표현 결과
 
 양방향 네 target 모두 수치 검사를 통과했다. 증가 방향의 1.2/1.6 Å 평균 오차는 30.96/50.31 mHa로 independent보다 낮았지만, 감소 방향의 1.2/1.0 Å는 41.15/36.19 mHa로 높았다. Sign-only보다는 네 target 모두 평균 오차가 낮았다. Direction dependence와 기존 개발 데이터 재사용 한계를 유지하며 일반적 우위나 speedup을 주장하지 않는다. 고정 공통 표현은 세 구조의 inverse-frame roundtrip state error 약 1.13e-14 이하를 통과했다. 전체 테스트 14개다. 근거는 experiments/BLOCK_WARMSTART_RESULTS.md 및 META_REPRESENTATION.md에 있다. Phase 6의 작은 모델을 검토할 수 있으나 아직 fitting/미관측 geometry 검증은 수행하지 않았다.
+
+## 2026-11-04 — D036: Phase 6 affine initialization pilot
+
+Training은 기존 1.0/1.2/1.6 Å common-frame features다. Anchor 1.2 Å를 training에 포함한다. Validation 1.1 Å와 pilot test 1.4 Å는 기존 label/feature 데이터에 포함되지 않는다. Affine ridge의 slope penalty=1e-6을 사전 고정하고 geometry center/scale은 training에서만 추정한다. Validation 결과로 모델/gain을 조정하지 않고 두 point를 같은 frozen 모델로 평가한다. 이는 최종 project test가 아닌 첫 development pilot이다.
+
+Target에서는 예측 feature decode 및 anchor→target block-frame 변환 후 추가 refinement 없이 SQD를 평가한다. 독립 regularized CCSD 초기화와 training source 1.0→1.1, 1.2→1.4의 single-hop block-polar warm initialization을 비교한다. 이 warm 비교는 Phase 4의 전체 sequential refinement chain과 다르며 그 대체가 아니다. Methods 모두 50,000 shots, seeds 112233/223344/334455와 같은 batch/solver 조건을 사용한다. 새 FCI reference를 계산하고 convergence/residual을 보고한다.
+
+Label archive 생성의 기존 end-to-end 비용, feature 준비, model fitting, target prediction/transport, initialization 및 SQD 비용을 구분한다. 이 zero-refinement pilot으로 전체 최적화 비용 절감이나 강한 warm-start 대비 효율성을 입증하지 않는다. Feature MSE보다 SQD energy를 우선하고 부정적 결과도 보존한다.
+
+
+## D037: Phase 6 첫 Meta 결과
+
+Frozen affine common-frame 모델의 미학습 point 평가에서 1.1 Å는 independent/warm/meta 평균 오차 48.03/27.55/38.37 mHa, 1.4 Å는 49.49/43.64/59.85 mHa였다. Meta의 일관된 이점이나 전체 비용 절감은 확인하지 못했다. 두 point와 18개 sampling/SQD 결과의 수치 검사를 통과했고 새 FCI도 수렴했다. Feature MSE만으로 성공을 주장하지 않는다. 기존 label archive 비용 약 418.37초와 feature preparation 기록을 보존한다. 추가 validation/test 결과를 보고 model을 변경하면 새 독립 test를 확보해야 한다. 상세 증거는 experiments/PHASE6_PILOT_RESULTS.md에 있다. Phase 7로 진행한 것은 아니다.

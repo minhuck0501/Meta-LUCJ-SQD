@@ -255,3 +255,12 @@ def test_common_frame_covariance_and_inverse():
     state=prepare(op,norb,nelec)
     np.testing.assert_allclose(prepare(changed,norb,nelec),ffsim.apply_orbital_rotation(state,rotation,norb,nelec),atol=1e-10)
     np.testing.assert_allclose(prepare(change_block_frame(changed,rotation.T,2),norb,nelec),state,atol=1e-10)
+
+
+def test_affine_model_known_function():
+    from meta_lucj_sqd.meta import fit_affine
+
+    distances=np.array([1.,1.2,1.6]);features=np.column_stack([2*distances+1,-3*distances+2])
+    model=fit_affine(distances,features,0.)
+    np.testing.assert_allclose(model.predict(1.1),[3.2,-1.3],atol=1e-12)
+    np.testing.assert_allclose(model.predict(1.4),[3.8,-2.2],atol=1e-12)
