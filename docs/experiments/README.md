@@ -14,6 +14,7 @@
 | [다른 거리 적용](PHASE3_GEOMETRIES.md) | 1.0/1.6 Å의 독립 refinement |
 | [Phase 4](PHASE4_RESULTS.md) | 양방향 sign-only warm-start pilot |
 | [Phase 5](PHASE5_RESULTS.md) | 오비탈 대응·주기성·polar 전달 진단 |
+| [Block warm-start 재평가](BLOCK_WARMSTART_RESULTS.md) | 양방향 고정 규칙 비교와 공통 표현 검증 |
 
 같은 폴더의 `*_summary.json`은 추적 가능한 수치 요약이다. 원본 배열·trajectory·실행 환경·source snapshot은 Git에서 제외한 `results/`에 저장한다.
 

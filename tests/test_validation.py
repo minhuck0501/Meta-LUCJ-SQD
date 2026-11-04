@@ -220,3 +220,38 @@ def test_block_transport_preserves_reference_occupations():
     hf=ffsim.hartree_fock_state(norb,nelec)
     np.testing.assert_allclose(ffsim.apply_orbital_rotation(hf,rotation,norb,nelec),hf,atol=1e-10)
     np.testing.assert_allclose(prepare(transformed,norb,nelec),ffsim.apply_orbital_rotation(prepare(op,norb,nelec),rotation,norb,nelec),atol=1e-10)
+
+
+def test_representation_roundtrip_and_periodic_gauge():
+    from meta_lucj_sqd.representation import encode_operator,decode_operator
+
+    norb=4;nelec=(2,2);pairs=interaction_pairs(norb)
+    count=ffsim.UCJOpSpinBalanced.n_params(norb,1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    params=np.random.default_rng(8871).normal(scale=0.2,size=count)
+    op=ffsim.UCJOpSpinBalanced.from_parameters(params,norb=norb,n_reps=1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    features=encode_operator(op)
+    np.testing.assert_allclose(prepare(decode_operator(features,norb,1),norb,nelec),prepare(op,norb,nelec),atol=1e-10)
+    matrices=op.diag_coulomb_mats.copy()
+    for spin,indices in enumerate(pairs):
+        for p,q in indices:
+            matrices[0,spin,p,q]+=2*np.pi
+            if p!=q:
+                matrices[0,spin,q,p]+=2*np.pi
+    phases=np.exp(1j*np.array([0.2,-0.4,0.7,1.2]))
+    equivalent=ffsim.UCJOpSpinBalanced(matrices,op.orbital_rotations*phases[None,None,:],op.final_orbital_rotation)
+    np.testing.assert_allclose(encode_operator(equivalent),features,atol=1e-10)
+    np.testing.assert_allclose(prepare(equivalent,norb,nelec),prepare(op,norb,nelec),atol=1e-10)
+
+
+def test_common_frame_covariance_and_inverse():
+    from meta_lucj_sqd.representation import change_block_frame
+
+    norb=4;nelec=(2,2);pairs=interaction_pairs(norb)
+    count=ffsim.UCJOpSpinBalanced.n_params(norb,1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    params=np.random.default_rng(997).normal(scale=0.1,size=count)
+    op=ffsim.UCJOpSpinBalanced.from_parameters(params,norb=norb,n_reps=1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    rotation=np.array([[0.,-1.,0.,0.],[1.,0.,0.,0.],[0.,0.,0.8,-0.6],[0.,0.,0.6,0.8]])
+    changed=change_block_frame(op,rotation,2)
+    state=prepare(op,norb,nelec)
+    np.testing.assert_allclose(prepare(changed,norb,nelec),ffsim.apply_orbital_rotation(state,rotation,norb,nelec),atol=1e-10)
+    np.testing.assert_allclose(prepare(change_block_frame(changed,rotation.T,2),norb,nelec),state,atol=1e-10)

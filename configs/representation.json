@@ -1,0 +1,7 @@
+{
+  "source_summary": "docs/experiments/phase3_geometries_summary.json",
+  "anchor_report": "results/phase3_20261103T074031/report.json",
+  "anchor_distance_angstrom": 1.2,
+  "transport": "block_polar",
+  "roundtrip_tolerance": 1e-10
+}

@@ -1,0 +1,239 @@
+{
+  "source_report": "results/phase4_20261104T064917/report.json",
+  "status": "success",
+  "config": {
+    "base_config": "configs/phase3.json",
+    "geometry_summary": "docs/experiments/phase3_geometries_summary.json",
+    "center_report": "results/phase3_20261103T074031/report.json",
+    "directions": [
+      [
+        1.0,
+        1.2,
+        1.6
+      ],
+      [
+        1.6,
+        1.2,
+        1.0
+      ]
+    ],
+    "evaluation_seeds": [
+      89012,
+      90123,
+      101234
+    ],
+    "iterations": 12,
+    "optimizer_seed": 45678,
+    "training_seed": 12345,
+    "transfer_method": "block_polar"
+  },
+  "directions": [
+    {
+      "distances": [
+        1.0,
+        1.2,
+        1.6
+      ],
+      "points": [
+        {
+          "distance_angstrom": 1.2,
+          "source_report": "results/phase3_20261104T064917/report.json",
+          "error_mha_mean": 30.957921384768383,
+          "error_mha_std": 0.4401090460603877,
+          "values": [
+            30.4719352937326,
+            31.32959664317525,
+            31.0722322173973
+          ],
+          "wall_seconds": 129.3092769999057,
+          "peak_rss_mib": 1443.375,
+          "transfer": {
+            "method": "block_polar",
+            "overlap_singular_values": [
+              1.0000000000000009,
+              0.9999999999999999,
+              0.9999999999999999,
+              0.9999999999999998,
+              0.9999999999999994,
+              0.9999999923125884,
+              0.999999366122012,
+              0.9988827369549896,
+              0.9976850368133721,
+              0.9905630079922915,
+              0.9905630079922888,
+              0.9849433358504855,
+              0.8986697141353445,
+              0.8986697141353439,
+              0.8690673165648589,
+              0.73010378056253
+            ],
+            "unitarity_error": 3.5392207470461575e-15
+          },
+          "evaluations": 46,
+          "status": "success"
+        },
+        {
+          "distance_angstrom": 1.6,
+          "source_report": "results/phase3_20261104T065128/report.json",
+          "error_mha_mean": 50.311890138824346,
+          "error_mha_std": 3.8808338587676743,
+          "values": [
+            51.32602807114495,
+            53.584968607623296,
+            46.0246737377048
+          ],
+          "wall_seconds": 144.44475895771757,
+          "peak_rss_mib": 1443.15625,
+          "transfer": {
+            "method": "block_polar",
+            "overlap_singular_values": [
+              1.0000000000000004,
+              1.0000000000000002,
+              0.9999999999999997,
+              0.9999999999999996,
+              0.9999999999999988,
+              0.9999999369993321,
+              0.9999989200368818,
+              0.9976778720506527,
+              0.9961441299367241,
+              0.9582460335656082,
+              0.9582460335656078,
+              0.9420300386669883,
+              0.7857982383433809,
+              0.6600697361379937,
+              0.660069736137993,
+              0.29359528756421266
+            ],
+            "unitarity_error": 3.487244977829682e-15
+          },
+          "evaluations": 46,
+          "status": "success"
+        }
+      ],
+      "endpoint_report": "results/phase3_20261104T061057/report.json",
+      "endpoint_wall_seconds": 130.61478658299893,
+      "chain_child_wall_seconds": 404.3688225406222
+    },
+    {
+      "distances": [
+        1.6,
+        1.2,
+        1.0
+      ],
+      "points": [
+        {
+          "distance_angstrom": 1.2,
+          "source_report": "results/phase3_20261104T065353/report.json",
+          "error_mha_mean": 41.149709514333686,
+          "error_mha_std": 1.9814847317785065,
+          "values": [
+            43.24053928759497,
+            39.29955560994358,
+            40.9090336454625
+          ],
+          "wall_seconds": 118.76583633292466,
+          "peak_rss_mib": 1443.578125,
+          "transfer": {
+            "method": "block_polar",
+            "overlap_singular_values": [
+              1.0000000000000007,
+              1.0,
+              0.9999999999999999,
+              0.9999999999999994,
+              0.9999999999999987,
+              0.9999999369993328,
+              0.9999989200368815,
+              0.9976778720506528,
+              0.9961441299367236,
+              0.9582460335656088,
+              0.9582460335656074,
+              0.9420300386669859,
+              0.7857982383433809,
+              0.6600697361379937,
+              0.6600697361379934,
+              0.2935952875642126
+            ],
+            "unitarity_error": 3.965395577282263e-15
+          },
+          "evaluations": 46,
+          "status": "success"
+        },
+        {
+          "distance_angstrom": 1.0,
+          "source_report": "results/phase3_20261104T065553/report.json",
+          "error_mha_mean": 36.187005329324506,
+          "error_mha_std": 5.038533175232788,
+          "values": [
+            35.44731551686198,
+            41.55449576059311,
+            31.55920471051843
+          ],
+          "wall_seconds": 122.50934775033966,
+          "peak_rss_mib": 1442.015625,
+          "transfer": {
+            "method": "block_polar",
+            "overlap_singular_values": [
+              1.0000000000000004,
+              1.0000000000000004,
+              0.9999999999999998,
+              0.9999999999999996,
+              0.9999999999999994,
+              0.9999999923125872,
+              0.999999366122011,
+              0.9988827369549897,
+              0.9976850368133728,
+              0.9905630079922911,
+              0.9905630079922886,
+              0.9849433358504841,
+              0.8986697141353444,
+              0.8986697141353438,
+              0.8690673165648605,
+              0.7301037805625296
+            ],
+            "unitarity_error": 3.3829579244496765e-15
+          },
+          "evaluations": 46,
+          "status": "success"
+        }
+      ],
+      "endpoint_report": "results/phase3_20261104T061309/report.json",
+      "endpoint_wall_seconds": 147.10456308396533,
+      "chain_child_wall_seconds": 388.37974716722965
+    }
+  ],
+  "independent": {
+    "1.0": {
+      "mean_error_mha": 23.470367552628584,
+      "sample_std_mha": 0.8850346366094451,
+      "values": [
+        22.631924850372798,
+        24.395599461229267,
+        23.383578346283684
+      ],
+      "error_mha_mean": 23.470367552628584,
+      "error_mha_std": 0.8850346366094451
+    },
+    "1.6": {
+      "mean_error_mha": 54.521039018349406,
+      "sample_std_mha": 3.3853620798969217,
+      "values": [
+        58.06762376496977,
+        51.324026557281854,
+        54.1714667327966
+      ],
+      "error_mha_mean": 54.521039018349406,
+      "error_mha_std": 3.3853620798969217
+    },
+    "1.2": {
+      "error_mha_mean": 36.61676252193047,
+      "error_mha_std": 3.0535303569457275,
+      "values": [
+        38.41970700710817,
+        38.33942652357791,
+        33.09115403510532
+      ]
+    }
+  },
+  "sign_only_source": "docs/experiments/phase4_summary.json",
+  "new_orchestration_wall_seconds": 518.7807302912697
+}

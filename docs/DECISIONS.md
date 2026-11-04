@@ -156,3 +156,28 @@ AB diagonal Jastrow 원소에 2π를 더한 상태의 불변성을 검사하고 
 ## D031: Phase 5 진단 결과
 
 오비탈 assignment 후 overlap은 개선되지만 cross-geometry O는 unitary가 아니었다. Jastrow 한 좌표의 2π 이동에서 상태 차이 6.21e-16으로 비유일성을 확인했다. 세 표본의 rank≤2를 learnability 증거로 해석하지 않는다. 추가 refinement 없는 block-polar 전달은 네 방향에서 sign-only보다 낮은 평균 SQD 오차(31.55/57.02/45.97/28.50 mHa)를 보였다. Full polar는 역방향 하나에서 오차가 증가했다. Target approximate best와 fidelity도 SQD energy 순서를 대체하지 못했다. 12개 테스트와 모든 SQD residual 검사를 통과했다. 다음은 고정 block-polar 규칙으로 warm-start baseline 재검증 및 Meta용 공통 표현 설계다. 상세 증거는 experiments/PHASE5_RESULTS.md에 있다.
+
+## 2026-11-04 — D032: Block-polar warm-start 재검증
+
+Phase 5의 탐색 결과에 따라 block-polar 규칙을 모든 방향에 고정해 Phase 4와 같은 양방향/12회/SPSA gains/seeds/shots에서 재평가한다. Sign-only 원본 결과는 보존한다. Target별 결과를 보고 규칙을 선택하지 않는다. 평가 데이터는 개발 pilot이며 최종 일반화 test는 아니다. Endpoint 생성 비용과 신규 실행 비용을 분리하고 same-accuracy speedup으로 주장하지 않는다. Meta 학습은 이 실행에 포함하지 않는다.
+
+## D033: Meta pilot용 공통 표현 후보
+
+공통 anchor는 최초 단일 지점인 1.2 Å로 사전 고정한다. 향후 Meta split에서 이 anchor는 training geometry에 포함해야 하며 held-out optimized state에서 기준을 만들지 않는다. Source operator를 block-polar로 anchor 좌표에 옮긴 뒤 내부 orbital rotation의 column phase만 최대 절대 성분이 실수 양수가 되도록 고정한다. Column diagonal phases는 J와 commute하므로 layer state를 바꾸지 않는다. Column permutation과 축퇴공간의 모든 내부 gauge까지 canonicalize한 것은 아니다. Final rotation의 임의 column phase는 고정하지 않는다.
+
+Unitary matrices는 real/imag entries, 허용된 J 계수는 cos/sin으로 encode한다. Decode 시 matrix polar projection과 atan2를 사용한다. Singular predicted matrices 또는 0인 angle pair는 오류로 처리한다. Matrix-entry 방식은 로그 branch를 피하지만 feature 공간은 중복이며 회귀 오차가 상태 오차를 보장하지 않는다. 현재 1-layer 16 orbital에서는 1062 features로 raw 531 parameters보다 많다. 복잡한 모델의 근거로 삼지 않는다.
+
+Encode/decode 및 역방향 anchor rotation 후 원래 N₂ state가 복원되는지 검증한다. 동일 좌표로 되돌리는 이 불변성 검사는 실제 다른 geometry의 physical state가 동일함을 뜻하지 않는다. 이번 작업은 표현 후보와 roundtrip 검증이며 Meta fit이나 held-out 일반화 실험은 아니다.
+
+## D034: Common-frame operator convention 및 검증
+
+공통 frame의 표현은 final output rotation만 합성하는 전송과 구분한다. Block unitary G에 대해 모든 내부 U를 GU, final F를 GFG†로 바꿔 operator를 conjugate한다. G가 occupied/virtual partition을 보존하므로 HF는 global phase까지 유지되며 real RHF block rotations에서는 두 spin 위상이 상쇄된다. 역변환은 G†로 수행한다. Nontrivial state에서 covariance와 inverse를 검증했고 N₂ 세 구조의 encode/decode/inverse-frame state L2 error는 약 1.1e-14 이하였다.
+
+최초 output-only embedding draft archive는 보존하지만 현재 representation은 위 전체 operator-frame convention으로 고정한다. Feature 1062개는 raw 531개보다 많고 redundancy가 있으며, 내부 permutation/degeneracy, anchor 경로 의존성 및 final global phase 문제를 전부 해결한 유일 표현은 아니다. 이 후보로 작은 Meta pilot을 검토할 수 있지만 현재 결과는 학습/일반화 증거가 아니다.
+
+표현 검증 및 테스트가 warm-start 재평가와 일부 겹쳐 실행됐다. 따라서 wall times는 실행 기록으로 보고하며 미세한 runtime 차이나 speedup의 근거로 사용하지 않는다.
+
+
+## D035: Block warm-start 및 공통 표현 결과
+
+양방향 네 target 모두 수치 검사를 통과했다. 증가 방향의 1.2/1.6 Å 평균 오차는 30.96/50.31 mHa로 independent보다 낮았지만, 감소 방향의 1.2/1.0 Å는 41.15/36.19 mHa로 높았다. Sign-only보다는 네 target 모두 평균 오차가 낮았다. Direction dependence와 기존 개발 데이터 재사용 한계를 유지하며 일반적 우위나 speedup을 주장하지 않는다. 고정 공통 표현은 세 구조의 inverse-frame roundtrip state error 약 1.13e-14 이하를 통과했다. 전체 테스트 14개다. 근거는 experiments/BLOCK_WARMSTART_RESULTS.md 및 META_REPRESENTATION.md에 있다. Phase 6의 작은 모델을 검토할 수 있으나 아직 fitting/미관측 geometry 검증은 수행하지 않았다.

@@ -1,4 +1,5 @@
 import json
+import argparse
 import subprocess
 import sys
 import time
@@ -7,7 +8,10 @@ from pathlib import Path
 
 
 def main():
-    spec=json.loads(Path('configs/phase4.json').read_text())
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--config',default='configs/phase4.json')
+    args=parser.parse_args()
+    spec=json.loads(Path(args.config).read_text())
     template=json.loads(Path(spec['base_config']).read_text())
     geometry=json.loads(Path(spec['geometry_summary']).read_text())
     baseline={point['distance_angstrom']:point['source_report'] for point in geometry['points']}
@@ -24,7 +28,7 @@ def main():
             cfg=dict(template,distance_angstrom=distance,
                      reference_report=target['config']['reference_report'],
                      reference_integrals=target['config']['reference_integrals'],
-                     warm_start_report=previous,evaluation_seeds=spec['evaluation_seeds'],
+                     warm_start_report=previous,transfer_method=spec.get('transfer_method','sign'),evaluation_seeds=spec['evaluation_seeds'],
                      training_seed=spec['training_seed'],
                      optimizer=dict(template['optimizer'],iterations=spec['iterations'],seed=spec['optimizer_seed']))
             config=out/f'direction{index}_R{distance:.2f}.json'

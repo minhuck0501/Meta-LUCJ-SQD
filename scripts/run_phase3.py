@@ -22,7 +22,7 @@ from meta_lucj_sqd.initialization import compressed_initialization
 from meta_lucj_sqd.lucj import interaction_pairs, prepare, sample
 from meta_lucj_sqd.optimization import spsa_step
 from meta_lucj_sqd.sqd import evaluate
-from meta_lucj_sqd.transfer import sign_transfer
+from meta_lucj_sqd.transfer import sign_transfer,block_polar_transfer,orbital_overlap
 
 
 def main():
@@ -74,10 +74,19 @@ def main():
                 source.mf.mo_coeff=np.load(previous_path.parent/'mo_coeff.npy')
             params=np.load(previous_path.parent/'best.npy')
             old_op=ffsim.UCJOpSpinBalanced.from_parameters(params,norb=c.norb,n_reps=cfg['n_reps'],interaction_pairs=interaction_pairs(c.norb),with_final_orbital_rotation=cfg['final_rotation_from_t1'])
-            op,transfer=sign_transfer(old_op,source,c)
+            method=spec.get('transfer_method','sign')
+            if method=='block_polar':
+                op,rotation=block_polar_transfer(old_op,source,c)
+                overlap=orbital_overlap(source,c)
+                transfer=dict(method=method,overlap_singular_values=np.linalg.svd(overlap,compute_uv=False).tolist(),unitarity_error=float(np.linalg.norm(rotation.conj().T@rotation-np.eye(c.norb))))
+                np.save(out/'transfer_rotation.npy',rotation)
+            elif method=='sign':
+                op,transfer=sign_transfer(old_op,source,c)
+            else:
+                raise ValueError('Unknown transfer method')
             report['transfer']=transfer
             report['warm_start_from']=str(previous_path)
-            diag=dict(all_stages_success=True,kind='sign_transferred_previous_best')
+            diag=dict(all_stages_success=True,kind=method+'_transferred_previous_best')
         else:
             cc=run_ccsd(c,cfg)
             op,diag=compressed_initialization(cc,c.norb,cfg,spec['compression'],regularization=spec['regularization'])

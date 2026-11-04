@@ -1,0 +1,40 @@
+{
+  "source_report": "results/representation_20261104T065315/report.json",
+  "config": {
+    "source_summary": "docs/experiments/phase3_geometries_summary.json",
+    "anchor_report": "results/phase3_20261103T074031/report.json",
+    "anchor_distance_angstrom": 1.2,
+    "transport": "block_polar",
+    "roundtrip_tolerance": 1e-10
+  },
+  "status": "success",
+  "points": [
+    {
+      "distance_angstrom": 1.0,
+      "source_report": "results/phase3_20261104T061057/report.json",
+      "roundtrip_state_l2_error": 9.363286276084576e-15,
+      "feature_count": 1062
+    },
+    {
+      "distance_angstrom": 1.2,
+      "source_report": "results/phase3_20261103T074031/report.json",
+      "roundtrip_state_l2_error": 1.0758725995289713e-14,
+      "feature_count": 1062
+    },
+    {
+      "distance_angstrom": 1.6,
+      "source_report": "results/phase3_20261104T061309/report.json",
+      "roundtrip_state_l2_error": 1.1254583674745629e-14,
+      "feature_count": 1062
+    }
+  ],
+  "wall_seconds": 10.21270400006324,
+  "versions_collected_after_run": {
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "pyscf": "2.14.0",
+    "ffsim": "0.0.85",
+    "qiskit": "2.6.1",
+    "qiskit-addon-sqd": "0.14.0"
+  }
+}
