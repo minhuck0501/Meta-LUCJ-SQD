@@ -161,3 +161,62 @@ def test_spsa_step_quadratic_and_cap():
     updated=spsa_step(x,plus,minus,direction,0,cfg)
     assert np.linalg.norm(updated-x)<=0.1+1e-12
     assert np.sum(updated**2)<np.sum(x**2)
+
+
+def test_sign_transfer_preserves_gauge_state_and_energy():
+    from meta_lucj_sqd.transfer import transform_signs
+
+    lib.num_threads(1)
+    cfg=small_config();c=build_chemistry(cfg)
+    pairs=interaction_pairs(c.norb)
+    count=ffsim.UCJOpSpinBalanced.n_params(c.norb,1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    parameters=np.random.default_rng(65432).normal(scale=0.2,size=count)
+    op=ffsim.UCJOpSpinBalanced.from_parameters(parameters,norb=c.norb,n_reps=1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    signs=np.array([-1.,1.])
+    state=prepare(op,c.norb,c.nelec)
+    assert abs(state[0])**2 < 0.99
+    transformed=prepare(transform_signs(op,signs),c.norb,c.nelec)
+    expected=ffsim.apply_orbital_rotation(state,np.diag(signs),c.norb,c.nelec)
+    np.testing.assert_allclose(transformed,expected,atol=1e-10)
+    h1=c.h1*signs[:,None]*signs[None,:]
+    eri=c.eri*np.einsum('p,q,r,s->pqrs',signs,signs,signs,signs)
+    h=ffsim.linear_operator(ffsim.MolecularHamiltonian(c.h1,c.eri),c.norb,c.nelec)
+    hg=ffsim.linear_operator(ffsim.MolecularHamiltonian(h1,eri),c.norb,c.nelec)
+    assert abs(np.vdot(state,h@state)-np.vdot(transformed,hg@transformed))<1e-10
+
+
+def test_output_rotation_and_jastrow_periodicity():
+    from meta_lucj_sqd.transfer import rotate_output
+
+    lib.num_threads(1)
+    norb=2;nelec=(1,1);pairs=interaction_pairs(norb)
+    count=ffsim.UCJOpSpinBalanced.n_params(norb,1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    parameters=np.random.default_rng(657).normal(scale=0.3,size=count)
+    op=ffsim.UCJOpSpinBalanced.from_parameters(parameters,norb=norb,n_reps=1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    rotation=np.array([[0.,-1.],[1.,0.]])
+    state=prepare(op,norb,nelec)
+    np.testing.assert_allclose(prepare(rotate_output(op,rotation),norb,nelec),
+        ffsim.apply_orbital_rotation(state,rotation,norb,nelec),atol=1e-10)
+    shifted=op.diag_coulomb_mats.copy();shifted[0,1,0,0]+=2*np.pi
+    equivalent=ffsim.UCJOpSpinBalanced(shifted,op.orbital_rotations,op.final_orbital_rotation)
+    np.testing.assert_allclose(prepare(equivalent,norb,nelec),state,atol=1e-10)
+
+
+def test_block_transport_preserves_reference_occupations():
+    from types import SimpleNamespace
+    from unittest.mock import patch
+    from meta_lucj_sqd.transfer import block_polar_transfer
+
+    norb=4;nelec=(2,2);pairs=interaction_pairs(norb)
+    count=ffsim.UCJOpSpinBalanced.n_params(norb,1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    params=np.random.default_rng(887).normal(scale=0.1,size=count)
+    op=ffsim.UCJOpSpinBalanced.from_parameters(params,norb=norb,n_reps=1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    overlap=np.array([[0.8,0.3,0.1,0.0],[-0.3,0.8,0.0,0.1],[0.1,0.0,0.7,0.2],[0.0,0.1,-0.2,0.7]])
+    c=SimpleNamespace(norb=norb,nelec=nelec)
+    with patch('meta_lucj_sqd.transfer.orbital_overlap',return_value=overlap):
+        transformed,rotation=block_polar_transfer(op,c,c)
+    np.testing.assert_allclose(rotation.T@rotation,np.eye(norb),atol=1e-10)
+    np.testing.assert_allclose(rotation[:2,2:],0,atol=1e-10)
+    hf=ffsim.hartree_fock_state(norb,nelec)
+    np.testing.assert_allclose(ffsim.apply_orbital_rotation(hf,rotation,norb,nelec),hf,atol=1e-10)
+    np.testing.assert_allclose(prepare(transformed,norb,nelec),ffsim.apply_orbital_rotation(prepare(op,norb,nelec),rotation,norb,nelec),atol=1e-10)

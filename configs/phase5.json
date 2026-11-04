@@ -1,0 +1,34 @@
+{
+  "geometry_summary": "docs/experiments/phase3_geometries_summary.json",
+  "center_report": "results/phase3_20261103T074031/report.json",
+  "pairs": [
+    [
+      1.0,
+      1.2
+    ],
+    [
+      1.2,
+      1.6
+    ],
+    [
+      1.6,
+      1.2
+    ],
+    [
+      1.2,
+      1.0
+    ]
+  ],
+  "methods": [
+    "sign",
+    "polar",
+    "block_polar"
+  ],
+  "shots": 50000,
+  "evaluation_seeds": [
+    89012,
+    90123,
+    101234
+  ],
+  "residual_limit": 1e-06
+}

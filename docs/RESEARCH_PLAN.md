@@ -22,16 +22,17 @@ N₂ potential energy curve에서 geometry-conditioned LUCJ 초기화가 독립 
 | 1a 작은 검증 | 결정론적 chemistry/state/sampling/subspace 테스트 | 에너지 상수, tensor convention, bit order 검증 |
 | 1b 단일 구조 | N₂ 1.2 Å 설정·결과·시간·메모리 | SCF/CCSD 수렴, 자원 측정, 기준 에너지 신뢰성 확인 |
 | 2 작은 sweep | 소수 구조의 수렴·샘플링 진단 | 실패를 포함한 재현 가능한 기록 |
-| 3 baselines | 독립 및 양방향 sequential 결과 | 동일한 목적함수·예산·평가 조건 |
-| 4 표현 분석 | gauge/주기성/유효 차원 분석 | 변환의 물리적 불변성 확인 |
-| 5 Meta pilot | 단순 모델의 validation 결과 | test를 사용하지 않은 모델 선택 |
-| 6 최종 비교 | held-out 정확도·비용·불확실성 | 독립 seed 및 학습 overhead 포함 |
+| 3 독립 최적화 | 고정 예산 independent refinement 결과 | 독립 평가·실패·비용 기록 |
+| 4 Warm start | 양방향 sequential 결과 | 동일한 목적함수·예산·평가 조건, 전송 규칙 명시 |
+| 5 표현 분석 | gauge/주기성/유효 차원 분석 | 변환의 물리적 불변성 확인 |
+| 6 Meta pilot | 단순 모델의 validation 결과 | test를 사용하지 않은 모델 선택 |
+| 7 최종 비교 | held-out 정확도·비용·불확실성 | 독립 seed 및 학습 overhead 포함 |
 
 ## 첫 번째 실험
 
 먼저 작은 H₂/STO-3G 문제에서 library 연동과 convention을 검증한다. 이는 N₂ benchmark를 대체하는 설정 변경이 아니라 수치 unit/integration validation이다. 이후 N₂/6-31G, R=1.2 Å, frozen core=2, active (10e,16o)에서 chemistry를 검증한다. 큰 FCI나 반복 SQD 최적화는 자원 점검 후 수행한다.
 
-16 orbital, (5,5)의 고정 입자수 공간은 19,079,424 determinants다. complex128 state vector 하나만 약 291 MiB이고, 연산 workspace·여러 state 복사본·FCI Davidson vector는 별도다. 전체 32-qubit dense statevector는 64 GiB이므로 초기 backend로 사용하지 않는다. 실행 시간은 아직 측정하지 않았으며 추정값으로 보고하지 않는다.
+16 orbital, (5,5)의 고정 입자수 공간은 19,079,424 determinants다. complex128 state vector 하나만 약 291 MiB이고, 연산 workspace·여러 state 복사본·FCI Davidson vector는 별도다. 전체 32-qubit dense statevector는 64 GiB이므로 초기 backend로 사용하지 않는다. 이는 초기 자원 추정이며, 이후 실측 시간·메모리는 docs/experiments/의 실행별 보고서에 기록한다.
 
 ## 학습 접근의 우선순위
 

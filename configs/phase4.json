@@ -1,0 +1,10 @@
+{
+  "base_config": "configs/phase3.json",
+  "geometry_summary": "docs/experiments/phase3_geometries_summary.json",
+  "center_report": "results/phase3_20261103T074031/report.json",
+  "directions": [[1.0, 1.2, 1.6], [1.6, 1.2, 1.0]],
+  "evaluation_seeds": [89012, 90123, 101234],
+  "iterations": 12,
+  "optimizer_seed": 45678,
+  "training_seed": 12345
+}

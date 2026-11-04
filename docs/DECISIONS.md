@@ -122,3 +122,37 @@ Phase 2 reference의 physical config와 HF total 일치를 검사하고 같은 c
 ## D025: 다른 geometry의 refinement 결과
 
 1.0 Å의 별도 평가 평균 오차는 35.41→23.47 mHa, 1.6 Å는 62.91→54.52 mHa로 감소했다. 각 거리의 3 sampling seeds 모두 개선됐고 수치 검사를 통과했다. 각 한 optimizer trajectory, 12회 budget exhaustion이며 목표 정확도나 수렴은 미입증이다. Child wall time 합 약 277.72초, 전체 objective 92회다. 근거는 experiments/PHASE3_GEOMETRIES.md와 phase3_geometries_summary.json에 있다. 새 거리의 optimizer 반복과 예산 검증은 남아 있으며 아직 Phase 4로 진입하지 않는다.
+
+## 2026-11-04 — D026: Fixed-budget pilot 및 Phase 4
+
+사용자 승인에 따라 수십 mHa 오차를 pilot의 현재 수준으로 허용하고 고정 예산 비교를 진행한다. 목표 정확도 달성이나 optimizer 수렴을 의미하지 않는다. Phase 4에서는 1.0→1.2→1.6 및 역방향에서 이전 지점 best를 새 구조의 초기값으로 쓴다. 각 target은 같은 SPSA 12회, 50,000 shots, training/direction/evaluation seeds와 solver budget을 사용한다. Chain endpoint는 기존 독립 실행을 재사용하되 생성 비용을 누적 비용에 포함한다. 이전 best 선택은 training energy만 사용한다.
+
+## D027: Warm-start orbital sign convention
+
+Cross-geometry AO overlap에서 active MO 대각 overlap 부호 D를 계산하고 회전을 U→DUD, final rotation도 같은 방식으로 변환하며 J는 유지한다. Γ(D)는 occupation basis의 부호 연산이며 J와 commute한다. Closed-shell HF는 두 spin의 동일 occupation으로 Γ(D) 위상이 상쇄되므로 변환된 ansatz state=Γ(D) 원래 state다. H₂의 state equality와 동일 gauge로 변환한 Hamiltonian energy invariance를 수치 검증했다. 실제 다른 geometry의 Hamiltonian은 다르므로 에너지 보존을 요구하지 않는다.
+
+이는 sign-only index-preserving transfer다. Permutation, degenerate orbital subspace rotation, Procrustes는 수행하지 않는다. 대각 overlap과 최대 offdiagonal overlap을 기록해 한계를 드러내며 결과에 따라 전송 방식을 사후 선택하지 않는다. 새 실행은 MO coefficients를 저장한다. 과거 endpoint는 저장된 MO가 없어 같은 로컬 환경에서 재구성한다는 한계를 기록한다. Source chemistry 재구성 비용과 endpoint 비용도 보고한다. Phase 5의 전체 alignment 분석을 완료한 것으로 간주하지 않는다.
+
+
+## D028: Phase 4 결과와 단계 표기
+
+양방향 sign-only pilot의 네 target 모두 실행·잔차 검사를 통과했으나 independent보다 평균 오차가 컸다. 증가 방향의 1.2/1.6 Å는 43.70/83.50 mHa, 감소 방향의 1.2/1.0 Å는 44.64/54.25 mHa다. 오비탈 diagonal overlap이 거의 0인 구간이 있어 전송 규칙의 한계를 확인했다. 모든 warm start의 실패나 단일 원인으로 일반화하지 않는다. 이번 pilot은 완료했으며 Phase 5에서 correspondence와 gauge를 분석해야 한다. 상세 근거는 experiments/PHASE4_RESULTS.md에 있다.
+
+README와 RESEARCH_PLAN의 단계 번호를 사용자와 합의한 최초 Phase 0–7로 통일했다. Phase 3=independent, 4=warm start, 5=표현 분석, 6=Meta, 7=전체 benchmark이며 과학적 계산 설정은 이 번호 정리로 변경하지 않았다.
+
+## 2026-11-04 — D029: Phase 5 표현 및 전송 진단
+
+세 geometry의 독립 best를 사용해 인접 양방향 4쌍을 분석한다. Active MO cross-overlap의 SVD와 maximum-weight orbital assignment를 진단하며 assignment 자체를 파라미터 재배열에 사용하지 않는다. 같은 source best에 sign-only 및 polar 전송을 각각 적용하고 refinement 없이 target의 sampling/SQD 성능을 평가한다. 이는 chain history 효과를 분리한 zero-refinement 진단이며 Phase 4 chain 결과를 대체하지 않는다.
+
+Polar 제안은 O=C_source† S_cross C_target, G=polar(O†)로 unitary를 만들고 final orbital rotation만 G F_source로 바꾼다. 따라서 원래 ansatz 내부 locality를 바꾸지 않고 Γ(G)|ψ_source>를 정확하게 표현한다. 작은 비자명 상태에서 output rotation identity를 검증한다. Cross-geometry O는 일반적으로 unitary가 아니므로 이 projection은 물리적 동일성의 보장이 아닌 approximate transport 선택이다. Full occupied/virtual mixing을 허용하며 target optimized state는 G 계산에 사용하지 않는다. Target best와의 fidelity/확률 TV는 평가용 보조지표다.
+
+AB diagonal Jastrow 원소에 2π를 더한 상태의 불변성을 검사하고 raw parameter 비유일성을 직접 확인한다. 다른 좌표에 동일 주기성을 무단 적용하지 않는다. 세 geometry의 centered parameter SVD도 기록하되 rank≤2는 세 표본의 수학적 한계이므로 learnable low-dimensional structure 증거로 간주하지 않는다. 이번 geometry/seed는 development pilot이고 최종 test 분할이 아니다.
+
+## D030: Phase 5 block-polar 후속 진단
+
+첫 분석에서 full polar는 3/4 방향 SQD 오차가 낮았으나 target independent state fidelity는 낮아졌고 역방향 한 곳은 에너지도 개선되지 않았다. 따라서 occupied/virtual mixing 영향을 분리하기 위해 두 block의 polar를 각각 구하는 후속 exploratory transport를 추가한다. 이는 첫 결과를 보고 제안한 후속 진단이므로 사전 등록한 최종 비교로 부르지 않는다. 두 block rotation은 HF occupation을 유지하며 같은 output-rotation 구현으로 적용한다. 설정을 세 방법으로 갱신하고 이번 후속 실행에서는 --methods block_polar만 계산해 기존 결과를 재사용한다. 최종 Meta 규칙이나 효과를 이 pilot에서 사후 선택해 일반화하지 않는다.
+
+
+## D031: Phase 5 진단 결과
+
+오비탈 assignment 후 overlap은 개선되지만 cross-geometry O는 unitary가 아니었다. Jastrow 한 좌표의 2π 이동에서 상태 차이 6.21e-16으로 비유일성을 확인했다. 세 표본의 rank≤2를 learnability 증거로 해석하지 않는다. 추가 refinement 없는 block-polar 전달은 네 방향에서 sign-only보다 낮은 평균 SQD 오차(31.55/57.02/45.97/28.50 mHa)를 보였다. Full polar는 역방향 하나에서 오차가 증가했다. Target approximate best와 fidelity도 SQD energy 순서를 대체하지 못했다. 12개 테스트와 모든 SQD residual 검사를 통과했다. 다음은 고정 block-polar 규칙으로 warm-start baseline 재검증 및 Meta용 공통 표현 설계다. 상세 증거는 experiments/PHASE5_RESULTS.md에 있다.

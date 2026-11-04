@@ -22,6 +22,7 @@ from meta_lucj_sqd.initialization import compressed_initialization
 from meta_lucj_sqd.lucj import interaction_pairs, prepare, sample
 from meta_lucj_sqd.optimization import spsa_step
 from meta_lucj_sqd.sqd import evaluate
+from meta_lucj_sqd.transfer import sign_transfer
 
 
 def main():
@@ -56,6 +57,7 @@ def main():
 
     try:
         c=build_chemistry(cfg)
+        np.save(out/'mo_coeff.npy',c.mf.mo_coeff)
         integrals=np.load(spec['reference_integrals'])
         for key,value in [('h1',c.h1),('eri',c.eri),('ecore',c.ecore)]:
             np.testing.assert_allclose(integrals[key],value,atol=1e-10,rtol=0)
@@ -63,9 +65,22 @@ def main():
         if not ref['converged'] or ref['residual_norm']>=1e-5:
             raise ValueError('Reference invalid')
         report['reference']=ref
-        cc=run_ccsd(c,cfg)
         tick=time.perf_counter()
-        op,diag=compressed_initialization(cc,c.norb,cfg,spec['compression'],regularization=spec['regularization'])
+        if spec.get('warm_start_report'):
+            previous_path=Path(spec['warm_start_report'])
+            previous=json.loads(previous_path.read_text())
+            source=build_chemistry(previous['effective_config'])
+            if (previous_path.parent/'mo_coeff.npy').exists():
+                source.mf.mo_coeff=np.load(previous_path.parent/'mo_coeff.npy')
+            params=np.load(previous_path.parent/'best.npy')
+            old_op=ffsim.UCJOpSpinBalanced.from_parameters(params,norb=c.norb,n_reps=cfg['n_reps'],interaction_pairs=interaction_pairs(c.norb),with_final_orbital_rotation=cfg['final_rotation_from_t1'])
+            op,transfer=sign_transfer(old_op,source,c)
+            report['transfer']=transfer
+            report['warm_start_from']=str(previous_path)
+            diag=dict(all_stages_success=True,kind='sign_transferred_previous_best')
+        else:
+            cc=run_ccsd(c,cfg)
+            op,diag=compressed_initialization(cc,c.norb,cfg,spec['compression'],regularization=spec['regularization'])
         report['initialization_seconds']=time.perf_counter()-tick
         report['initialization']=diag
         if not diag['all_stages_success']:

@@ -58,7 +58,7 @@ LUCJ와 SQD는 참고 문헌에 기반한 방법입니다. 이 프로젝트에�
 
 ## 현재 상태
 
-Phase 2 소규모 sweep을 완료하고 Phase 3 단일 지점 SQD refinement pilot을 실행했습니다. Held-out seed의 평균 오차가 46.07→37.73 mHa로 감소했으며, 추가 seed 반복에서도 개선을 관측했습니다. 12→24회 예산 증가는 첫 경로에서 이득이 없었습니다. 1.0/1.6 Å에도 적용해 별도 평가 평균 오차가 각각 35.41→23.47, 62.91→54.52 mHa로 감소했습니다. 새 거리의 독립 반복 등 전체 baseline 검증은 진행 중입니다.
+Phase 5의 오비탈 대응·파라미터 표현 pilot 분석을 완료했습니다. 순서/축퇴공간 변화와 Jastrow 비유일성을 확인했고, block-polar 전달은 네 진단 방향에서 sign-only보다 낮은 SQD 오차를 보였습니다. Warm-start 재검증과 공통 표현 설계가 남아 있으며 Meta 학습은 아직 시작하지 않았습니다.
 
 자세한 내용은 [Phase 3 pilot 결과](docs/experiments/PHASE3_PILOT_RESULTS.md)와 [반복·예산 비교](docs/experiments/PHASE3_REPETITIONS.md), [다른 거리 적용](docs/experiments/PHASE3_GEOMETRIES.md)을 참고하세요.
 
@@ -69,7 +69,7 @@ Phase 2 결과는 [소규모 sweep 보고서](docs/experiments/PHASE2_RESULTS.md
 - 프로젝트 디렉터리, 연구 지침, 참고 논문 3편 및 참조 notebook이 준비되어 있습니다.
 - 로컬 `.venv`에서 Python 3.11.18과 native ARM64 실행을 확인했습니다.
 - NumPy, SciPy, PySCF, ffsim, Qiskit, qiskit-addon-sqd, pytest의 import를 확인했습니다.
-- Chemistry/LUCJ/sampling/SQD 최소 구현과 수치 테스트 9개가 통과했습니다.
+- Chemistry/LUCJ/sampling/SQD 최소 구현과 수치 테스트 12개가 통과했습니다.
 - N₂ 1.2 Å의 FCI 및 초기 SQD 결과를 측정했습니다. 최초 SQD 오차는 약 189.95 mHa였습니다. 후속 압축 초기화 비교에서는 평균 약 45–49 mHa로 개선됐지만 초기 압축 optimizer는 미수렴이었습니다. 후속 norm regularization으로 gradient 수렴을 확인했으며, 50,000 shots의 평균 오차는 약 44.25 mHa입니다. 소규모 진단 sweep은 진행할 수 있지만 목표 정확도와 Meta 효율성은 미입증입니다.
 - 연구 문서 4종에 Phase 0 설계 초안과 참조 notebook 검토 내용을 작성했습니다.
 - `pyproject.toml`에 패키지 구성과 현재 직접 의존성 버전을 선언했습니다.
@@ -77,15 +77,20 @@ Phase 2 결과는 [소규모 sweep 보고서](docs/experiments/PHASE2_RESULTS.md
 
 환경 확인은 해당 로컬 환경에 대한 점검이며, 다른 환경에서의 설치나 수치적 정확성을 보장하지 않습니다.
 
+Phase 4 결과는 [양방향 warm-start 보고서](docs/experiments/PHASE4_RESULTS.md)에 있습니다.
+
+Phase 5 결과는 [오비탈·파라미터 분석 보고서](docs/experiments/PHASE5_RESULTS.md)에 있습니다.
+
 ## 개발 단계
 
-1. **연구 설계:** 논문과 notebook을 검토하고 방법론, 비교 조건, 검증 기준을 문서화합니다.
-2. **단일 구조 검증:** 작은 문제의 수치 테스트 후 N₂의 1.2 Å 지점에서 chemistry, LUCJ, sampling, SQD를 검증하고 자원 사용량을 측정합니다.
-3. **소규모 구조 조사:** 선택한 거리에서 수렴, 에너지, 샘플링 특성을 확인합니다.
-4. **기준 방법 구축:** 독립 최적화와 sequential warm start를 통제된 예산으로 비교합니다.
-5. **파라미터 분석:** 구조에 따른 연속성, 표현의 비유일성, 정렬과 유효 차원을 조사합니다.
-6. **Meta 초기화:** 간단한 회귀 모델부터 시작해 미관측 구조에서 평가합니다. 직접 SQD 목적함수 학습과 혼합 접근은 비용과 근거에 따라 검토합니다.
-7. **전체 benchmark:** 정확도, 변동성, 학습 비용 회수, 강상관 영역의 한계를 평가합니다.
+- **Phase 0 — 연구 설계:** 문헌·계산 정의·비교 조건·검증 기준을 정합니다.
+- **Phase 1 — 단일 구조 검증:** 작은 테스트와 N₂ 1.2 Å에서 계산 정확성과 자원을 확인합니다.
+- **Phase 2 — 소규모 구조 조사:** 거리별 수렴·샘플링·에너지 특성을 확인합니다.
+- **Phase 3 — 독립 최적화:** 구조별 고정 예산 refinement baseline을 구축합니다.
+- **Phase 4 — Sequential warm start:** 이전 구조의 결과를 전달해 양방향으로 비교합니다.
+- **Phase 5 — 파라미터 분석:** 오비탈 gauge, 표현 비유일성, 정렬 및 유효 차원을 조사합니다.
+- **Phase 6 — Meta 초기화:** 간단한 geometry-conditioned 모델을 학습하고 미관측 구조에서 평가합니다.
+- **Phase 7 — 전체 benchmark:** 정확도·변동성·학습 비용 회수·강상관 영역의 한계를 평가합니다.
 
 ## 프로젝트 구조
 
