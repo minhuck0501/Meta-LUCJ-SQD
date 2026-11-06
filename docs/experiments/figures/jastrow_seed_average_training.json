@@ -1,0 +1,46 @@
+{
+  "source_report": "results/jastrow_seed_average_20261106T020635/report.json",
+  "title": "SQD optimization trajectory (training objective)",
+  "xlabel": "Update iteration",
+  "ylabel": "Energy error (mHa)",
+  "series": [
+    {
+      "name": "Candidate",
+      "x": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "y": [
+        33.472059920086394,
+        31.82381320954164,
+        30.662043338082867,
+        31.37175455462682
+      ],
+      "error": null
+    },
+    {
+      "name": "Best training candidate",
+      "x": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "y": [
+        33.472059920086394,
+        31.82381320954164,
+        30.662043338082867,
+        30.662043338082867
+      ],
+      "error": null
+    }
+  ],
+  "reference": {
+    "method": "FCI",
+    "value": 0.0,
+    "unit": "mHa",
+    "scope": "Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth"
+  }
+}

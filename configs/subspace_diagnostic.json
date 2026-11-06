@@ -1,0 +1,7 @@
+{
+  "anchor_report": "results/phase3_20261103T074031/report.json",
+  "shots": 50000,
+  "seeds": [950101, 950102, 950103],
+  "samples_per_batch": [200, 400, 800],
+  "max_dim": 250000
+}

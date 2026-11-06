@@ -1,0 +1,64 @@
+{
+  "source_report": "results/subspace_diagnostic_20261106T021528/report.json",
+  "reference": {
+    "energy_total": -109.09813082054681,
+    "converged": true,
+    "residual_norm": 2.98963841884039e-06
+  },
+  "subspace_budget": [
+    {
+      "samples_per_batch": 200,
+      "mean_error_mha": 32.30795337361769,
+      "std_error_mha": 2.0487741344509742,
+      "mean_seconds": 0.9891809999632338,
+      "dimensions": [
+        10800,
+        11124,
+        10296
+      ]
+    },
+    {
+      "samples_per_batch": 400,
+      "mean_error_mha": 21.422086172033044,
+      "std_error_mha": 1.831003091816331,
+      "mean_seconds": 1.7157387773816783,
+      "dimensions": [
+        23360,
+        22792,
+        22484
+      ]
+    },
+    {
+      "samples_per_batch": 800,
+      "mean_error_mha": 21.01741186056927,
+      "std_error_mha": 1.8577178543310697,
+      "mean_seconds": 1.8885682639665902,
+      "dimensions": [
+        24450,
+        24800,
+        24480
+      ]
+    }
+  ],
+  "sample_support": [
+    {
+      "seed": 950101,
+      "unique_bitstrings": 497,
+      "unique_left": 163,
+      "unique_right": 150
+    },
+    {
+      "seed": 950102,
+      "unique_bitstrings": 502,
+      "unique_left": 160,
+      "unique_right": 155
+    },
+    {
+      "seed": 950103,
+      "unique_bitstrings": 502,
+      "unique_left": 160,
+      "unique_right": 153
+    }
+  ],
+  "wall_seconds": 15.68333933269605
+}

@@ -1,0 +1,6 @@
+{
+  "single_seed_report": "results/jastrow_local_20261106T015732/report.json",
+  "training_seeds": [71002, 71012, 71022],
+  "training_call_budget": 40,
+  "evaluation_seeds": [930101, 930102, 930103, 930104, 930105, 930106, 930107, 930108, 930109]
+}

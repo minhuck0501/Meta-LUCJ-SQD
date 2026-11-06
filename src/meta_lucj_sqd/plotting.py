@@ -43,6 +43,12 @@ def _groups(points,container):
 
 def chart_data(report):
     reference=report.get('reference',{}).get('energy_total')
+    if report.get('subspace_budget'):
+        rows=report['subspace_budget']
+        return dict(title='Fixed-state SQD subspace budget diagnostic',xlabel='Samples per batch (50,000 raw shots fixed)',ylabel='SQD energy error (mHa)',series=[_series('1.2 angstrom, three seeds',[r['samples_per_batch'] for r in rows],[r['mean_error_mha'] for r in rows],[r['std_error_mha'] for r in rows])])
+    if report.get('sensitivity') and not report.get('trajectory'):
+        rows=sorted(report['sensitivity'],key=lambda r:r['amplitude'])
+        return dict(title='Single-direction Jastrow sensitivity',xlabel='Signed perturbation per coefficient (radian)',ylabel='SQD energy error (mHa)',series=[_series('Development seeds',[r['amplitude'] for r in rows],[_mean(r) for r in rows],[_std(r) for r in rows])])
     if report.get('pairs'):
         points=[]
         for pair in report['pairs']:
@@ -143,6 +149,7 @@ def chart_data(report):
         return dict(title='Initialization sampling-budget evaluation',xlabel='Shots',ylabel='SQD energy error (mHa)',series=series)
     if report.get('groups') and isinstance(report['groups'],dict):
         groups=report['groups'];names=[n for n in ['noise_probe','heldout_initial','heldout_refined'] if n in groups]
+        if not names:names=list(groups)
         return dict(title='Initial and refined independent-seed evaluation',xlabel='Evaluation group (categorical)',ylabel='SQD energy error (mHa)',series=[_series('Evaluation',range(len(names)),[_mean(groups[n]) for n in names],[_std(groups[n]) for n in names])],tick_labels=names)
     if report.get('rows') and 'method' in report['rows'][0] and reference is not None:
         groups=[]

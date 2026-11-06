@@ -1,0 +1,37 @@
+{
+  "source_report": "results/jastrow_local_20261106T015732/final_evaluation.json",
+  "title": "Initial and refined independent-seed evaluation",
+  "xlabel": "Evaluation group (categorical)",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "Evaluation",
+      "x": [
+        0,
+        1,
+        2
+      ],
+      "y": [
+        34.38705207662925,
+        34.219360812566414,
+        34.38705207662925
+      ],
+      "error": [
+        2.519523018305705,
+        2.1668276375010973,
+        2.519523018305705
+      ]
+    }
+  ],
+  "tick_labels": [
+    "baseline",
+    "spsa_best",
+    "probe_best"
+  ],
+  "reference": {
+    "method": "FCI",
+    "value": 0.0,
+    "unit": "mHa",
+    "scope": "Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth"
+  }
+}

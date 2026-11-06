@@ -1,0 +1,166 @@
+{
+  "source_report": "results/jastrow_local_20261106T015732/report.json",
+  "status": "success",
+  "config": {
+    "anchor_report": "results/phase3_20261103T074031/report.json",
+    "shots": 50000,
+    "probe_amplitudes": [
+      0.003,
+      0.03,
+      0.1
+    ],
+    "probe_direction_seed": 84000,
+    "probe_seeds": [
+      84001,
+      84002,
+      84003
+    ],
+    "training_seed": 71002,
+    "evaluation_seeds": [
+      910101,
+      910102,
+      910103
+    ],
+    "update_wall_budget_seconds": 120,
+    "optimizer": {
+      "iterations": 12,
+      "a": 0.1,
+      "c": 0.03,
+      "alpha": 0.602,
+      "gamma": 0.101,
+      "stability": 1,
+      "max_step_norm": 0.1,
+      "seed": 998877
+    }
+  },
+  "reference": {
+    "energy_total": -109.09813082054681,
+    "converged": true,
+    "residual_norm": 2.98963841884039e-06
+  },
+  "budget": {
+    "chosen_iterations": 12,
+    "probe_mean_evaluation_seconds": 2.7026750454900874
+  },
+  "optimizer_status": "budget_exhausted",
+  "training_initial_error_mha": 35.61300539548995,
+  "training_best_error_mha": 28.48252463378742,
+  "final_groups": {
+    "baseline": {
+      "mean_error_mha": 34.38705207662925,
+      "sample_std_mha": 2.519523018305705,
+      "values": [
+        31.82894267966674,
+        34.46608449421262,
+        36.86612905600839
+      ],
+      "correction_norm": 0.0
+    },
+    "spsa_best": {
+      "mean_error_mha": 34.219360812566414,
+      "sample_std_mha": 2.1668276375010973,
+      "values": [
+        34.30806375949658,
+        32.00954383463284,
+        36.34047484356984
+      ],
+      "correction_norm": 0.04141508557597842
+    },
+    "probe_best": {
+      "mean_error_mha": 34.38705207662925,
+      "sample_std_mha": 2.519523018305705,
+      "values": [
+        31.82894267966674,
+        34.46608449421262,
+        36.86612905600839
+      ],
+      "correction_norm": 0.0
+    }
+  },
+  "paired_improvement_mha": [
+    -2.479121079829838,
+    2.4565406595797867,
+    0.5256542124385533
+  ],
+  "paired_improvement_sample_std_mha": 2.4872258252469535,
+  "state_diagnostic": {
+    "fidelity": 0.9995186512078896,
+    "probability_total_variation": 0.007950698169788691
+  },
+  "sensitivity": [
+    {
+      "amplitude": 0.0,
+      "mean_error_mha": 33.15847414951634,
+      "sample_std_mha": 1.650094018474591,
+      "values": [
+        31.975890523966655,
+        35.04357129781965,
+        32.4559606267627
+      ]
+    },
+    {
+      "amplitude": -0.003,
+      "mean_error_mha": 35.868458092011224,
+      "sample_std_mha": 4.9344504207735245,
+      "values": [
+        38.512671289083755,
+        38.91726711624699,
+        30.175435870702927
+      ]
+    },
+    {
+      "amplitude": 0.003,
+      "mean_error_mha": 35.20068195541626,
+      "sample_std_mha": 0.4344557759088462,
+      "values": [
+        34.8416236018636,
+        35.68362445635387,
+        35.0767978080313
+      ]
+    },
+    {
+      "amplitude": -0.03,
+      "mean_error_mha": 34.77036258067775,
+      "sample_std_mha": 3.57323029838585,
+      "values": [
+        30.658887640683474,
+        36.526425012255004,
+        37.12577508909476
+      ]
+    },
+    {
+      "amplitude": 0.03,
+      "mean_error_mha": 35.26307207395026,
+      "sample_std_mha": 1.5016450786700977,
+      "values": [
+        35.77626812638357,
+        33.57210648636055,
+        36.440841609106656
+      ]
+    },
+    {
+      "amplitude": -0.1,
+      "mean_error_mha": 36.56297110819177,
+      "sample_std_mha": 3.720254846216619,
+      "values": [
+        35.2872561709745,
+        40.753251647046795,
+        33.64840550655401
+      ]
+    },
+    {
+      "amplitude": 0.1,
+      "mean_error_mha": 35.96246579518455,
+      "sample_std_mha": 0.20040211733434762,
+      "values": [
+        35.81469835820883,
+        35.88212695676418,
+        36.19057207058063
+      ]
+    }
+  ],
+  "wall_seconds": 179.802858625073,
+  "peak_rss_mib": 1443.5625,
+  "objective_evaluations": 67,
+  "diagonalizations": 402
+}

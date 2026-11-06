@@ -1,0 +1,78 @@
+{
+  "source_report": "results/jastrow_local_20261106T015732/report.json",
+  "title": "SQD optimization trajectory (training objective)",
+  "xlabel": "Update iteration",
+  "ylabel": "Energy error (mHa)",
+  "series": [
+    {
+      "name": "Candidate",
+      "x": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "y": [
+        36.94821179036012,
+        36.45375952532959,
+        36.04277758310559,
+        33.91926483247687,
+        28.48252463378742,
+        32.256545604425924,
+        32.96134226629022,
+        30.17109782652483,
+        31.65781609379792,
+        33.08711904971062,
+        32.277526688361036,
+        37.2291419547679
+      ],
+      "error": null
+    },
+    {
+      "name": "Best training candidate",
+      "x": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "y": [
+        35.61300539548995,
+        35.61300539548995,
+        35.61300539548995,
+        33.91926483247687,
+        28.48252463378742,
+        28.48252463378742,
+        28.48252463378742,
+        28.48252463378742,
+        28.48252463378742,
+        28.48252463378742,
+        28.48252463378742,
+        28.48252463378742
+      ],
+      "error": null
+    }
+  ],
+  "reference": {
+    "method": "FCI",
+    "value": 0.0,
+    "unit": "mHa",
+    "scope": "Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth"
+  }
+}

@@ -18,6 +18,9 @@
 | [Phase 6 Meta pilot](PHASE6_PILOT_RESULTS.md) | Affine 학습과 새 geometry 평가 |
 | [Frozen Meta 진단](META_DIAGNOSTIC_RESULTS.md) | 학습점 재구성·unitary projection·확률 분포 |
 | [직접 SQD 공동 학습](JASTROW_JOINT_RESULTS.md) | Frozen rotations의 공유 Jastrow 보정 pilot |
+| [단일 J-only 대조](JASTROW_LOCAL_RESULTS.md) | 고정 회전의 probe/SPSA/독립 seed 평가 |
+| [부분공간 예산 진단](SUBSPACE_DIAGNOSTIC_RESULTS.md) | 고정 상태·샘플에서 SQD 예산 및 관측 support 포화 확인 |
+| [Seed 평균 대조](JASTROW_SEED_AVERAGE_RESULTS.md) | 공통 호출 상한의 single/averaged objective 비교 |
 
 같은 폴더의 `*_summary.json`은 추적 가능한 수치 요약이다. 원본 배열·trajectory·실행 환경·source snapshot은 Git에서 제외한 `results/`에 저장한다.
 

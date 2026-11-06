@@ -1,0 +1,44 @@
+{
+  "source_report": "results/jastrow_local_20261106T015732/sensitivity.json",
+  "title": "Single-direction Jastrow sensitivity",
+  "xlabel": "Signed perturbation per coefficient (radian)",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "Development seeds",
+      "x": [
+        -0.1,
+        -0.03,
+        -0.003,
+        0.0,
+        0.003,
+        0.03,
+        0.1
+      ],
+      "y": [
+        36.56297110819177,
+        34.77036258067775,
+        35.868458092011224,
+        33.15847414951634,
+        35.20068195541626,
+        35.26307207395026,
+        35.96246579518455
+      ],
+      "error": [
+        3.720254846216619,
+        3.57323029838585,
+        4.9344504207735245,
+        1.650094018474591,
+        0.4344557759088462,
+        1.5016450786700977,
+        0.20040211733434762
+      ]
+    }
+  ],
+  "reference": {
+    "method": "FCI",
+    "value": 0.0,
+    "unit": "mHa",
+    "scope": "Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth"
+  }
+}

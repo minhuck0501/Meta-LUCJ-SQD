@@ -1,0 +1,11 @@
+{
+  "anchor_report": "results/phase3_20261103T074031/report.json",
+  "shots": 50000,
+  "probe_amplitudes": [0.003, 0.03, 0.1],
+  "probe_direction_seed": 84000,
+  "probe_seeds": [84001, 84002, 84003],
+  "training_seed": 71002,
+  "evaluation_seeds": [910101, 910102, 910103],
+  "update_wall_budget_seconds": 120,
+  "optimizer": {"iterations": 12, "a": 0.1, "c": 0.03, "alpha": 0.602, "gamma": 0.101, "stability": 1, "max_step_norm": 0.1, "seed": 998877}
+}

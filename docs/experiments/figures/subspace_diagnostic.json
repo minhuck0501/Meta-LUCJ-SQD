@@ -1,0 +1,32 @@
+{
+  "source_report": "results/subspace_diagnostic_20261106T021528/report.json",
+  "title": "Fixed-state SQD subspace budget diagnostic",
+  "xlabel": "Samples per batch (50,000 raw shots fixed)",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "1.2 angstrom, three seeds",
+      "x": [
+        200,
+        400,
+        800
+      ],
+      "y": [
+        32.30795337361769,
+        21.422086172033044,
+        21.01741186056927
+      ],
+      "error": [
+        2.0487741344509742,
+        1.831003091816331,
+        1.8577178543310697
+      ]
+    }
+  ],
+  "reference": {
+    "method": "FCI",
+    "value": 0.0,
+    "unit": "mHa",
+    "scope": "Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth"
+  }
+}

@@ -229,3 +229,35 @@ Figure timer 보충: 개별 실험 report의 scientific wall timer는 figure 생
 ## D044: 직접 SQD Jastrow 공동 학습 결과
 
 Probe aggregate 평균 8.84초/seed SD 1.60 mHa를 측정해 사전 규칙으로 최대 6회 중 4회 갱신했다. 고정 training mean의 초기값 37.821 mHa보다 낮은 candidate를 찾지 못해 φ=0이 선택됐다. 별도 training seeds 및 새 1.05/1.5 Å에서도 zero와 selected 결과가 같았다. Independent/warm/zero-selected 평균 오차는 1.05 Å에서 44.12/28.79/29.57 mHa, 1.5 Å에서 57.06/49.99/49.99 mHa다. 초기 anchor 전달 효과를 학습 효과로 주장하지 않는다. 새로운 두 FCI와 모든 SQD 수치 검사를 통과했으며 optimizer는 budget_exhausted다. 전체 484.49초와 90 SQD evaluations/540 diagonalizations를 기록했다. 상세 증거는 experiments/JASTROW_JOINT_RESULTS.md에 있다. 다음 판단에는 단일 training geometry의 J-only 대조와 update signal/noise 진단이 필요하다.
+
+## 2026-11-06 — D045: 단일 geometry J-only 대조 실험
+
+1.2 Å의 같은 anchor best와 orbital rotations를 고정하고 J 계수 19개만 조정한다. Probe는 사전 고정한 한 Rademacher 방향에서 0, ±0.003, ±0.03, ±0.1 rad/계수를 세 seeds로 평가한다. Probe 평균으로 고른 후보는 진단용이며 SPSA 초기값이나 gain을 바꾸지 않는다. SPSA는 zero에서 이전과 같은 a/c/schedule/cap으로 시작한다. Call 시간을 측정해 update 예산 120초·최대 12회를 적용한다.
+
+Probe 선택, SPSA training, final sampling seeds를 분리한다. 최종 비교는 baseline/SPSA best/probe best를 같은 새 seeds에서 평가한다. Nonzero probe가 좋다면 같은 family의 개선 여지에 대한 증거이며 SPSA의 성공과 구분한다. 개선을 찾지 못해도 global optimum이나 표현력 한계의 증명은 아니다. FCI는 기존 동일 Hamiltonian의 적분 일치 검증 후 재사용한다.
+
+
+## D046: 단일 geometry J-only 결과
+
+한 방향의 probe는 zero를 선택했다. Zero에서 12회 SPSA는 fixed training seed에서 35.613→28.483 mHa인 nonzero 후보를 찾았지만, 새 seeds 평균은 34.39→34.22 mHa로 감소가 약 0.17 mHa에 그쳤다. 표본 변동보다 작아 재현 가능한 개선으로 주장하지 않는다. Selected state는 fidelity 0.999519/TV 0.007951로 baseline과 실제로 달랐으며 frozen rotations 검사를 통과했다. 공동 geometry 모델이 없어도 training gain이 유지되지 않아 sampling 적합을 먼저 진단할 근거다. Shared model의 표현력이나 noise를 단독 원인으로 확정하지 않는다. 다음 후보는 같은 call 예산의 single-seed 대 multi-seed 평균 objective 비교다. 상세 증거는 experiments/JASTROW_LOCAL_RESULTS.md에 있다.
+
+## 2026-11-06 — D047: Fixed-seed 대 seed-average 목적함수
+
+같은 1.2 Å anchor, frozen rotations, J19 계수, SPSA gains/c/schedule/cap을 유지하고 single training seed와 세 training seeds 평균을 비교한다. 공통 최대 40 single-geometry SQD calls 안에서 single은 기존 12 updates/37 calls를 재사용하고 평균법은 4 updates/39 calls로 실행한다. 실제 호출 차이와 update 수 차이를 보고하고 seed averaging만의 순수 효과나 엄밀히 동일 compute라고 주장하지 않는다.
+
+Final seeds는 새로운 930101–930109 아홉 개이며 candidate 선택에 쓰지 않는다. Baseline, 기존 single best, 이번 averaged best를 같은 새 seeds로 평가한다. Sample SD와 paired improvement를 보고하며 각 한 optimizer trajectory로 광범위한 우위를 주장하지 않는다. 기존 reference는 integral 일치 검증 후 재사용하고 single run의 과거 비용도 별도 계상한다. Probe나 gain tuning을 추가하지 않는다.
+
+
+## D048: Single 대 averaged-seed 결과
+
+새 final seeds 9개의 평균 오차는 baseline/single/average=34.76/33.64/32.51 mHa였다. Average는 baseline 대비 약 2.25 mHa, single 대비 약 1.14 mHa 낮았지만 paired 변동이 크고 한 trajectory씩이라 확실한 우위를 주장하지 않는다. 공통 call cap40에서 실제37/39, update12/4를 사용했다. Seed averaging만의 순수 효과와 candidate 수 차이를 분리하지 못한다. 신규 66 calls/396 diagonalizations, 173.51초를 기록했고 수치 검사를 통과했다. 다음은 optimizer/training seed 묶음 반복 검증이며 shared 모델 확대로 바로 해석하지 않는다. 상세 근거는 experiments/JASTROW_SEED_AVERAGE_RESULTS.md에 있다.
+
+## 2026-11-06 — D049: 오차 원인 분리를 위한 SQD 부분공간 예산 진단
+
+현재 수십 mHa 오차를 seed 평균만으로 해결한다고 가정하지 않는다. 같은 1.2 Å anchor state와 seed별 50,000 raw samples를 고정하고 samples_per_batch=200/400/800만 바꾼다. 나머지 batch 수·iterations·solver tolerance는 유지하고 자원 보호 max_dim=250000을 세 조건에 동일 적용한다. 이는 benchmark 설정 변경이 아닌 별도 예산 민감도 진단이며 기존 결과를 대체하지 않는다. 에너지·실제 dimension·시간·residual을 보고한다. 같은 샘플을 사용해도 선택된 subspace가 nested라는 보장은 없으므로 monotonic improvement를 가정하지 않는다.
+
+## 2026-11-06 — D050: 부분공간 병목 확인 및 자원 상한 의미 정정
+
+고정 상태/샘플의 batch200/400/800 결과는 평균32.308/21.422/21.017 mHa였다. 800에서는 관측된 모든 spin-string Cartesian 부분공간을 사용했고 포화되었다. Seed 평균 반복보다 누락 배치 확보와 부분공간 구성의 정확도/비용 진단을 우선한다. 이는 Meta 성과가 아니며 기존 공통 benchmark를 변경하지 않는다. 새로운 후처리는 모든 baseline에 동일 적용하고 비용을 별도 계상해야 한다. 상세는 experiments/SUBSPACE_DIAGNOSTIC_RESULTS.md.
+
+D049 정정: addon의 max_dim은 전체 Cartesian 차원이 아니라 각 spin sector의 상한이다. 250000은 이번 작은 support에서 nonbinding이었고 실질적인 전체 차원 자원 보호 상한으로 해석할 수 없다. 향후 실행 전 sector 상한과 곱을 함께 확인한다.

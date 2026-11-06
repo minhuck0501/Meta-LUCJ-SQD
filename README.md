@@ -58,7 +58,7 @@ LUCJ와 SQD는 참고 문헌에 기반한 방법입니다. 이 프로젝트에�
 
 ## 현재 상태
 
-Phase 6의 직접 SQD 공동 학습 pilot을 실행했습니다. Frozen orbital rotations 위의 38개 geometry-dependent Jastrow coefficients를 제한된 예산으로 학습했지만 개선 candidate를 찾지 못해 보정 0이 선택됐습니다. 새 1.05/1.5 Å 결과도 학습 전 기준과 같았으며, 학습 효율성의 이점은 확인하지 못했습니다.
+Phase 6의 SQD 학습 잡음 진단을 진행 중입니다. 같은 최대 call budget의 단일 seed/세 seed 평균 학습을 새 seed 9개에서 평가했으며 평균 오차는 각각 33.64/32.51 mHa였습니다. 평균 학습이 조금 낮았지만 변동성과 optimizer 반복 부족으로 확실한 우위나 Meta 효율성을 입증하지 못했습니다.
 
 자세한 내용은 [Phase 3 pilot 결과](docs/experiments/PHASE3_PILOT_RESULTS.md)와 [반복·예산 비교](docs/experiments/PHASE3_REPETITIONS.md), [다른 거리 적용](docs/experiments/PHASE3_GEOMETRIES.md)을 참고하세요.
 
@@ -88,6 +88,10 @@ Phase 5 결과는 [오비탈·파라미터 분석 보고서](docs/experiments/PH
 최신 원인 진단은 [Frozen Meta 진단](docs/experiments/META_DIAGNOSTIC_RESULTS.md)에 있습니다.
 
 최신 결과는 [직접 SQD Jastrow 공동 학습](docs/experiments/JASTROW_JOINT_RESULTS.md)에 있습니다.
+
+최신 대조 실험은 [단일 geometry J-only](docs/experiments/JASTROW_LOCAL_RESULTS.md)에 있습니다.
+
+최신 비교는 [Training seed 평균 대조](docs/experiments/JASTROW_SEED_AVERAGE_RESULTS.md)에 있습니다.
 
 ## 개발 단계
 
