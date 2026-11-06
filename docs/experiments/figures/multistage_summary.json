@@ -1,0 +1,23 @@
+{
+  "source_report": "docs/experiments/multistage_summary.json",
+  "title": "Initialization sampling-budget evaluation [validation_incomplete]",
+  "xlabel": "Shots",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "compressed",
+      "x": [
+        10000,
+        50000
+      ],
+      "y": [
+        50.42802484641129,
+        49.57984096923932
+      ],
+      "error": [
+        4.3986834098579095,
+        0.24616669068897729
+      ]
+    }
+  ]
+}

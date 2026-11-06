@@ -1,3 +1,4 @@
+from meta_lucj_sqd.plotting import plot_report
 import json
 import argparse
 import subprocess
@@ -54,6 +55,7 @@ def main():
     report['status']='success' if all(d['status']=='success' for d in report['directions']) else 'validation_incomplete'
     report['wall_seconds']=time.perf_counter()-started
     (out/'report.json').write_text(json.dumps(report,indent=2))
+    plot_report(out/'report.json')
     print(out/'report.json',flush=True)
 
 

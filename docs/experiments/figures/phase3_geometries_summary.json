@@ -1,0 +1,38 @@
+{
+  "source_report": "docs/experiments/phase3_geometries_summary.json",
+  "title": "Independent refinement at additional geometries",
+  "xlabel": "Bond length (angstrom)",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "heldout_initial",
+      "x": [
+        1.0,
+        1.6
+      ],
+      "y": [
+        35.40551727614627,
+        62.91414189181429
+      ],
+      "error": [
+        0.7716894224006403,
+        0.7356880988752755
+      ]
+    },
+    {
+      "name": "heldout_refined",
+      "x": [
+        1.0,
+        1.6
+      ],
+      "y": [
+        23.470367552628584,
+        54.521039018349406
+      ],
+      "error": [
+        0.8850346366094451,
+        3.3853620798969217
+      ]
+    }
+  ]
+}

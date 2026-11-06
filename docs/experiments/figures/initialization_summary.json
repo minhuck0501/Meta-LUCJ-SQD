@@ -1,0 +1,38 @@
+{
+  "source_report": "docs/experiments/initialization_summary.json",
+  "title": "Initialization sampling-budget evaluation [validation_incomplete]",
+  "xlabel": "Shots",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "compressed",
+      "x": [
+        10000,
+        50000
+      ],
+      "y": [
+        48.81673804050498,
+        44.97015675911579
+      ],
+      "error": [
+        1.1474181843849744,
+        1.2682622882236372
+      ]
+    },
+    {
+      "name": "truncated",
+      "x": [
+        10000,
+        50000
+      ],
+      "y": [
+        183.50726142477924,
+        162.89229917987313
+      ],
+      "error": [
+        5.599487369744045,
+        5.878223190085666
+      ]
+    }
+  ]
+}

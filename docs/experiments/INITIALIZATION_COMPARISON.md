@@ -60,3 +60,11 @@ PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts
 ```
 
 추가한 compression wrapper의 상태가 ffsim 고수준 constructor와 일치하는 작은 H₂ 검증을 포함해 테스트 6개가 통과했다.
+
+## 그래프
+
+![결과 그래프](figures/initialization_summary.png)
+
+점선은 계산된 점 사이의 시각적 안내이며, 오차 막대는 제공된 seed 간 표본 표준편차입니다. 매끄러운 PEC fitting이나 confidence interval을 의미하지 않습니다.
+
+[SVG](figures/initialization_summary.svg) · [그래프 수치](figures/initialization_summary.json)

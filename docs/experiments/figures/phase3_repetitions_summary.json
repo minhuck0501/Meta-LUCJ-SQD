@@ -1,0 +1,49 @@
+{
+  "source_report": "docs/experiments/phase3_repetitions_summary.json",
+  "title": "Independent optimizer repetitions",
+  "xlabel": "Optimizer trial (categorical)",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "heldout_initial",
+      "x": [
+        0,
+        1,
+        2
+      ],
+      "y": [
+        44.55960019396343,
+        44.55960019396343,
+        44.55960019396343
+      ],
+      "error": [
+        3.011998070823373,
+        3.011998070823373,
+        3.011998070823373
+      ]
+    },
+    {
+      "name": "heldout_refined",
+      "x": [
+        0,
+        1,
+        2
+      ],
+      "y": [
+        36.61676252193047,
+        27.41794465439777,
+        30.25389028639817
+      ],
+      "error": [
+        3.0535303569457275,
+        1.6782589346464862,
+        1.3811610048421272
+      ]
+    }
+  ],
+  "tick_labels": [
+    "budget24",
+    "repeat2",
+    "repeat3"
+  ]
+}

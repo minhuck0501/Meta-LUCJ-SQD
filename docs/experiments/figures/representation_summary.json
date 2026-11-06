@@ -1,0 +1,23 @@
+{
+  "source_report": "docs/experiments/representation_summary.json",
+  "title": "Common-frame representation roundtrip",
+  "xlabel": "Bond length (angstrom)",
+  "ylabel": "State L2 difference",
+  "series": [
+    {
+      "name": "Roundtrip",
+      "x": [
+        1.0,
+        1.2,
+        1.6
+      ],
+      "y": [
+        9.363286276084576e-15,
+        1.0758725995289713e-14,
+        1.1254583674745629e-14
+      ],
+      "error": null
+    }
+  ],
+  "log_y": true
+}

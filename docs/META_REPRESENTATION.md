@@ -53,3 +53,7 @@ PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=
 ```
 
 기존 independent best archives가 필요한 로컬 검증 명령이다.
+
+## 복원 오차 그래프
+
+![공통 표현 복원 오차](experiments/figures/representation_summary.png)

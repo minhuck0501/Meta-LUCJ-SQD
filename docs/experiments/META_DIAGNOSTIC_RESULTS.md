@@ -67,3 +67,11 @@ Unseen Meta와 control 사이 fidelity/TV는 원본 report에 저장했다. 이�
 ```bash
 PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts/diagnose_meta.py
 ```
+
+## 그래프
+
+![결과 그래프](figures/meta_diagnostic_summary.png)
+
+점선은 계산된 점 사이의 시각적 안내이며, 오차 막대는 제공된 seed 간 표본 표준편차입니다. 매끄러운 PEC fitting이나 confidence interval을 의미하지 않습니다.
+
+[SVG](figures/meta_diagnostic_summary.svg) · [그래프 수치](figures/meta_diagnostic_summary.json)

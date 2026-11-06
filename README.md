@@ -145,3 +145,13 @@ Phase 1 테스트와 실행 명령은 [결과 문서](docs/experiments/PHASE1_RE
 ## 작업 규칙
 
 세부 지침은 [AGENTS.md](AGENTS.md)를 따릅니다. 정확성과 재현성을 우선하고, 소스 코드에 주석을 작성하지 않으며, 설정과 구현을 분리합니다. 과학적 주장은 실험 근거와 함께 기록하고 실패한 실험과 한계도 보고합니다.
+
+## 결과 그래프
+
+각 수치 결과에 PNG·SVG와 그래프 수치를 저장합니다. 기존 주요 그래프는 [실험 목록](docs/experiments/README.md)과 각 보고서에서 볼 수 있습니다. 전체 재생성은 다음 명령을 사용합니다.
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/plot_results.py
+```
+
+새 실험은 종료 시 결과 폴더에 그래프를 생성합니다. 점선은 시각적 안내이며 fitting된 PEC가 아닙니다. 실패해 수치가 없는 실행에는 곡선을 만들지 않습니다.

@@ -264,3 +264,13 @@ def test_affine_model_known_function():
     model=fit_affine(distances,features,0.)
     np.testing.assert_allclose(model.predict(1.1),[3.2,-1.3],atol=1e-12)
     np.testing.assert_allclose(model.predict(1.4),[3.8,-2.2],atol=1e-12)
+
+
+def test_plotting_energy_units_and_seed_variability():
+    from meta_lucj_sqd.plotting import chart_data
+
+    data=chart_data(dict(reference=dict(energy_total=-2.),trajectory=[dict(iteration=1,value=-1.9,best_value=-1.95)]))
+    np.testing.assert_allclose(data['series'][0]['y'],[100.])
+    data=chart_data(dict(reference=dict(energy_total=-2.),rows=[dict(method='meta',shots=10,energy_total=-1.9),dict(method='meta',shots=10,energy_total=-1.8)]))
+    np.testing.assert_allclose(data['series'][0]['y'],[150.])
+    np.testing.assert_allclose(data['series'][0]['error'],[np.sqrt(5000.)])

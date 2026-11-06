@@ -32,3 +32,12 @@ Develop and validate geometry-conditioned LUCJ initialization methods for effici
 - Use small, deterministic tests before launching expensive experiments.
 - Update docs/DECISIONS.md when methodological choices change.
 - Do not claim a result without experimental evidence.
+## Result Figures
+
+- Generate curve figures with every numerical experiment report.
+- Save PNG, SVG, and the exact plotted values beside the result.
+- Use calculated points and identify connecting lines as visual guides, not fitted PECs.
+- Show seed sample standard deviation when available; distinguish it from confidence intervals and optimizer-run variability.
+- Include optimization trajectories for iterative runs and total-energy/reference curves when geometry data permit.
+- Preserve failed/partial results without inventing missing data.
+- Keep figure generation outside reported scientific computation timers.

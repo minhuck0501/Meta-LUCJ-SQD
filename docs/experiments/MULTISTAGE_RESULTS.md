@@ -58,3 +58,11 @@ PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts
 ```
 
 로컬 reference report와 integral archive가 필요하다. 새 환경에서 해당 기록이 없으면 초기 Phase 1 및 single-stage 기준 계산을 먼저 재생성하고 경로를 설정해야 한다.
+
+## 그래프
+
+![결과 그래프](figures/multistage_summary.png)
+
+점선은 계산된 점 사이의 시각적 안내이며, 오차 막대는 제공된 seed 간 표본 표준편차입니다. 매끄러운 PEC fitting이나 confidence interval을 의미하지 않습니다.
+
+[SVG](figures/multistage_summary.svg) · [그래프 수치](figures/multistage_summary.json)

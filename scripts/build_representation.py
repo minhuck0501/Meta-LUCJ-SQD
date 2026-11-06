@@ -1,3 +1,4 @@
+from meta_lucj_sqd.plotting import plot_report
 import json
 import shutil
 import time
@@ -50,6 +51,7 @@ def main():
     np.savez_compressed(out/'features.npz',distances=distances,features=np.stack(vectors))
     report['status']='success';report['wall_seconds']=time.perf_counter()-started
     (out/'report.json').write_text(json.dumps(report,indent=2))
+    plot_report(out/'report.json')
     print(out/'report.json',flush=True)
 
 

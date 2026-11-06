@@ -1,0 +1,31 @@
+{
+  "source_report": "docs/experiments/phase3_summary.json",
+  "title": "Initial and refined independent-seed evaluation",
+  "xlabel": "Evaluation group (categorical)",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "Evaluation",
+      "x": [
+        0,
+        1,
+        2
+      ],
+      "y": [
+        45.17747513899432,
+        46.06662308300713,
+        37.734361467623025
+      ],
+      "error": [
+        2.5694339277164815,
+        1.0784488987568985,
+        3.1417556715083688
+      ]
+    }
+  ],
+  "tick_labels": [
+    "noise_probe",
+    "heldout_initial",
+    "heldout_refined"
+  ]
+}

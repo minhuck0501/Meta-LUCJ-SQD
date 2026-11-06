@@ -1,3 +1,4 @@
+from meta_lucj_sqd.plotting import plot_report
 import argparse
 import hashlib
 import importlib.metadata
@@ -127,6 +128,7 @@ def main():
         raise
     finally:
         save()
+        plot_report(out / "report.json")
         print(str(out / "report.json"), flush=True)
 
 

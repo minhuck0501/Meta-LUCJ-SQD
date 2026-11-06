@@ -207,3 +207,10 @@ Exact feature control은 세 training states를 약 1e-14 이내로 복원했다
 ## D040: 보간 제안의 지위와 reference 재검토
 
 사용자의 방법론 검토 요청에 따라 Meta-VQE Eq.(2)/(16)/(17), LUCJ Eq.(14)와 norm regularization/QSCI 논의를 다시 확인했다. Exact training-label interpolation은 reference의 필수 성공 기준이나 검증된 해결책이 아니다. Local/manifold interpolation 제안은 diagnostic control로 한정하며 다음 주력 방법으로 확정하지 않는다. 논문의 linear angle encoding과 현재 affine matrix-entry regression을 혼동하지 않는다. Physical-objective shared learning 또는 검증된 surrogate/hybrid를 연구 후보로 두되 SQD 확장의 효과·비용은 새 실험으로 검증해야 한다. 자세한 근거는 METHOD_REVIEW.md에 기록했다. 기존 실험과 부정적 결과는 유지하며 모델을 변경하거나 새로운 계산을 실행하지 않았다.
+
+
+## 2026-11-06 — D041: 결과별 그래프 저장
+
+사용자 요청에 따라 기존 수치 결과의 energy-error/shot-budget/optimization/diagnostic 곡선을 생성하고 각 보고서에 연결했다. 이후 실행은 종료 시 PNG/SVG/plot-data JSON을 저장한다. Geometry 점 사이 선은 시각적 안내이며 미계산 지점 예측이나 fitting된 PEC로 주장하지 않는다. Seed 표본 표준편차와 optimizer 반복/신뢰구간을 구분한다. Figure generation은 scientific computation timer 밖이며 계산 결과를 바꾸지 않는다. Matplotlib 직접 의존성 버전을 기록했다. 수치가 없는 실패 실행에 임의 곡선을 생성하지 않는다.
+
+Figure timer 보충: 개별 실험 report의 scientific wall timer는 figure 생성 전에 종료한다. Wrapper의 전체 orchestration wall에는 child plotting/I/O overhead가 포함될 수 있으므로 이 둘을 구분한다. 기존 원시 수치는 재계산하지 않고 저장된 report에서 그래프를 생성했다.

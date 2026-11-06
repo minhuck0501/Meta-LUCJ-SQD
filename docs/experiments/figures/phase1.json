@@ -1,0 +1,27 @@
+{
+  "source_report": "results/phase1_20261103T064449/report.json",
+  "title": "Single-geometry energy comparison",
+  "xlabel": "Method (categorical)",
+  "ylabel": "Energy error (mHa)",
+  "series": [
+    {
+      "name": "Energy comparison",
+      "x": [
+        0,
+        1,
+        2
+      ],
+      "y": [
+        262.3566105679487,
+        12.844964093588374,
+        189.95056111018016
+      ],
+      "error": null
+    }
+  ],
+  "tick_labels": [
+    "RHF",
+    "CCSD",
+    "SQD"
+  ]
+}

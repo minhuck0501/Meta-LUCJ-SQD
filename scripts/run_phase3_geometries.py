@@ -1,3 +1,4 @@
+from meta_lucj_sqd.plotting import plot_report
 import json
 import subprocess
 import sys
@@ -50,6 +51,7 @@ def main():
         print('Completed',distance,entry['status'],flush=True)
     report['status']='success' if all(p['status']=='success' for p in report['points']) else 'validation_incomplete'
     (out/'report.json').write_text(json.dumps(report,indent=2))
+    plot_report(out/'report.json')
     print(out/'report.json',flush=True)
 
 

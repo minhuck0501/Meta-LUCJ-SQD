@@ -1,0 +1,44 @@
+{
+  "source_report": "docs/experiments/meta_diagnostic_summary.json",
+  "title": "Training-geometry reconstruction diagnostic",
+  "xlabel": "Bond length (angstrom)",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "optimized_label",
+      "x": [
+        1.0,
+        1.2,
+        1.6
+      ],
+      "y": [
+        23.821944807925394,
+        36.018130113788516,
+        53.7736224782274
+      ],
+      "error": [
+        0.8374049815022163,
+        0.9123181407009876,
+        2.1034415596295304
+      ]
+    },
+    {
+      "name": "affine_prediction",
+      "x": [
+        1.0,
+        1.2,
+        1.6
+      ],
+      "y": [
+        33.70666600567063,
+        46.9636066259748,
+        53.30449112931982
+      ],
+      "error": [
+        2.1499617185561597,
+        7.3481483996321995,
+        3.8561104545682254
+      ]
+    }
+  ]
+}

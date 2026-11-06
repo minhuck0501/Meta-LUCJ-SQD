@@ -70,3 +70,11 @@ CCSD 초기화만 사용했으며 LUCJ parameter refinement, compressed initiali
 최소 chemistry–LUCJ–sampling–SQD 연결과 작은 문제의 수치 검증은 통과했다. 그러나 현재 truncated 1-layer 초기화의 SQD 정확도는 충분하지 않다. 21개의 unique samples는 제한된 sampling support를 보여주지만, 원인이 topology, layer 수, 초기화 또는 shot budget 중 무엇인지는 이번 한 번의 실험으로 분리할 수 없다.
 
 다음에는 같은 1.2 Å에서 compressed initialization과 단순 truncation을 동일 조건으로 비교하고, sampling support와 SQD 에너지를 진단한다. Reference 강화와 seed 변동성을 함께 확인한 후 Phase 2 진행 여부를 판단한다. 개선을 위해 topology·반복 수·예산을 바꾸면 별도 설정과 결정으로 기록한다.
+
+## 그래프
+
+![결과 그래프](figures/phase1.png)
+
+점선은 계산된 점 사이의 시각적 안내이며, 오차 막대는 제공된 seed 간 표본 표준편차입니다. 매끄러운 PEC fitting이나 confidence interval을 의미하지 않습니다.
+
+[SVG](figures/phase1.svg) · [그래프 수치](figures/phase1.json)

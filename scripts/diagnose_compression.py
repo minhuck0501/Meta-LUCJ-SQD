@@ -1,3 +1,4 @@
+from meta_lucj_sqd.plotting import plot_report
 import json
 import argparse
 import time
@@ -72,6 +73,7 @@ def main():
         report['runs'].append(record)
         (out/'report.json').write_text(json.dumps(report,indent=2))
         print(method,result.success,result.nit,result.fun,record['final']['gradient_inf'],seconds,flush=True)
+    plot_report(out/'report.json')
     print(out/'report.json',flush=True)
 
 

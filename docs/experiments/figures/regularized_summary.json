@@ -1,0 +1,23 @@
+{
+  "source_report": "docs/experiments/regularized_summary.json",
+  "title": "Initialization sampling-budget evaluation",
+  "xlabel": "Shots",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "compressed",
+      "x": [
+        10000,
+        50000
+      ],
+      "y": [
+        55.42241410647364,
+        44.2510704262844
+      ],
+      "error": [
+        3.9681548162955935,
+        3.1945739178408594
+      ]
+    }
+  ]
+}

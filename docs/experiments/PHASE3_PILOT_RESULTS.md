@@ -47,3 +47,15 @@ PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=
 ```
 
 선행 reference와 integral archives가 필요한 로컬 재현 명령이다.
+
+## 그래프
+
+![결과 그래프](figures/phase3_summary.png)
+
+점선은 계산된 점 사이의 시각적 안내이며, 오차 막대는 제공된 seed 간 표본 표준편차입니다. 매끄러운 PEC fitting이나 confidence interval을 의미하지 않습니다.
+
+[SVG](figures/phase3_summary.svg) · [그래프 수치](figures/phase3_summary.json)
+
+![훈련 목적함수 곡선](figures/phase3_training_curve.png)
+
+훈련 seed의 곡선이며 독립 평가 성능이나 optimizer 수렴을 뜻하지 않습니다.

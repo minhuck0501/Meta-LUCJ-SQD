@@ -7,7 +7,7 @@ name = "meta-lucj-sqd"
 version = "0.1.0"
 description = "Geometry-conditioned LUCJ initialization research"
 requires-python = ">=3.11"
-dependencies = ["numpy==2.4.6", "scipy==1.17.1", "pyscf==2.14.0", "ffsim==0.0.85", "qiskit==2.6.1", "qiskit-addon-sqd==0.14.0"]
+dependencies = ["numpy==2.4.6", "scipy==1.17.1", "pyscf==2.14.0", "ffsim==0.0.85", "qiskit==2.6.1", "qiskit-addon-sqd==0.14.0", "matplotlib==3.11.2"]
 
 [project.optional-dependencies]
 test = ["pytest==9.2.0"]

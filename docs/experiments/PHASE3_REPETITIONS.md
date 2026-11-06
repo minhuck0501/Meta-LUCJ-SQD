@@ -49,3 +49,11 @@ PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=
 ```
 
 기존 pilot checkpoint와 reference archives가 필요한 로컬 재현 명령이다. Resume은 이번 12→24회 경로에서 실행 검증했으나 임의 중단 지점이나 변경된 library 버전에서 일반적으로 검증된 것은 아니다.
+
+## 그래프
+
+![결과 그래프](figures/phase3_repetitions_summary.png)
+
+점선은 계산된 점 사이의 시각적 안내이며, 오차 막대는 제공된 seed 간 표본 표준편차입니다. 매끄러운 PEC fitting이나 confidence interval을 의미하지 않습니다.
+
+[SVG](figures/phase3_repetitions_summary.svg) · [그래프 수치](figures/phase3_repetitions_summary.json)

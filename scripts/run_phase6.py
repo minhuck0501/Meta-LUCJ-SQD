@@ -1,3 +1,4 @@
+from meta_lucj_sqd.plotting import plot_report
 import json
 import importlib.metadata
 import resource
@@ -93,7 +94,9 @@ def main():
     except BaseException:
         report['status']='failed';report['exception']=traceback.format_exc();raise
     finally:
-        save();print(out/'report.json',flush=True)
+        save()
+        plot_report(out/'report.json')
+        print(out/'report.json',flush=True)
 
 
 if __name__=='__main__':
