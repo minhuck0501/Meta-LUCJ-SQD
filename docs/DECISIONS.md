@@ -214,3 +214,7 @@ Exact feature control은 세 training states를 약 1e-14 이내로 복원했다
 사용자 요청에 따라 기존 수치 결과의 energy-error/shot-budget/optimization/diagnostic 곡선을 생성하고 각 보고서에 연결했다. 이후 실행은 종료 시 PNG/SVG/plot-data JSON을 저장한다. Geometry 점 사이 선은 시각적 안내이며 미계산 지점 예측이나 fitting된 PEC로 주장하지 않는다. Seed 표본 표준편차와 optimizer 반복/신뢰구간을 구분한다. Figure generation은 scientific computation timer 밖이며 계산 결과를 바꾸지 않는다. Matplotlib 직접 의존성 버전을 기록했다. 수치가 없는 실패 실행에 임의 곡선을 생성하지 않는다.
 
 Figure timer 보충: 개별 실험 report의 scientific wall timer는 figure 생성 전에 종료한다. Wrapper의 전체 orchestration wall에는 child plotting/I/O overhead가 포함될 수 있으므로 이 둘을 구분한다. 기존 원시 수치는 재계산하지 않고 저장된 report에서 그래프를 생성했다.
+
+## 2026-11-06 — D042: 그래프의 reference 명시
+
+사용자 요청에 따라 energy-error 그래프에 FCI reference=0 mHa 선과 legend를 추가하고 축 범위에 포함한다. Total-energy 그래프는 실제 각 계산 geometry의 FCI points를 검은 diamond로 표시한다. 같은 basis/core/active Hamiltonian의 수치적으로 수렴한 기준이며 실험적 진실이나 complete-basis limit와 동일하지 않다고 명시한다. Fitting loss/state roundtrip 진단에는 FCI energy reference를 억지로 넣지 않고, roundtrip ideal=0과 log-axis 표시 한계를 설명한다. 기존 실험 수치·설정은 변경하지 않고 그림을 재생성했다. Reference uncertainty의 검증된 bound가 없어 임의 uncertainty band를 추가하지 않는다.

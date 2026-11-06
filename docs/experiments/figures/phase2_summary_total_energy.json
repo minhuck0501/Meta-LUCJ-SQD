@@ -54,5 +54,15 @@
       ],
       "error": null
     }
-  ]
+  ],
+  "reference": {
+    "method": "FCI",
+    "unit": "Ha",
+    "energies": {
+      "1.0": -109.04667177831853,
+      "1.2": -109.09813082054681,
+      "1.6": -108.94225171072745
+    },
+    "scope": "Same basis and active-space Hamiltonian"
+  }
 }

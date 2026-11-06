@@ -274,3 +274,30 @@ def test_plotting_energy_units_and_seed_variability():
     data=chart_data(dict(reference=dict(energy_total=-2.),rows=[dict(method='meta',shots=10,energy_total=-1.9),dict(method='meta',shots=10,energy_total=-1.8)]))
     np.testing.assert_allclose(data['series'][0]['y'],[150.])
     np.testing.assert_allclose(data['series'][0]['error'],[np.sqrt(5000.)])
+
+
+def test_energy_plot_contains_fci_reference(tmp_path):
+    import json
+    from meta_lucj_sqd.plotting import plot_report
+
+    source=tmp_path/'report.json'
+    source.write_text(json.dumps(dict(reference=dict(energy_total=-2.),trajectory=[dict(iteration=1,value=-1.9,best_value=-1.95)])))
+    plot_report(source)
+    data=json.loads((tmp_path/'figure.json').read_text())
+    assert data['reference']['value']==0.
+    assert data['reference']['unit']=='mHa'
+    assert 'FCI reference (0 mHa)' in (tmp_path/'figure.svg').read_text()
+
+
+def test_total_energy_plot_uses_reference_energies(tmp_path):
+    import json
+    from meta_lucj_sqd.plotting import plot_report
+
+    points=[dict(distance_angstrom=1.,reference=dict(energy_total=-2.),methods=[dict(method='meta',mean_error_mha=100.,sample_std_mha=0.)]),dict(distance_angstrom=2.,reference=dict(energy_total=-3.),methods=[dict(method='meta',mean_error_mha=200.,sample_std_mha=0.)])]
+    source=tmp_path/'report.json';source.write_text(json.dumps(dict(targets=points)))
+    plot_report(source)
+    data=json.loads((tmp_path/'figure_total_energy.json').read_text())
+    np.testing.assert_allclose(data['series'][0]['y'],[-1.9,-2.8])
+    np.testing.assert_allclose(data['series'][-1]['y'],[-2.,-3.])
+    assert data['reference']['unit']=='Ha'
+    assert 'FCI reference (0 mHa)' not in (tmp_path/'figure_total_energy.svg').read_text()

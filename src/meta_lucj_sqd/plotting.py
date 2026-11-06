@@ -165,6 +165,9 @@ def plot_report(report_path,output_stem=None,metric='error'):
     path=Path(report_path);report=json.loads(path.read_text());data=chart_data(report)
     if data is None:return None
     if not data['series']:return None
+    energy_error=data['ylabel'] in ['Energy error (mHa)','SQD energy error (mHa)']
+    if energy_error:
+        data['reference']=dict(method='FCI',value=0.,unit='mHa',scope='Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth')
     if report.get('status') in ['failed','interrupted','running','validation_incomplete']:
         data['title']+=' ['+report['status']+']'
     if metric=='total_energy':
@@ -182,22 +185,37 @@ def plot_report(report_path,output_stem=None,metric='error'):
         data['series'].append(_series('FCI reference',sorted(references),[references[x] for x in sorted(references)]))
         data['title']='Total energies at calculated geometries'
         data['ylabel']='Total energy (Ha)'
+        energy_error=False
+        data['reference']=dict(method='FCI',unit='Ha',energies=references,scope='Same basis and active-space Hamiltonian')
     stem=Path(output_stem) if output_stem else path.parent/'figure'
     stem.parent.mkdir(parents=True,exist_ok=True)
     with plt.rc_context({'font.size':10,'axes.spines.top':False,'axes.spines.right':False}):
         fig,ax=plt.subplots(figsize=(8,4.8),layout='constrained')
         for series in data['series']:
-            ax.errorbar(series['x'],series['y'],yerr=series['error'],marker='o',linestyle='--',linewidth=1.6,capsize=4,label=series['name'])
+            is_reference=series['name']=='FCI reference'
+            ax.errorbar(series['x'],series['y'],yerr=series['error'],marker='D' if is_reference else 'o',linestyle=':' if is_reference else '--',color='black' if is_reference else None,linewidth=2 if is_reference else 1.6,capsize=4,label=series['name'])
+        if energy_error:
+            ax.axhline(0.,color='black',linewidth=1.5,label='FCI reference (0 mHa)')
+            lower,upper=ax.get_ylim()
+            ax.set_ylim(min(lower,-0.03*max(abs(upper),1.)),upper)
         ax.set(title=data['title'],xlabel=data['xlabel'],ylabel=data['ylabel'])
         if data.get('tick_labels'):
             ax.set_xticks(range(len(data['tick_labels'])),data['tick_labels'],rotation=12)
         if data.get('log_y'):ax.set_yscale('log')
         ax.grid(alpha=0.2);ax.legend(fontsize=8)
-        fig.get_layout_engine().set(rect=(0,0.08,1,0.92))
-        fig.text(0.5,0.015,'Dashed lines guide the eye; no fitted PEC. Error bars: sample SD where available.',ha='center',fontsize=8)
+        fig.get_layout_engine().set(rect=(0,0.13,1,0.87))
+        fig.text(0.5,0.055,'Dashed lines guide the eye; no fitted PEC. Error bars: sample SD where available.',ha='center',fontsize=8)
+        note='Diagnostic only: no FCI energy target on this axis.'
+        if energy_error or metric=='total_energy':
+            note='Reference: converged FCI in the same basis and active space; not experimental truth.'
+        elif data.get('log_y'):
+            note='Ideal roundtrip difference = 0 (not drawable on this logarithmic axis).'
+        fig.text(0.5,0.015,note,ha='center',fontsize=8)
         fig.savefig(stem.with_suffix('.png'),dpi=180,bbox_inches='tight',pad_inches=0.15)
         fig.savefig(stem.with_suffix('.svg'),bbox_inches='tight',pad_inches=0.15)
         plt.close(fig)
+    svg=stem.with_suffix('.svg')
+    svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines())+'\n')
     stem.with_suffix('.json').write_text(json.dumps(dict(source_report=str(path),**data),indent=2))
     points=report.get('targets',report.get('points',[]))
     if metric=='error' and len(points)>1 and all('reference' in p or ('report' in p and json.loads(Path(p['report']).read_text()).get('reference')) for p in points):

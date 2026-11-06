@@ -49,5 +49,11 @@
         3.564238809351873
       ]
     }
-  ]
+  ],
+  "reference": {
+    "method": "FCI",
+    "value": 0.0,
+    "unit": "mHa",
+    "scope": "Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth"
+  }
 }

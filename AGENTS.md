@@ -41,3 +41,6 @@ Develop and validate geometry-conditioned LUCJ initialization methods for effici
 - Include optimization trajectories for iterative runs and total-energy/reference curves when geometry data permit.
 - Preserve failed/partial results without inventing missing data.
 - Keep figure generation outside reported scientific computation timers.
+- Energy-error figures must show the FCI reference at 0 mHa. Total-energy figures must show the actual available FCI points for the same Hamiltonian.
+- Identify the reference basis, active-space scope, numerical convergence limitations, and provenance; do not equate finite-basis FCI with experimental truth.
+- Do not invent ground-truth curves for fitting losses or representation diagnostics; label their mathematical targets separately.

@@ -155,3 +155,5 @@ PYTHONPATH=src .venv/bin/python scripts/plot_results.py
 ```
 
 새 실험은 종료 시 결과 폴더에 그래프를 생성합니다. 점선은 시각적 안내이며 fitting된 PEC가 아닙니다. 실패해 수치가 없는 실행에는 곡선을 만들지 않습니다.
+
+에너지 오차 그래프의 검은 0 mHa 선은 같은 계산 조건의 FCI 기준입니다. 총 에너지 그래프에는 계산 지점별 FCI 값을 표시합니다. FCI는 해당 유한 basis/active space의 수치 기준이며 실험값을 뜻하지 않습니다. 진단용 loss에는 임의의 에너지 정답선을 넣지 않습니다.

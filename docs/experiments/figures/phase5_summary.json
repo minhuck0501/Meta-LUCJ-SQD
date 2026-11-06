@@ -73,5 +73,11 @@
     "1.2 to 1.6",
     "1.6 to 1.2",
     "1.2 to 1.0"
-  ]
+  ],
+  "reference": {
+    "method": "FCI",
+    "value": 0.0,
+    "unit": "mHa",
+    "scope": "Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth"
+  }
 }
