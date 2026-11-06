@@ -1,0 +1,18 @@
+{
+  "phase3_config": "configs/phase3.json",
+  "training_summary": "docs/experiments/phase3_geometries_summary.json",
+  "anchor_report": "results/phase3_20261103T074031/report.json",
+  "training_distances": [1.0, 1.2, 1.6],
+  "geometry_center": 1.2,
+  "geometry_scale": 0.4,
+  "shots": 50000,
+  "training_seeds": [71001, 71002, 71003],
+  "probe_seed_sets": [[73001, 73002, 73003], [74001, 74002, 74003], [75001, 75002, 75003]],
+  "evaluation_seeds": [778899, 889900, 990011],
+  "optimizer": {"iterations": 6, "a": 0.1, "c": 0.03, "alpha": 0.602, "gamma": 0.101, "stability": 1, "max_step_norm": 0.1, "seed": 998877},
+  "update_wall_budget_seconds": 120,
+  "targets": [{"distance_angstrom": 1.05, "warm_source": 1.0}, {"distance_angstrom": 1.5, "warm_source": 1.2}],
+  "reference_tol": 1e-11,
+  "reference_max_cycle": 100,
+  "reference_residual_limit": 1e-5
+}

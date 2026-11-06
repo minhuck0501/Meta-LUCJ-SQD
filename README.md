@@ -58,7 +58,7 @@ LUCJ와 SQD는 참고 문헌에 기반한 방법입니다. 이 프로젝트에�
 
 ## 현재 상태
 
-Phase 6의 첫 affine Meta pilot은 일관된 이점을 보이지 못했습니다. 후속 진단에서 exact feature decode는 통과했지만 affine 모델이 학습 지점의 일부 state도 충분히 재구성하지 못했고 내부 회전의 unitary projection 변화가 컸습니다. 현재는 모델을 키우기 전에 표현·회귀의 재구성 한계를 분리하는 단계입니다.
+Phase 6의 직접 SQD 공동 학습 pilot을 실행했습니다. Frozen orbital rotations 위의 38개 geometry-dependent Jastrow coefficients를 제한된 예산으로 학습했지만 개선 candidate를 찾지 못해 보정 0이 선택됐습니다. 새 1.05/1.5 Å 결과도 학습 전 기준과 같았으며, 학습 효율성의 이점은 확인하지 못했습니다.
 
 자세한 내용은 [Phase 3 pilot 결과](docs/experiments/PHASE3_PILOT_RESULTS.md)와 [반복·예산 비교](docs/experiments/PHASE3_REPETITIONS.md), [다른 거리 적용](docs/experiments/PHASE3_GEOMETRIES.md)을 참고하세요.
 
@@ -69,7 +69,7 @@ Phase 2 결과는 [소규모 sweep 보고서](docs/experiments/PHASE2_RESULTS.md
 - 프로젝트 디렉터리, 연구 지침, 참고 논문 3편 및 참조 notebook이 준비되어 있습니다.
 - 로컬 `.venv`에서 Python 3.11.18과 native ARM64 실행을 확인했습니다.
 - NumPy, SciPy, PySCF, ffsim, Qiskit, qiskit-addon-sqd, pytest의 import를 확인했습니다.
-- Chemistry/LUCJ/sampling/SQD 최소 구현과 수치 테스트 15개가 통과했습니다.
+- Chemistry/LUCJ/sampling/SQD 최소 구현과 수치 테스트 20개가 통과했습니다.
 - N₂ 1.2 Å의 FCI 및 초기 SQD 결과를 측정했습니다. 최초 SQD 오차는 약 189.95 mHa였습니다. 후속 압축 초기화 비교에서는 평균 약 45–49 mHa로 개선됐지만 초기 압축 optimizer는 미수렴이었습니다. 후속 norm regularization으로 gradient 수렴을 확인했으며, 50,000 shots의 평균 오차는 약 44.25 mHa입니다. 소규모 진단 sweep은 진행할 수 있지만 목표 정확도와 Meta 효율성은 미입증입니다.
 - 연구 문서 4종에 Phase 0 설계 초안과 참조 notebook 검토 내용을 작성했습니다.
 - `pyproject.toml`에 패키지 구성과 현재 직접 의존성 버전을 선언했습니다.
@@ -86,6 +86,8 @@ Phase 5 결과는 [오비탈·파라미터 분석 보고서](docs/experiments/PH
 최신 결과는 [Phase 6 Meta pilot](docs/experiments/PHASE6_PILOT_RESULTS.md)에 있습니다.
 
 최신 원인 진단은 [Frozen Meta 진단](docs/experiments/META_DIAGNOSTIC_RESULTS.md)에 있습니다.
+
+최신 결과는 [직접 SQD Jastrow 공동 학습](docs/experiments/JASTROW_JOINT_RESULTS.md)에 있습니다.
 
 ## 개발 단계
 

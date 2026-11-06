@@ -1,0 +1,50 @@
+{
+  "source_report": "results/jastrow_joint_20261106T013550/training_evaluation.json",
+  "title": "Unseen-geometry initialization evaluation",
+  "xlabel": "Bond length (angstrom)",
+  "ylabel": "SQD energy error (mHa)",
+  "series": [
+    {
+      "name": "zero_correction",
+      "x": [
+        1.0,
+        1.2,
+        1.6
+      ],
+      "y": [
+        27.04707640173846,
+        37.7573773308247,
+        56.98030822654706
+      ],
+      "error": [
+        2.6915515458969326,
+        3.3612396993092384,
+        0.3236746976229748
+      ]
+    },
+    {
+      "name": "trained_jastrow",
+      "x": [
+        1.0,
+        1.2,
+        1.6
+      ],
+      "y": [
+        27.04707640173846,
+        37.7573773308247,
+        56.98030822654706
+      ],
+      "error": [
+        2.6915515458969326,
+        3.3612396993092384,
+        0.3236746976229748
+      ]
+    }
+  ],
+  "reference": {
+    "method": "FCI",
+    "value": 0.0,
+    "unit": "mHa",
+    "scope": "Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth"
+  }
+}

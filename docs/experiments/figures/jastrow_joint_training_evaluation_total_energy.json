@@ -1,0 +1,68 @@
+{
+  "source_report": "results/jastrow_joint_20261106T013550/training_evaluation.json",
+  "title": "Total energies at calculated geometries",
+  "xlabel": "Bond length (angstrom)",
+  "ylabel": "Total energy (Ha)",
+  "series": [
+    {
+      "name": "zero_correction",
+      "x": [
+        1.0,
+        1.2,
+        1.6
+      ],
+      "y": [
+        -109.01962470191678,
+        -109.060373443216,
+        -108.8852714025009
+      ],
+      "error": [
+        0.0026915515458969326,
+        0.0033612396993092384,
+        0.0003236746976229748
+      ]
+    },
+    {
+      "name": "trained_jastrow",
+      "x": [
+        1.0,
+        1.2,
+        1.6
+      ],
+      "y": [
+        -109.01962470191678,
+        -109.060373443216,
+        -108.8852714025009
+      ],
+      "error": [
+        0.0026915515458969326,
+        0.0033612396993092384,
+        0.0003236746976229748
+      ]
+    },
+    {
+      "name": "FCI reference",
+      "x": [
+        1.0,
+        1.2,
+        1.6
+      ],
+      "y": [
+        -109.04667177831853,
+        -109.09813082054681,
+        -108.94225171072745
+      ],
+      "error": null
+    }
+  ],
+  "reference": {
+    "method": "FCI",
+    "unit": "Ha",
+    "energies": {
+      "1.0": -109.04667177831853,
+      "1.2": -109.09813082054681,
+      "1.6": -108.94225171072745
+    },
+    "scope": "Same basis and active-space Hamiltonian"
+  }
+}

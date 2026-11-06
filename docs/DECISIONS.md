@@ -218,3 +218,14 @@ Figure timer 보충: 개별 실험 report의 scientific wall timer는 figure 생
 ## 2026-11-06 — D042: 그래프의 reference 명시
 
 사용자 요청에 따라 energy-error 그래프에 FCI reference=0 mHa 선과 legend를 추가하고 축 범위에 포함한다. Total-energy 그래프는 실제 각 계산 geometry의 FCI points를 검은 diamond로 표시한다. 같은 basis/core/active Hamiltonian의 수치적으로 수렴한 기준이며 실험적 진실이나 complete-basis limit와 동일하지 않다고 명시한다. Fitting loss/state roundtrip 진단에는 FCI energy reference를 억지로 넣지 않고, roundtrip ideal=0과 log-axis 표시 한계를 설명한다. 기존 실험 수치·설정은 변경하지 않고 그림을 재생성했다. Reference uncertainty의 검증된 bound가 없어 임의 uncertainty band를 추가하지 않는다.
+
+## 2026-11-06 — D043: 작은 직접 SQD Jastrow 공동 학습 pilot
+
+기준은 1.2 Å의 기존 12회 independent best 하나로 고정하고 orbital rotations를 유지한다. 각 geometry에는 같은 anchor에서 block-polar로 출력을 전달한다. 허용된 J 계수 19개에 ΔJ(R)=b+s*(R−1.2)/0.4를 더하며 공유 계수 38개를 평균 SQD energy로 학습한다. Label 회귀를 하지 않는다. 1.0/1.2/1.6 Å는 training Hamiltonians, 1.05/1.5 Å는 새 pilot 평가로 고정한다. Training FCI는 보고용이고 update에는 쓰지 않는다. Anchor archive 생성 비용은 별도 계상한다.
+
+먼저 보정 0을 세 seed 묶음으로 평가해 잡음과 call 시간을 측정한다. Update 예산 120초를 측정한 aggregate 시간으로 나누어 최대 6회로 제한하며 gains/c/step cap은 변경하지 않는다. Candidate 선택은 고정 training seeds의 평균 SQD만 사용하고 최종 평가 seeds는 사용하지 않는다. 보정 0과 학습 보정의 독립 training 평가도 수행해 같은 frozen orbital family에서의 학습 효과를 분리한다. 새 target에서는 독립 regularized 초기화, 사전 지정 training source의 single-hop warm, 보정 0, 학습 모델을 같은 shots/batch/solver 조건에서 비교한다. 모두 추가 refinement 없는 초기화 평가이며 full optimization efficiency 비교가 아니다.
+
+
+## D044: 직접 SQD Jastrow 공동 학습 결과
+
+Probe aggregate 평균 8.84초/seed SD 1.60 mHa를 측정해 사전 규칙으로 최대 6회 중 4회 갱신했다. 고정 training mean의 초기값 37.821 mHa보다 낮은 candidate를 찾지 못해 φ=0이 선택됐다. 별도 training seeds 및 새 1.05/1.5 Å에서도 zero와 selected 결과가 같았다. Independent/warm/zero-selected 평균 오차는 1.05 Å에서 44.12/28.79/29.57 mHa, 1.5 Å에서 57.06/49.99/49.99 mHa다. 초기 anchor 전달 효과를 학습 효과로 주장하지 않는다. 새로운 두 FCI와 모든 SQD 수치 검사를 통과했으며 optimizer는 budget_exhausted다. 전체 484.49초와 90 SQD evaluations/540 diagonalizations를 기록했다. 상세 증거는 experiments/JASTROW_JOINT_RESULTS.md에 있다. 다음 판단에는 단일 training geometry의 J-only 대조와 update signal/noise 진단이 필요하다.

@@ -1,0 +1,46 @@
+{
+  "source_report": "results/jastrow_joint_20261106T013550/report.json",
+  "title": "SQD optimization trajectory (training objective)",
+  "xlabel": "Update iteration",
+  "ylabel": "Energy error (mHa)",
+  "series": [
+    {
+      "name": "Candidate",
+      "x": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "y": [
+        38.44440631412738,
+        41.59969910578809,
+        42.20131510533065,
+        41.72925179602771
+      ],
+      "error": null
+    },
+    {
+      "name": "Best training candidate",
+      "x": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "y": [
+        37.82086208286728,
+        37.82086208286728,
+        37.82086208286728,
+        37.82086208286728
+      ],
+      "error": null
+    }
+  ],
+  "reference": {
+    "method": "FCI",
+    "value": 0.0,
+    "unit": "mHa",
+    "scope": "Mean error across three fixed training Hamiltonians"
+  }
+}

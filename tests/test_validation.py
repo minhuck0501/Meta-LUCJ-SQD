@@ -301,3 +301,36 @@ def test_total_energy_plot_uses_reference_energies(tmp_path):
     np.testing.assert_allclose(data['series'][-1]['y'],[-2.,-3.])
     assert data['reference']['unit']=='Ha'
     assert 'FCI reference (0 mHa)' not in (tmp_path/'figure_total_energy.svg').read_text()
+
+
+def test_jastrow_shared_correction_zero_and_linear_geometry():
+    from meta_lucj_sqd.jastrow_meta import parameter_count,correct_jastrow
+
+    norb=4;nelec=(2,2);pairs=interaction_pairs(norb)
+    count=ffsim.UCJOpSpinBalanced.n_params(norb,1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    params=np.random.default_rng(99871).normal(scale=0.2,size=count)
+    op=ffsim.UCJOpSpinBalanced.from_parameters(params,norb=norb,n_reps=1,interaction_pairs=pairs,with_final_orbital_rotation=True)
+    coefficients=np.zeros((2,parameter_count(norb)))
+    np.testing.assert_allclose(prepare(correct_jastrow(op,coefficients,1.4,1.2,0.4),norb,nelec),prepare(op,norb,nelec),atol=1e-10)
+    coefficients[0]=0.1;coefficients[1]=0.2
+    corrected=correct_jastrow(op,coefficients,1.6,1.2,0.4)
+    for spin,indices in enumerate(pairs):
+        for p,q in indices:
+            np.testing.assert_allclose(corrected.diag_coulomb_mats[0,spin,p,q]-op.diag_coulomb_mats[0,spin,p,q],0.3,atol=1e-12)
+            np.testing.assert_allclose(corrected.diag_coulomb_mats[0,spin,p,q],corrected.diag_coulomb_mats[0,spin,q,p],atol=1e-12)
+    np.testing.assert_array_equal(corrected.orbital_rotations,op.orbital_rotations)
+    np.testing.assert_array_equal(corrected.final_orbital_rotation,op.final_orbital_rotation)
+    assert abs(np.linalg.norm(prepare(corrected,norb,nelec))-1)<1e-10
+
+
+def test_multiple_plot_reports_preserve_source_data(tmp_path):
+    import json
+    from meta_lucj_sqd.plotting import plot_report
+
+    source=tmp_path/'evaluation.json'
+    original=json.dumps(dict(targets=[dict(distance_angstrom=1.,methods=[dict(method='meta',mean_error_mha=100.,sample_std_mha=0.)])]))
+    source.write_text(original)
+    plot_report(source)
+    assert source.read_text()==original
+    assert (tmp_path/'evaluation_figure.png').exists()
+    assert (tmp_path/'evaluation_figure.json').exists()

@@ -1,0 +1,336 @@
+{
+  "source_report": "results/jastrow_joint_20261106T013550/report.json",
+  "status": "success",
+  "config": {
+    "phase3_config": "configs/phase3.json",
+    "training_summary": "docs/experiments/phase3_geometries_summary.json",
+    "anchor_report": "results/phase3_20261103T074031/report.json",
+    "training_distances": [
+      1.0,
+      1.2,
+      1.6
+    ],
+    "geometry_center": 1.2,
+    "geometry_scale": 0.4,
+    "shots": 50000,
+    "training_seeds": [
+      71001,
+      71002,
+      71003
+    ],
+    "probe_seed_sets": [
+      [
+        73001,
+        73002,
+        73003
+      ],
+      [
+        74001,
+        74002,
+        74003
+      ],
+      [
+        75001,
+        75002,
+        75003
+      ]
+    ],
+    "evaluation_seeds": [
+      778899,
+      889900,
+      990011
+    ],
+    "optimizer": {
+      "iterations": 6,
+      "a": 0.1,
+      "c": 0.03,
+      "alpha": 0.602,
+      "gamma": 0.101,
+      "stability": 1,
+      "max_step_norm": 0.1,
+      "seed": 998877
+    },
+    "update_wall_budget_seconds": 120,
+    "targets": [
+      {
+        "distance_angstrom": 1.05,
+        "warm_source": 1.0
+      },
+      {
+        "distance_angstrom": 1.5,
+        "warm_source": 1.2
+      }
+    ],
+    "reference_tol": 1e-11,
+    "reference_max_cycle": 100,
+    "reference_residual_limit": 1e-05
+  },
+  "budget": {
+    "probe_mean_aggregate_seconds": 8.844100346943984,
+    "chosen_iterations": 4,
+    "requested_max_iterations": 6,
+    "probe_mean_error_sample_std": 1.6016212902281524
+  },
+  "optimizer_status": "budget_exhausted",
+  "selected_coefficient_norm": 0.0,
+  "last_coefficient_norm": 0.02846593804705067,
+  "checkpoint_replay_error": 0.0,
+  "step_norms": [
+    0.00265045936201865,
+    0.017120733070077183,
+    0.01752964514515262,
+    0.011063350042718774
+  ],
+  "trajectory": [
+    {
+      "iteration": 1,
+      "value": -108.99057369688346,
+      "best_value": -108.99119724111472,
+      "rng_state": {
+        "bit_generator": "PCG64",
+        "state": {
+          "state": 14322638060886935920296546144155124282,
+          "inc": 80479584500925005354700121318230269371
+        },
+        "has_uint32": 0,
+        "uinteger": 907432894
+      }
+    },
+    {
+      "iteration": 2,
+      "value": -108.9874184040918,
+      "best_value": -108.99119724111472,
+      "rng_state": {
+        "bit_generator": "PCG64",
+        "state": {
+          "state": 253509613650535665216129034292097264711,
+          "inc": 80479584500925005354700121318230269371
+        },
+        "has_uint32": 0,
+        "uinteger": 3675192588
+      }
+    },
+    {
+      "iteration": 3,
+      "value": -108.98681678809226,
+      "best_value": -108.99119724111472,
+      "rng_state": {
+        "bit_generator": "PCG64",
+        "state": {
+          "state": 198008891860140312401554475789173284896,
+          "inc": 80479584500925005354700121318230269371
+        },
+        "has_uint32": 0,
+        "uinteger": 3942628256
+      }
+    },
+    {
+      "iteration": 4,
+      "value": -108.98728885140156,
+      "best_value": -108.99119724111472,
+      "rng_state": {
+        "bit_generator": "PCG64",
+        "state": {
+          "state": 254869180161550183326013768154723610261,
+          "inc": 80479584500925005354700121318230269371
+        },
+        "has_uint32": 0,
+        "uinteger": 3200861560
+      }
+    }
+  ],
+  "reference": {
+    "energy_total": -109.02901810319759,
+    "kind": "mean_training_fci"
+  },
+  "reference_label": "Mean training FCI (0 mHa)",
+  "reference_scope": "Mean error across three fixed training Hamiltonians",
+  "training_evaluation": [
+    {
+      "distance_angstrom": 1.0,
+      "methods": [
+        {
+          "method": "zero_correction",
+          "mean_error_mha": 27.04707640173846,
+          "sample_std_mha": 2.6915515458969326,
+          "values": [
+            24.15953302131868,
+            29.486347787511136,
+            27.495348396385566
+          ]
+        },
+        {
+          "method": "trained_jastrow",
+          "mean_error_mha": 27.04707640173846,
+          "sample_std_mha": 2.6915515458969326,
+          "values": [
+            24.15953302131868,
+            29.486347787511136,
+            27.495348396385566
+          ]
+        }
+      ]
+    },
+    {
+      "distance_angstrom": 1.2,
+      "methods": [
+        {
+          "method": "zero_correction",
+          "mean_error_mha": 37.7573773308247,
+          "sample_std_mha": 3.3612396993092384,
+          "values": [
+            37.866721550173565,
+            34.34279968713838,
+            41.062610755162154
+          ]
+        },
+        {
+          "method": "trained_jastrow",
+          "mean_error_mha": 37.7573773308247,
+          "sample_std_mha": 3.3612396993092384,
+          "values": [
+            37.866721550173565,
+            34.34279968713838,
+            41.062610755162154
+          ]
+        }
+      ]
+    },
+    {
+      "distance_angstrom": 1.6,
+      "methods": [
+        {
+          "method": "zero_correction",
+          "mean_error_mha": 56.98030822654706,
+          "sample_std_mha": 0.32367469762297474,
+          "values": [
+            56.66036764547755,
+            57.307592079951064,
+            56.97296495421256
+          ]
+        },
+        {
+          "method": "trained_jastrow",
+          "mean_error_mha": 56.98030822654706,
+          "sample_std_mha": 0.32367469762297474,
+          "values": [
+            56.66036764547755,
+            57.307592079951064,
+            56.97296495421256
+          ]
+        }
+      ]
+    }
+  ],
+  "targets": [
+    {
+      "distance_angstrom": 1.05,
+      "methods": [
+        {
+          "method": "independent",
+          "mean_error_mha": 44.12353477051075,
+          "sample_std_mha": 2.0260588570061517,
+          "values": [
+            44.81678904537034,
+            41.84184603849417,
+            45.71196922766774
+          ]
+        },
+        {
+          "method": "warm",
+          "mean_error_mha": 28.78704612887854,
+          "sample_std_mha": 2.030338276989028,
+          "values": [
+            31.126471762618735,
+            27.74995795962809,
+            27.48470866438879
+          ]
+        },
+        {
+          "method": "zero_correction",
+          "mean_error_mha": 29.57490475389098,
+          "sample_std_mha": 1.3758728927762562,
+          "values": [
+            30.427942351735737,
+            30.30910614501181,
+            27.987665764925396
+          ]
+        },
+        {
+          "method": "trained_jastrow",
+          "mean_error_mha": 29.57490475389098,
+          "sample_std_mha": 1.3758728927762562,
+          "values": [
+            30.427942351735737,
+            30.30910614501181,
+            27.987665764925396
+          ]
+        }
+      ],
+      "reference": {
+        "energy_total": -109.08571385591588,
+        "converged": true,
+        "residual_norm": 1.985881568784101e-06,
+        "seconds": 82.04645470902324
+      }
+    },
+    {
+      "distance_angstrom": 1.5,
+      "methods": [
+        {
+          "method": "independent",
+          "mean_error_mha": 57.05949013174916,
+          "sample_std_mha": 0.6065244968169189,
+          "values": [
+            56.577645535199395,
+            56.860251886789115,
+            57.74057297325896
+          ]
+        },
+        {
+          "method": "warm",
+          "mean_error_mha": 49.98957745525937,
+          "sample_std_mha": 0.6122159645441958,
+          "values": [
+            49.28275545925942,
+            50.33248194476414,
+            50.35349496175456
+          ]
+        },
+        {
+          "method": "zero_correction",
+          "mean_error_mha": 49.98957745525937,
+          "sample_std_mha": 0.6122159645441958,
+          "values": [
+            49.28275545925942,
+            50.33248194476414,
+            50.35349496175456
+          ]
+        },
+        {
+          "method": "trained_jastrow",
+          "mean_error_mha": 49.98957745525937,
+          "sample_std_mha": 0.6122159645441958,
+          "values": [
+            49.28275545925942,
+            50.33248194476414,
+            50.35349496175456
+          ]
+        }
+      ],
+      "reference": {
+        "energy_total": -108.97968481473275,
+        "converged": true,
+        "residual_norm": 2.1924505964102796e-06,
+        "seconds": 134.46596554201096
+      }
+    }
+  ],
+  "wall_seconds": 484.48637474980205,
+  "peak_rss_mib": 5398.65625,
+  "objective_evaluations": 90,
+  "diagonalizations": 540,
+  "anchor_archive_wall_seconds": 140.64829608425498,
+  "probe_seconds": 26.532301040831953,
+  "joint_training_seconds": 118.08531658537686
+}

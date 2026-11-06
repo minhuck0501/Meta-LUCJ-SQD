@@ -167,7 +167,7 @@ def plot_report(report_path,output_stem=None,metric='error'):
     if not data['series']:return None
     energy_error=data['ylabel'] in ['Energy error (mHa)','SQD energy error (mHa)']
     if energy_error:
-        data['reference']=dict(method='FCI',value=0.,unit='mHa',scope='Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth')
+        data['reference']=dict(method='FCI',value=0.,unit='mHa',scope=report.get('reference_scope','Same basis, frozen core and active-space Hamiltonian; numerically converged reference, not experimental truth'))
     if report.get('status') in ['failed','interrupted','running','validation_incomplete']:
         data['title']+=' ['+report['status']+']'
     if metric=='total_energy':
@@ -187,15 +187,16 @@ def plot_report(report_path,output_stem=None,metric='error'):
         data['ylabel']='Total energy (Ha)'
         energy_error=False
         data['reference']=dict(method='FCI',unit='Ha',energies=references,scope='Same basis and active-space Hamiltonian')
-    stem=Path(output_stem) if output_stem else path.parent/'figure'
+    stem=Path(output_stem) if output_stem else path.parent/('figure' if path.name=='report.json' else path.stem+'_figure')
     stem.parent.mkdir(parents=True,exist_ok=True)
     with plt.rc_context({'font.size':10,'axes.spines.top':False,'axes.spines.right':False}):
         fig,ax=plt.subplots(figsize=(8,4.8),layout='constrained')
         for series in data['series']:
             is_reference=series['name']=='FCI reference'
-            ax.errorbar(series['x'],series['y'],yerr=series['error'],marker='D' if is_reference else 'o',linestyle=':' if is_reference else '--',color='black' if is_reference else None,linewidth=2 if is_reference else 1.6,capsize=4,label=series['name'])
+            sparse_geometry=data['xlabel']=='Bond length (angstrom)' and len(series['x'])<3
+            ax.errorbar(series['x'],series['y'],yerr=series['error'],marker='D' if is_reference else 'o',linestyle='none' if sparse_geometry else (':' if is_reference else '--'),color='black' if is_reference else None,linewidth=2 if is_reference else 1.6,capsize=4,label=series['name'])
         if energy_error:
-            ax.axhline(0.,color='black',linewidth=1.5,label='FCI reference (0 mHa)')
+            ax.axhline(0.,color='black',linewidth=1.5,label=report.get('reference_label','FCI reference (0 mHa)'))
             lower,upper=ax.get_ylim()
             ax.set_ylim(min(lower,-0.03*max(abs(upper),1.)),upper)
         ax.set(title=data['title'],xlabel=data['xlabel'],ylabel=data['ylabel'])
@@ -218,6 +219,6 @@ def plot_report(report_path,output_stem=None,metric='error'):
     svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines())+'\n')
     stem.with_suffix('.json').write_text(json.dumps(dict(source_report=str(path),**data),indent=2))
     points=report.get('targets',report.get('points',[]))
-    if metric=='error' and len(points)>1 and all('reference' in p or ('report' in p and json.loads(Path(p['report']).read_text()).get('reference')) for p in points):
+    if metric=='error' and data['xlabel']=='Bond length (angstrom)' and len(points)>1 and all('reference' in p or ('report' in p and json.loads(Path(p['report']).read_text()).get('reference')) for p in points):
         plot_report(path,str(stem)+'_total_energy',metric='total_energy')
     return str(stem.with_suffix('.png'))
